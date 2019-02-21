@@ -6,9 +6,10 @@ export default {
     app: {
       uid: '',
       appid: '',
-      appName: 'third-party-demo',
+      appName: '1,2,3 Aprende',
       deviceToken: '',
-      bundleid: 'edu.harvard.csci-s65.Behavior-based-Notifications'
+      bundleid:
+        '**-bundle-id--type-namespace-**'
     },
     firebase: {
       appData: {
