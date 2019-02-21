@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "1,2,3 Aprende",
+    "slug": "uno-dos-tres-aprende",
+    "scheme": "uno-dos-tres",
+    "privacy": "unlisted",
+    "sdkVersion": "32.0.0",
+    "platforms": [
+      "ios",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 180000
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "**-bundle-id--type-namespace-**",
+      "buildNumber": "0.1.0",
+      "associated-domains": [
+        "https://123aprende.selfenrichment.online"
+      ],
+      "supportsTablet": false
+    },
+    "splash": {
+      "backgroundColor": "#00AEEF"
+      /*
+        Local path or remote url to an image to fill the background of the loading screen.
+        Image size and aspect ratio are up to you.
+        Must be a .png.
+      */
+      /* "image": STRING, */
+    }
+  }
+}
