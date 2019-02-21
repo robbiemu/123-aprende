@@ -6,9 +6,10 @@ export default {
     app: {
       uid: '',
       appid: '',
-      appName: 'third-party-demo',
+      appName: '1,2,3 Aprende',
       deviceToken: '',
-      bundleid: '**-bundle-id--type-namespace-**'
+      bundleid:
+        '**-bundle-id--type-namespace-**'
     },
     firebase: {
       appData: {
