@@ -7,7 +7,7 @@ yarn-error.log*
 
 .DS_Store
 
-src/config/private.js
+src/config/private*
 
 # expo
 .expo

@@ -7,20 +7,17 @@
     "sdkVersion": "32.0.0",
     "platforms": [
       "ios"
-      /*"web"*/
     ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/123go.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00AEEF"
     },
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
-      "fallbackToCacheTimeout": 180000
+      "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
       "**/*"
@@ -30,14 +27,7 @@
       "buildNumber": "0.1.0",
       "supportsTablet": false
     },
-    "splash": {
-      "backgroundColor": "#00AEEF"
-      /*
-        Local path or remote url to an image to fill the background of the loading screen.
-        Image size and aspect ratio are up to you.
-        Must be a .png.
-      */
-      /* "image": STRING, */
-    }
+    "description": "",
+    "githubUrl": "https://github.com/robbiemu/123-aprende"
   }
 }
