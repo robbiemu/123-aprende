@@ -9,6 +9,9 @@ yarn-error.log*
 
 src/config/
 
+# expo
+.expo
+
 # bfg
 .bfg.*
 
