@@ -5,10 +5,10 @@ export const config = {
 }
 
 export default {
-  apiKey: '**-firebase-api-key-**',
-  authDomain: '**-firebase-auth-domain-**',
-  databaseURL: '**-firebase-database-url-**',
-  projectId: **-firebase-project-id-**,
-  storageBucket: '**-firebase-storage-bucket-**',
-  messagingSenderId: '**-firebase-messagingSenderId-**'
+  apiKey: 'AIzaSyAQVWSOTXp-UCEV18yQycWfGPJrMSOZRvA',
+  authDomain: 'behavior-based-notifications.firebaseapp.com',
+  databaseURL: 'https://behavior-based-notifications.firebaseio.com',
+  projectId: 'behavior-based-notifications',
+  storageBucket: 'behavior-based-notifications.appspot.com',
+  messagingSenderId: '725026296545'
 }

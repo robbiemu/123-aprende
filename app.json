@@ -26,11 +26,8 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "**-bundle-id--type-namespace-**",
+      "bundleIdentifier": "edu.harvard.thesis.behavior-based-notifications.third-party-demo",
       "buildNumber": "0.1.0",
-      "associatedDomains": [
-        "https://123aprende.selfenrichment.online"
-      ],
       "supportsTablet": false
     },
     "splash": {

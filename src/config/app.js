@@ -1,6 +1,7 @@
 export default {
-  appName: 'third-party-demo',
-  appId: '***-app-id--type-uuid-**',
+  appName: 'uno-dos-tres-aprende',
+  appScheme: 'uno-dos-tres', // 'expo'
+  appId: 'a1b2c3d4-5555-6e7f-0000-9a8b7a605000',
   logLevel: 'trace',
   states: {
     app: {
@@ -9,7 +10,7 @@ export default {
       appName: '1,2,3 Aprende',
       deviceToken: '',
       bundleid:
-        '**-bundle-id--type-namespace-**'
+        'edu.harvard.thesis.behavior-based-notifications.third-party-demo'
     },
     firebase: {
       appData: {
