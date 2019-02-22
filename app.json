@@ -28,9 +28,6 @@
     "ios": {
       "bundleIdentifier": "**-bundle-id--type-namespace-**",
       "buildNumber": "0.1.0",
-      "associatedDomains": [
-        "https://123aprende.selfenrichment.online"
-      ],
       "supportsTablet": false
     },
     "splash": {

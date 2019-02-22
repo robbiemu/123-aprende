@@ -1,6 +1,7 @@
 export default {
-  appName: 'third-party-demo',
-  appId: '***-app-id--type-uuid-**',
+  appName: 'uno-dos-tres-aprende',
+  appScheme: 'uno-dos-tres', // 'expo'
+  appId: '**-app-id--type-uuid-**',
   logLevel: 'trace',
   states: {
     app: {

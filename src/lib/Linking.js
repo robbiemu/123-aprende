@@ -21,7 +21,7 @@ export default {
         config.constants.urls.connectionDetails
       }&appid=${appid}`
 
-    console.info('opening', urlize('expo'))
+    console.info('opening', urlize(config.appScheme))
     Linking.getInitialURL()
       .then(uri => {
         Linking.openURL(urlize(uri)).catch(error => {
