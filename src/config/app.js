@@ -9,8 +9,7 @@ export default {
       appid: '',
       appName: '1,2,3 Aprende',
       deviceToken: '',
-      bundleid:
-        '**-bundle-id--type-namespace-**'
+      bundleid: '**-bundle-id--type-namespace-**'
     },
     firebase: {
       appData: {
