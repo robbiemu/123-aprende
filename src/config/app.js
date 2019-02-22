@@ -1,7 +1,9 @@
+import secret from './private'
+
 export default {
   appName: 'uno-dos-tres-aprende',
   appScheme: 'uno-dos-tres', // 'expo'
-  appId: '**-app-id--type-uuid-**',
+  appId: secret.appId, // uuid app fingerprint
   logLevel: 'trace',
   states: {
     app: {
@@ -9,7 +11,7 @@ export default {
       appid: '',
       appName: '1,2,3 Aprende',
       deviceToken: '',
-      bundleid: '**-bundle-id--type-namespace-**'
+      bundleid: secret.bundleId // your app's bundleId
     },
     firebase: {
       appData: {

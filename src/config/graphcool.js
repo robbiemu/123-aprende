@@ -1,4 +1,6 @@
+import secret from './private'
+
 export default {
-  uri: '**-graphcool-url-**',
+  uri: secret.graphcoolUrl,
   credentials: 'include'
 }

@@ -1,9 +1,11 @@
+import secret from './private'
+
 export default {
   native: {
-    domain: '**-auth0-domain--type-fqurl@auth0.com-**',
+    domain: secret.auth0.rn_domain,
     connect: {
-      client_id: '**-auth0.clientid-**',
-      redirect_uri: '**-redirect-url-for-auth0-rn-callback-**',
+      client_id: secret.auth0.clientId,
+      redirect_uri: secret.auth0.rn_callback,
       response_type: 'token id_token',
       scope: 'openid profile email'
       //        audience: '**-auth0-domain--type-fqurl@auth0.com-**/userinfo'
@@ -11,9 +13,9 @@ export default {
   },
   web: {
     connect: {
-      domain: 't**-auth0-domain--type-url@auth0.com-**',
-      clientID: '**-auth0.clientid-**',
-      redirectUri: '**-redirect-url-for-auth0-rnw-callback-**',
+      domain: secret.auth0.rnw_domain,
+      clientID: secret.auth0.clientId,
+      redirectUri: secret.auth0.rnw_callback,
       responseType: 'token id_token',
       scope: 'openid profile email'
     }
