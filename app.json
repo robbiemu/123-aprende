@@ -26,7 +26,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "edu.harvard.thesis.behavior-based-notifications.third-party-demo",
+      "bundleIdentifier": "**-bundle-id--type-namespace-**",
       "buildNumber": "0.1.0",
       "supportsTablet": false
     },
