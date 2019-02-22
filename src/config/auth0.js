@@ -11,7 +11,7 @@ export default {
   },
   web: {
     connect: {
-      domain: '**-auth0-domain--type-url@auth0.com-**',
+      domain: 't**-auth0-domain--type-url@auth0.com-**',
       clientID: '**-auth0.clientid-**',
       redirectUri: '**-redirect-url-for-auth0-rnw-callback-**',
       responseType: 'token id_token',
