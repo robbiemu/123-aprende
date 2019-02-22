@@ -6,12 +6,12 @@
     "privacy": "unlisted",
     "sdkVersion": "32.0.0",
     "platforms": [
-      "ios",
-      "web"
+      "ios"
+      /*"web"*/
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/123go.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -28,7 +28,7 @@
     "ios": {
       "bundleIdentifier": "**-bundle-id--type-namespace-**",
       "buildNumber": "0.1.0",
-      "associated-domains": [
+      "associatedDomains": [
         "https://123aprende.selfenrichment.online"
       ],
       "supportsTablet": false
