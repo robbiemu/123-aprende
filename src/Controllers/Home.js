@@ -259,7 +259,7 @@ class Home extends React.Component<Props> {
 
     console.log('db', db)
 
-    db.collection(path + this.state.appName).add(payload)
+    db.collection(path + this.state.uid).add(payload)
   }
 
   /** helper method - generate a valid firebase payload for app metric data
