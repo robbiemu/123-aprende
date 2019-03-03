@@ -2,12 +2,12 @@
   "main": "react-native-main.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
     "web": "react-scripts start",
     "build": "expo build:ios",
     "build-web": "react-scripts build",
+    "publish-ios": "expo publish",
     "postinstall": "cp copy.into.node_modules.react-scripts.config.webpack.config.js node_modules/react-scripts/config/webpack.config.js"
   },
   "dependencies": {
