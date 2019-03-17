@@ -11,13 +11,9 @@ cache:
 build:
   stage: build
   script:
-    - echo "building for web"
-    - echo "1 - yarn install"
-    - yarn install
-    - echo "2 - load private files"
+    - echo "\"[stage: build] building for web\""
+    - echo "\"[stage: build] load private files\""
     - echo $PRIVATE_JS_BODY > src/config/private.web.js
-    - echo "3 - yarn build-web"
-    - yarn build-web
 
 deploy_staging:
   stage: deploy
@@ -25,10 +21,12 @@ deploy_staging:
     name: staging
     url: https://dgmd-e60-staging.herokuapp.com
   script:
-    - "echo \"[stage: deploy] deploying to staging\""
+    - echo "\"[stage: deploy] deploying to staging\""
+    - echo "\"[stage: deploy] frehsen dpl\""
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
+    - echo "\"[stage: deploy] deploy to heroku staging: dgmd-e60-staging\""
     - dpl --provider=heroku --app=dgmd-e60-staging --api-key=$HEROKU_API_KEY
   only:
     - master
@@ -41,9 +39,11 @@ deploy_production:
     url: http://123-aprende.selfenrichment.online
   script:
     - "echo \"[stage: deploy] deploying to PRODUCTION\""
+    - echo "\"[stage: deploy] frehsen dpl\""
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
+    - echo "\"[stage: deploy] deploy to heroku PRODUCTION: dgmd-e60\""
     - dpl --provider=heroku --app=dgmd-e60 --api-key=$HEROKU_API_KEY
   when: manual
   only:
