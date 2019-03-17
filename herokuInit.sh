@@ -1,4 +1,5 @@
 if [ ! -f './server/index.js' ]; then
+    echo $PRIVATE_JS > ./src/config/private.js
 export NODE_ENV=development;
 export NPM_CONFIG_PRODUCTION=false;
   yarn install --non-interactive --ignore-engines --production=false;
