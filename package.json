@@ -1,6 +1,5 @@
 {
   "main": "react-native-main.js",
-  "homepage": "https://dgmd-e60.herokuapp.com/",
   "scripts": {
     "start": "expo start",
     "ios": "expo start --ios",
