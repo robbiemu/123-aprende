@@ -1,0 +1,49 @@
+image: node:latest
+
+stages:
+  - build
+
+cache:
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  script:
+    - echo "building for web"
+    - echo "1 - yarn install"
+    - yarn install
+    - echo "2 - load private files"
+    - echo $PRIVATE_JS_BODY > src/config/private.web.js
+    - echo "3 - yarn build-web"
+    - yarn build-web
+
+deploy_staging:
+  stage: deploy
+  environment:
+    name: staging
+    url: https://dgmd-e60-staging.herokuapp.com
+  script:
+    - "echo \"[stage: deploy] deploying to staging\""
+    - apt-get update -qy
+    - apt-get install -y ruby-dev rubygems
+    - gem install dpl
+    - dpl --provider=heroku --app=dgmd-e60-staging --api-key=$HEROKU_API_KEY
+  only:
+    - master
+    - staging
+
+deploy_production:
+  stage: deploy
+  environment:
+    name: production
+    url: http://123-aprende.selfenrichment.online
+  script:
+    - "echo \"[stage: deploy] deploying to PRODUCTION\""
+    - apt-get update -qy
+    - apt-get install -y ruby-dev rubygems
+    - gem install dpl
+    - dpl --provider=heroku --app=dgmd-e60 --api-key=$HEROKU_API_KEY
+  when: manual
+  only:
+    - master
