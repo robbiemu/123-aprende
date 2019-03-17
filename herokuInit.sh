@@ -2,7 +2,7 @@ if [ ! -f './src/config/private.js' ]; then
     echo $PRIVATE_JS > ./src/config/private.js
 export NODE_ENV=development;
 export YARN_PRODUCTION=false;
-  echo "yarn install --non-interactive --ignore-engines --production=false";
+  echo "yarn install --non-interactive --ignore-engines --production=false --network-timeout 48000";
   yarn install --non-interactive --ignore-engines --production=false --network-timeout 48000;
 export NODE_ENV=production;
 export YARN_PRODUCTION=true;
