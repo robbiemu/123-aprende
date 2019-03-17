@@ -39,11 +39,11 @@ deploy_production:
     url: http://123-aprende.selfenrichment.online
   script:
     - "echo \"[stage: deploy] deploying to PRODUCTION\""
-    - echo "\"[stage: deploy] frehsen dpl\""
+    - "echo \"[stage: deploy] frehsen dpl\""
     - apt-get update -qy
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
-    - echo "\"[stage: deploy] deploy to heroku PRODUCTION: dgmd-e60\""
+    - "echo \"[stage: deploy] deploy to heroku PRODUCTION: dgmd-e60\""
     - dpl --provider=heroku --app=dgmd-e60 --api-key=$HEROKU_API_KEY
   when: manual
   only:
