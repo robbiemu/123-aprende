@@ -17,9 +17,9 @@ import {
   relayAuthToGraphcool,
   isAuthenticated,
   logout
-} from './extensionApp.Authentication'
+} from './extensionAuthentication'
 
-console.setPreface('src/App.js')
+console.setPreface('src/Controllers/App.js')
 
 type State = {
   auth0: any, // we must authenticate with auth0 ...

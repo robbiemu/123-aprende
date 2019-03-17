@@ -1,0 +1,1 @@
+web: /usr/bin/env bash ./herokuInit.sh
