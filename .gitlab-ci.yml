@@ -1,7 +1,16 @@
 image: node:latest
 
 stages:
+  - build
   - deploy
+
+build:
+  stage: build
+  script:
+    - "echo \"[stage: build] building web root\""
+    - echo $PRIVATE_JS > src/config/private.js
+    - yarn postinstall
+    - yarn build-web
 
 deploy_staging:
   stage: deploy

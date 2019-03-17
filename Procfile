@@ -1,1 +1,1 @@
-web: /usr/bin/env bash ./herokuInit.sh
+web: yarn serve-web
