@@ -1,4 +1,4 @@
-if [ ! -f './dist/server.js' ]; then
+if [ ! -f './server/index.js' ]; then
 export NODE_ENV=development;
 export NPM_CONFIG_PRODUCTION=false;
   yarn clean;
