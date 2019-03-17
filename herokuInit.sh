@@ -1,6 +1,7 @@
-if [ ! -f './src/config/private.js' ]; then
-  echo $PRIVATE_JS > ./src/config/private.js
-fi
-
+echo "building web root (build/)";
+echo $PRIVATE_JS > ./src/config/private.js
+yarn postinstall;
 yarn build-web;
+
+echo "running production server";
 yarn serve-web;
