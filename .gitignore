@@ -8,6 +8,7 @@ yarn-error.log*
 .DS_Store
 
 src/config/private*
+# this next line must be iin gitignore or else api keys will be in repos.
 build/
 
 .idea/
