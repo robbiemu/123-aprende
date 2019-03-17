@@ -1,4 +1,4 @@
-if [ ! -f './server/index.js' ]; then
+if [ ! -f './src/config/private.js' ]; then
     echo $PRIVATE_JS > ./src/config/private.js
 export NODE_ENV=development;
 export NPM_CONFIG_PRODUCTION=false;
