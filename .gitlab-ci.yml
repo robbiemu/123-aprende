@@ -1,19 +1,7 @@
 image: node:latest
 
 stages:
-  - build
   - deploy
-
-cache:
-  paths:
-    - node_modules/
-
-build:
-  stage: build
-  script:
-    - "echo \"[stage: build] building for web\""
-    - "echo \"[stage: build] load private files\""
-    - echo $PRIVATE_JS_BODY > src/config/private.web.js
 
 deploy_staging:
   stage: deploy
