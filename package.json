@@ -9,7 +9,8 @@
     "build": "expo build:ios",
     "build-web": "react-scripts build",
     "publish-ios": "expo publish",
-    "postinstall": "cp copy.into.node_modules.react-scripts.config.webpack.config.js node_modules/react-scripts/config/webpack.config.js"
+    "postinstall": "cp copy.into.node_modules.react-scripts.config.webpack.config.js node_modules/react-scripts/config/webpack.config.js",
+    "serve-web": "babel-node runServer.js"
   },
   "dependencies": {
     "@callstack/async-storage": "^1.1.0",

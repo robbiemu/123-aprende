@@ -8,4 +8,4 @@ export HEROKU_URL=$(heroku info -s -a dgmd-e60 | grep web_url | cut -d= -f2)
   yarn build-web;
 fi
 
-yarn serve;
+yarn serve-web;
