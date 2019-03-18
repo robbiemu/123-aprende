@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
-echo $SERVICE_CONFIG > ./build/service.config.js
+
+for filename in build/static/js; do
+    sed -i "s/__CALLBACK__/$HEROKU_URL:$PORT\/callback/" $filename
+done
+
 yarn serve-web
