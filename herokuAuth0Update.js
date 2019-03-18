@@ -6,7 +6,7 @@ var management = new ManagementClient({
   scope: 'read:client_keys update:client_keys'
 });
 
-var params = { client_id: process.env.AUTH0_123_CLIENT_SECRET }
+var params = { client_id: process.env.AUTH0_123_CLIENT_ID }
 
 management.getClient(params, function (err, client) {
   if (err) {
@@ -14,9 +14,9 @@ management.getClient(params, function (err, client) {
   }
 
   callbacks = client.callbacks
-  callbacks.map(uri => {
+  callbacks.forEach((uri, i) => {
     if(new RegExp(process.env.HEROKU_HOSTNAME).test(uri)) {
-      uri = `${process.env.HEROKU_URL}:${process.env.PORT}`
+      callbacks[i] = `${process.env.HEROKU_URL}:${process.env.PORT}`
     }
     return uri
   })
