@@ -17,6 +17,7 @@ build:
   artifacts:
     paths:
       - build/
+      - src/ # to be able to check the private.js vars
 
 deploy_staging:
   stage: deploy
