@@ -11,7 +11,7 @@ build:
   stage: build
   script:
     - "echo \"[stage: build] building web root\""
-    - echo $PRIVATE_JS > src/config/private.js
+    - echo $PRIVATE_JS_BODY > src/config/private.js
     - yarn install --production=false
     - yarn build-web
   artifacts:
