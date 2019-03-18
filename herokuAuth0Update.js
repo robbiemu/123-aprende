@@ -16,7 +16,7 @@ management.getClient(params, function (err, client) {
   callbacks = client.callbacks
   callbacks.forEach((uri, i) => {
     if(new RegExp(process.env.HEROKU_HOSTNAME).test(uri)) {
-      callbacks[i] = `${process.env.HEROKU_URL}:${process.env.PORT}`
+      callbacks[i] = `${process.env.HEROKU_URL}:${process.env.PORT}/callback`
     }
     return uri
   })
