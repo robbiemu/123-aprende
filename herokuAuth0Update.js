@@ -13,7 +13,7 @@ management.getClient({ client_id: process.env.AUTH0_CLIENT_ID }, function (err, 
 
   callbacks = client.callbacks
   callbacks.map(uri => {
-    if(new Regexp(process.env.HEROKU_HOSTNAME).text(uri)) {
+    if(new Regexp(process.env.HEROKU_HOSTNAME).test(uri)) {
       uri = `${process.env.HEROKU_URL}:${process.env.PORT}`
     }
     return uri
@@ -26,5 +26,7 @@ management.getClient({ client_id: process.env.AUTH0_CLIENT_ID }, function (err, 
     if (err) {
       return console.log(err)
     }
+
+    console.log(client.callbacks)
   });
 });
