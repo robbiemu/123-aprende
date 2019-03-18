@@ -23,7 +23,6 @@
     "apollo-link-http": "^1.5.9",
     "apollo-link-logger": "^1.2.3",
     "apollo-link-retry": "^2.2.8",
-    "auth0": "^2.15.0",
     "auth0-js": "^9.9.1",
     "config": "^3.0.1",
     "expo": "^32.0.0",
