@@ -30,7 +30,7 @@ deploy_staging:
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
     - "echo \"[stage: deploy] deploy to heroku staging: dgmd-e60-staging\""
-    - dpl --provider=heroku --app=dgmd-e60-staging --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=dgmd-e60-staging --api-key=$HEROKU_API_KEY --skip-cleanup
   only:
     - master
     - staging
@@ -47,7 +47,7 @@ deploy_production:
     - apt-get install -y ruby-dev rubygems
     - gem install dpl
     - "echo \"[stage: deploy] deploy to heroku PRODUCTION: dgmd-e60\""
-    - dpl --provider=heroku --app=dgmd-e60 --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=dgmd-e60 --api-key=$HEROKU_API_KEY --skip-cleanup
   when: manual
   only:
     - master
