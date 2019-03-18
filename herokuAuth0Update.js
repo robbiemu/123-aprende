@@ -6,27 +6,28 @@ var management = new ManagementClient({
   scope: 'read:client_keys update:client_keys'
 });
 
-management.getClient({ client_id: process.env.AUTH0_CLIENT_ID }, function (err, client) {
+var params = { client_id: process.env.AUTH0_123_CLIENT_SECRET }
+
+management.getClient(params, function (err, client) {
   if (err) {
     return console.log(err)
   }
 
   callbacks = client.callbacks
   callbacks.map(uri => {
-    if(new Regexp(process.env.HEROKU_HOSTNAME).test(uri)) {
+    if(new RegExp(process.env.HEROKU_HOSTNAME).test(uri)) {
       uri = `${process.env.HEROKU_URL}:${process.env.PORT}`
     }
     return uri
   })
 
-  var data = { callbacks };
-  var params = { client_id: process.env.AUTH0_CLIENT_ID };
+  var data = { callbacks }
 
-  management.client.update(params, data, function (err, client) {
+  management.updateClient(params, data, function (err, client) {
     if (err) {
       return console.log(err)
     }
 
     console.log(client.callbacks)
-  });
-});
+  })
+})
