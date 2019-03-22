@@ -43,10 +43,34 @@ export default {
         app: 'appId',
         uid: 'uid',
         token: 'deviceToken'
+      },
+    },
+    cards: {
+      forward: 'forward',
+      backward: 'backward',
+      faces: {
+        false: 'es',
+        true: 'en'
+      }
+    },
+    activities: {
+      types: {
+        Activity: 'Activity',
+        VocabularyPairs: 'VocabularyPairs',
+        VideoSubmission: 'VideoSubmission',
+        AudioSubmission: 'AudioSubmission'
+      },
+      VocabularyPairs:  {
+        review: 'review',
+        quiz: 'quiz',
+        test: 'test',
+        memoryGame: 'memoryGame',
+        list: 'list',
       }
     },
     graphcool: {
       user_id: 'user_id'
     }
-  }
+  },
+  routes: ['/activity', '/page', '/home', '/override']
 }

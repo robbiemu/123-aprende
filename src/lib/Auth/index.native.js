@@ -118,6 +118,7 @@ export default class Auth extends BaseAuth {
     }
 
     Linking.addListener('url', e => {
+      console.log('listening on url')
       AppLinking.onOpen(e.url)
     })
   }

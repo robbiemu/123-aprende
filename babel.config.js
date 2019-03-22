@@ -4,6 +4,13 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       [
+        '@babel/plugin-proposal-class-properties',
+        {
+          loose: false
+        }
+      ],
+
+      [
         'module-resolver',
         {
           alias: {

@@ -1,7 +1,7 @@
 import AsyncStorage from '@callstack/async-storage'
 import { relayAuthToGraphcool as authToGraphcool } from '@src/lib/Graphcool'
 import Firebase from '@src/lib/Firebase'
-import history from '@src/lib/history'
+import { default as history, location } from '@src/lib/history'
 import config from '@src/config/app'
 import console from '@src/lib/console'
 
@@ -60,8 +60,12 @@ export async function relayAuthToGraphcool () {
   })
 
   if (this.state.isLoaded) {
-    console.log('progressing home')
-    history.replace('/home')
+    if(config.routes.every(route => {
+      return !new RegExp(route).test(location.pathname)
+    })) {
+      console.log('progressing home')
+      history.replace('/home')
+    }
   } else {
     console.log(
       'checked isLoaded after relay to graphcool and found it is false'

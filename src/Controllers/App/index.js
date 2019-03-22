@@ -9,8 +9,11 @@ import console from '@src/lib/console'
 import Auth from '@src/lib/Auth'
 import { getApolloClient } from '@src/lib/Graphcool'
 import { Router, Switch, Route } from '@src/routing'
+
 import Home from '@src/Controllers/Home'
 import Splash from '@src/Controllers/Splash'
+import Activity from '@src/Controllers/Activity'
+import Override from '@src/Controllers/Override'
 
 import {
   conditionallyAuthenticate,
@@ -75,6 +78,12 @@ export default class App extends React.Component<*, State> {
           <View style={styles.app}>
             <Router history={history}>
               <Switch>
+                <Route path='/callback' render={() => <Splash message={this.state.splashMessage} spinner={true} />} />
+                <Route exact path='/override' render={props => <Home
+                    appAuthenticated={this.isAuthenticated.bind(this)}
+                    appLogout={this.logout.bind(this)}
+                    {...props}
+                />} />
                 <Route
                   exact
                   path='/'
@@ -99,6 +108,20 @@ export default class App extends React.Component<*, State> {
                       {...props}
                     />
                   )}
+                />
+                <Route
+                    path='/override'
+                    render={props => (
+                        <Override
+                            appAuthenticated={this.isAuthenticated.bind(this)}
+                            appLogout={this.logout.bind(this)}
+                            {...props}
+                        />
+                    )}
+                />
+                <Route
+                    path='/activity/:activity_id/:presentation?'
+                    render={props => (<Activity {...props}/> )}
                 />
               </Switch>
             </Router>

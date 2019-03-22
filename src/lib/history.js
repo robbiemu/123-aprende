@@ -18,4 +18,15 @@ const customHistory = (() => {
   }
 })()
 
+// Get the current location.
+export const location = customHistory.location;
+
+/*
+// Listen for changes to the current location.
+const unlisten = customHistory.listen((location, action) => {
+  // location is an object like window.location
+  console.log(action, location.pathname, location.state);
+});
+*/
+
 export default customHistory
