@@ -1,7 +1,5 @@
 import React from "react";
 import AsyncStorage from '@callstack/async-storage'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
 
 import config from '@src/config/app'
 import console from '@src/lib/console'
