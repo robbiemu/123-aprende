@@ -7,6 +7,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import config from '@src/config/app'
+import { rules } from '@src/lib/Markdown'
 import { HOME_PAGE_ID } from '@src/lib/constants'
 
 const GET_HOME_PAGE = gql`query page ($id: ID) {
@@ -71,7 +72,7 @@ class Home extends React.Component<Props> {
               }
 
               if (data && data.Page && data.Page.markdown) {
-                return <Markdown>{data.Page.markdown.replace(/\\n/g, '\n')}</Markdown>
+                return <Markdown rules={rules}>{data.Page.markdown.replace(/\\n/g, '\n')}</Markdown>
               }
 
               return (

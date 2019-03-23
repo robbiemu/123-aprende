@@ -31,7 +31,7 @@ class Splash extends React.Component<Props> {
               (<View style={styles.body}>
                 <Paragraph>{ this.props.message || '' }</Paragraph>
                 <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Image style={{width: 512, height: 512}} source={require('@src/media/123go-big.png')}/>
+                    <Image style={{width: '75%', height: '75%'}} source={require('@src/media/123go-big.png')}/>
                 </View>
               </View>)
           }
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3
   },
   spinner: {
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     bottom: 0,
     left: 0,
