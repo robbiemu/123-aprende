@@ -1,10 +1,7 @@
 import AsyncStorage from '@callstack/async-storage'
 import { getRawClient } from './index'
 import { default as appConfig } from '@src/config/app'
-import console from '@src/lib/console'
 import User from '@src/Models/User'
-
-console.setPreface('src/lib/Graphcool/extensionFirebase')
 
 export const getFirebaseToken = async () => {
   console.trace('getFirebaseToken')

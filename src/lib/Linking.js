@@ -4,10 +4,7 @@ import Url from 'url'
 
 import { relayBBNToGraphcool } from '@src/lib/Graphcool'
 import config from '@src/config/app'
-import console from '@src/lib/console'
 
-const SOURCE = 'src/lib/Linking'
-console.setPreface(SOURCE)
 
 export default {
   /** on iOS, request contection details by url */

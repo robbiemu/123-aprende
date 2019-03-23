@@ -17,7 +17,7 @@ type Props = {
 
 class Splash extends React.Component<Props> {
   render() {
-      return (<View style={styles.container}>
+    return (<View style={styles.container}>
           <Headline style={styles.header}>{ APP_NAME }</Headline>
           {this.props.spinner?
               (<View style={styles.body}>
@@ -41,6 +41,12 @@ class Splash extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+
     paddingHorizontal: 12,
     paddingVertical: 12
   },
@@ -48,6 +54,8 @@ const styles = StyleSheet.create({
     paddingVertical: 6
   },
   body: {
+    position: 'absolute',
+    zIndex: 0,
     flex: 1,
     flexDirection: 'column',
     paddingVertical: 3,

@@ -14,13 +14,8 @@ import { default as AppLinking } from '@src/lib/Linking'
 import BaseAuth from './BaseAuth'
 import AsyncStorage from '@callstack/async-storage'
 import history from '@src/lib/history'
-import console from '@src/lib/console'
 import Device from '@src/Models/Device'
 import { getApolloClient } from '@src/lib/Graphcool'
-
-const SOURCE = 'Auth'
-
-console.setPreface(SOURCE)
 
 export default class Auth extends BaseAuth {
   async login () {

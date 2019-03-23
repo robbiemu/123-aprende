@@ -2,11 +2,6 @@
 
 import AsyncStorage from '@callstack/async-storage'
 
-import console from '@src/lib/console'
-
-const SOURCE = 'lib/Auth/BaseAuth'
-console.setPreface(SOURCE)
-
 export default class BaseAuth {
   async setSession (authResult) {
     console.log('authResult', authResult)

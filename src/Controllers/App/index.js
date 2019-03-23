@@ -5,7 +5,6 @@ import { ApolloProvider } from 'react-apollo'
 
 import config from '@src/config/app'
 import history from '@src/lib/history'
-import console from '@src/lib/console'
 import { default as AppLinking } from '@src/lib/Linking'
 import Auth from '@src/lib/Auth'
 import { getApolloClient } from '@src/lib/Graphcool'
@@ -22,8 +21,6 @@ import {
   isAuthenticated,
   logout
 } from './extensionAuthentication'
-
-console.setPreface('src/Controllers/App.js')
 
 type State = {
   auth0: any, // we must authenticate with auth0 ...
@@ -72,6 +69,7 @@ export default class App extends React.Component<*, State> {
   /** get our initial app state cache and connect to graphcool */
   async setupApollo () {
     const apolloClient = await getApolloClient()
+    console.log('setting up apollo')
 
     this.setState({ apolloClient })
   }

@@ -11,13 +11,10 @@ import { setContext } from 'apollo-link-context'
 import AsyncStorage from '@callstack/async-storage'
 
 import config from '@src/config/graphcool'
-import console from '@src/lib/console'
 
 export { relayAuthToGraphcool } from './extensionAuth0'
 export { relayBBNToGraphcool } from './extensionLinking'
 export { getFirebaseToken } from './extensionFirebase'
-
-console.setPreface('src/lib/Graphcool')
 
 export var apolloClient
 var _cache

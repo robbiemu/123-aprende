@@ -8,10 +8,6 @@ import gql from 'graphql-tag'
 
 import config from '@src/config/app'
 import { HOME_PAGE_ID } from '@src/lib/constants'
-import console from '@src/lib/console'
-
-const SOURCE = 'Controllers/Home'
-console.setPreface(SOURCE)
 
 const GET_HOME_PAGE = gql`query page ($id: ID) {
   Page (id: $id) {

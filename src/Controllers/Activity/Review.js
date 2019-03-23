@@ -2,12 +2,9 @@ import React from "react";
 import AsyncStorage from '@callstack/async-storage'
 
 import config from '@src/config/app'
-import console from '@src/lib/console'
 
 import Card from '@src/Controllers/Card'
 
-const SOURCE = 'Controllers/Activity/Review'
-console.setPreface(SOURCE)
 
 export default class Review extends React.Component {
   state = {
