@@ -1,8 +1,6 @@
 // Here, we handle interaction of data between two datasources: graphcool and the BBN app for the user. We want to ensure that the BBN user specific information is in the graphcool store - particularly the uid, which we will use to qualify the reporting of our metric data.
 
 import AsyncStorage from '@callstack/async-storage'
-
-import console from '@src/lib/console'
 import history from '@src/lib/history'
 import { default as appConfig } from '@src/config/app'
 import { getRawClient, getFirebaseToken } from './index'
@@ -10,8 +8,6 @@ import User from '@src/Models/User'
 import Token from '@src/Models/Token'
 import Device from '@src/Models/Device'
 import DeviceTokenPair from '@src/Models/DeviceTokenPair'
-
-console.setPreface('src/lib/Graphcool/entensionLinking')
 
 /** relayBBNToGraphcool - (iOS only) after BBN connectionDetails have been set
  * in asyncStorage, we are ready to convey them to graphcool so we won't need

@@ -20,10 +20,6 @@ import gql from 'graphql-tag'
 import Firebase from '@src/lib/Firebase'
 import config from '@src/config/app'
 import { config as firebaseConfig } from '@src/config/firebase'
-import console from '@src/lib/console'
-
-const SOURCE = 'Controllers/Home'
-console.setPreface(SOURCE)
 
 type Props = {
   theme: Theme,

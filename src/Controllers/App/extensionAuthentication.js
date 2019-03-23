@@ -3,9 +3,6 @@ import { relayAuthToGraphcool as authToGraphcool } from '@src/lib/Graphcool'
 import Firebase from '@src/lib/Firebase'
 import { default as history, location } from '@src/lib/history'
 import config from '@src/config/app'
-import console from '@src/lib/console'
-
-console.setPreface('src/App.authentication.js')
 
 /** conditionallyAuthenticate - entry point to auth0 authentication in
  * authentication cycle. we manage the state 'isLoaded' from here.
@@ -63,8 +60,10 @@ export async function relayAuthToGraphcool () {
     if(config.routes.every(route => {
       return !new RegExp(route).test(location.pathname)
     })) {
-      console.log('progressing home')
+      console.log('progressing home', location.pathname)
       history.replace('/home')
+    } else {
+      console.log('no need to progress home', location.pathname)
     }
   } else {
     console.log(

@@ -1,11 +1,11 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform, Linking } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import { ApolloProvider } from 'react-apollo'
 
 import config from '@src/config/app'
 import history from '@src/lib/history'
-import console from '@src/lib/console'
+import { default as AppLinking } from '@src/lib/Linking'
 import Auth from '@src/lib/Auth'
 import { getApolloClient } from '@src/lib/Graphcool'
 import { Router, Switch, Route } from '@src/routing'
@@ -21,8 +21,6 @@ import {
   isAuthenticated,
   logout
 } from './extensionAuthentication'
-
-console.setPreface('src/Controllers/App.js')
 
 type State = {
   auth0: any, // we must authenticate with auth0 ...
@@ -42,6 +40,12 @@ export default class App extends React.Component<*, State> {
       splashMessage: config.constants.messages.LOADING
     }
 
+    if(Platform.OS === 'ios')
+      Linking.addListener('url', e => {
+        console.log('listening on url')
+        AppLinking.onOpen(e.url)
+      })
+
     this.conditionallyAuthenticate = conditionallyAuthenticate.bind(this)
     this.relayAuthToGraphcool = relayAuthToGraphcool.bind(this)
     this.isAuthenticated = isAuthenticated.bind(this)
@@ -55,7 +59,7 @@ export default class App extends React.Component<*, State> {
       await this.setupApollo()
 
       // don't forget to "t o d o - please remove" the following line i you uncomment it!
-      // console.warn('logging out to allow full run')
+       console.warn('logging out to allow full run')
       // this.state.auth0.logout()
     }
 
@@ -65,6 +69,7 @@ export default class App extends React.Component<*, State> {
   /** get our initial app state cache and connect to graphcool */
   async setupApollo () {
     const apolloClient = await getApolloClient()
+    console.log('setting up apollo')
 
     this.setState({ apolloClient })
   }

@@ -7,12 +7,8 @@ import gql from 'graphql-tag'
 
 import config from '@src/config/app'
 import history from '@src/lib/history'
-import console from '@src/lib/console'
 
 import Review from './Review'
-
-const SOURCE = 'Controllers/Activity'
-console.setPreface(SOURCE)
 
 const GET_ACTIVITY = gql`query activity ($id: ID) {
   Activity (id: $id) {

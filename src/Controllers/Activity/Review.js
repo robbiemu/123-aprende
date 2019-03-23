@@ -1,13 +1,12 @@
 import React from "react";
+import { View } from 'react-native'
 import AsyncStorage from '@callstack/async-storage'
 
 import config from '@src/config/app'
-import console from '@src/lib/console'
+import { reviewStyle } from '@src/styles/components/review'
 
 import Card from '@src/Controllers/Card'
 
-const SOURCE = 'Controllers/Activity/Review'
-console.setPreface(SOURCE)
 
 export default class Review extends React.Component {
   state = {
@@ -35,12 +34,14 @@ export default class Review extends React.Component {
   }
 
   render () {
-    return <Card
+    return <View style={reviewStyle}>
+      <Card
         data={this.props.vocabulary[this.state.current]}
         face={!!this.state.face[this.state.current]}
         type={config.constants.activities.VocabularyPairs.review}
         faceChange={this.onFaceChange.bind(this)}
         progress={this.onProgress.bind(this)} />
+    </View>
   }
 
   /**

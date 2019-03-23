@@ -5,11 +5,8 @@ import { Platform } from 'react-native'
 
 import { default as appConfig } from '@src/config/app'
 import { getRawClient } from './index'
-import console from '@src/lib/console'
 import User from '@src/Models/User'
 import { getFirebaseToken } from './extensionFirebase'
-
-console.setPreface('src/lib/Graphcool/extensionAuth0')
 
 /** after auth0 authentication, we need to user our credentials to sign in/create an account */
 export async function relayAuthToGraphcool ({ auth0 } = {}) {
