@@ -4,6 +4,7 @@ export const reviewStyle = {
   bottom: 0,
   left: 0,
   right: 0,
+  paddingVertical: 36,
   backgroundColor: '#999',
   justifyContent: 'center',
   alignItems: 'center'

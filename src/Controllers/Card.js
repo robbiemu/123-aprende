@@ -12,7 +12,7 @@ export default class Card extends React.Component {
         return (
             <NativeCard style={cardStyle} elevation={8} accessible={true} onPress={this.onPress.bind(this)}>
               <NativeCard.Content style={cardContentStyle}>
-                <Title style={{fontSize: "48pt", textShadow: "2pt 2pt 3pt #CCC", padding: 8}}>{this.props.data[config.constants.cards.faces[this.props.face]].number}</Title>
+                <Title style={{fontSize: "48pt", padding: 8}}>{this.props.data[config.constants.cards.faces[this.props.face]].number}</Title>
                 <Headline style={{ textAlign: 'center'}}>{this.props.data[config.constants.cards.faces[this.props.face]].glyphs}</Headline>
                 <Paragraph style={{ textAlign: 'center'}}>{this.props.data[config.constants.cards.faces[!this.props.face]].glyphs}</Paragraph>
               </NativeCard.Content>

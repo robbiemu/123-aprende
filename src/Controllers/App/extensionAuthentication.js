@@ -60,8 +60,10 @@ export async function relayAuthToGraphcool () {
     if(config.routes.every(route => {
       return !new RegExp(route).test(location.pathname)
     })) {
-      console.log('progressing home')
+      console.log('progressing home', location.pathname)
       history.replace('/home')
+    } else {
+      console.log('no need to progress home', location.pathname)
     }
   } else {
     console.log(
