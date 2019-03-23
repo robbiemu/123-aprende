@@ -7,9 +7,8 @@ module.exports = {
         return 8888
       case 'development':
       default:
-        return 8080
+        return 3000
     }
   },
-  public: 'build',
-  routes: ['/', '/callback', '/logout', '/home', '/page', '/activity']
+  public: 'build'
 }

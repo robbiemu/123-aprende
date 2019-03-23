@@ -4,7 +4,7 @@ The only complexity comes in how we handle the successful validation of identity
 
 // highly modified from official expo documentation example: https://github.com/expo/auth0-example/blob/master/App.js
 import { AuthSession } from 'expo'
-import { Linking, Platform } from 'react-native'
+import { Platform } from 'react-native'
 import { cloneDeep } from 'apollo-utilities'
 import uuid from 'uuid/v4'
 
@@ -19,6 +19,7 @@ import Device from '@src/Models/Device'
 import { getApolloClient } from '@src/lib/Graphcool'
 
 const SOURCE = 'Auth'
+
 console.setPreface(SOURCE)
 
 export default class Auth extends BaseAuth {
@@ -116,11 +117,6 @@ export default class Auth extends BaseAuth {
 
       return success
     }
-
-    Linking.addListener('url', e => {
-      console.log('listening on url')
-      AppLinking.onOpen(e.url)
-    })
   }
 
   async handleParams (responseObj) {

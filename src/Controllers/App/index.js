@@ -1,11 +1,12 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform, Linking } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import { ApolloProvider } from 'react-apollo'
 
 import config from '@src/config/app'
 import history from '@src/lib/history'
 import console from '@src/lib/console'
+import { default as AppLinking } from '@src/lib/Linking'
 import Auth from '@src/lib/Auth'
 import { getApolloClient } from '@src/lib/Graphcool'
 import { Router, Switch, Route } from '@src/routing'
@@ -41,6 +42,12 @@ export default class App extends React.Component<*, State> {
       isLoaded: false,
       splashMessage: config.constants.messages.LOADING
     }
+
+    if(Platform.OS === 'ios')
+      Linking.addListener('url', e => {
+        console.log('listening on url')
+        AppLinking.onOpen(e.url)
+      })
 
     this.conditionallyAuthenticate = conditionallyAuthenticate.bind(this)
     this.relayAuthToGraphcool = relayAuthToGraphcool.bind(this)

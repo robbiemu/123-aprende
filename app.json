@@ -8,7 +8,7 @@
     "platforms": [
       "ios"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/123go.png",
     "splash": {
@@ -24,7 +24,7 @@
     ],
     "ios": {
       "bundleIdentifier": "edu.harvard.thesis.behavior-based-notifications.third-party-demo",
-      "buildNumber": "0.1.0",
+      "buildNumber": "0.2.0",
       "supportsTablet": false
     },
     "description": "",

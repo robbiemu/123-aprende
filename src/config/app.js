@@ -72,5 +72,5 @@ export default {
       user_id: 'user_id'
     }
   },
-  routes: ['activity', 'page', 'home', 'override', 'callback', 'api']
+  routes: ['activity', 'page', 'home', 'override', 'splash', 'callback', 'api']
 }
