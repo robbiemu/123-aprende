@@ -13,7 +13,7 @@ import handleErrors from './middlewares/handle-errors'
 
 export const app = new Koa()
 app.use(async (ctx, next) => {
-      if (config.routes.includes(ctx.request.path)) {
+      if (config.routes.includes(ctx.request.path.replace(/^\/([^\/]*).*$/, '$1'))) {
         ctx.request.path = '/'
       }
       await next()
