@@ -20,7 +20,3 @@ export let rules = {
     }
   }
 }
-
-
-
-console.log('markdownit configured')

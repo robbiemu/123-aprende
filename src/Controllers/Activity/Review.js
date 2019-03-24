@@ -94,6 +94,8 @@ export default class Review extends React.Component {
   }
 
   onCompletedReview() {
+
+
     this.props.completedActivity()
   }
 }

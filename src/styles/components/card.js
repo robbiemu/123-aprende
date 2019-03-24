@@ -11,3 +11,25 @@ export const cardContentStyle = {
   justifyContent: 'center',
   alignItems: 'center'
 }
+
+const textInput = {
+  height: 48,
+  maxHeight: 48,
+  width: 168,
+  flex: 1,
+  fontSize: '16pt',
+}
+
+export const cardTextInputStyle = Object.assign({}, textInput, {
+  autoFocus: true,
+  autoCapitalize: 'none',
+  paddingHorizontal: 16
+})
+
+export const cardNativeTextInputStyle = Object.assign({}, textInput,{
+  borderRadius: 3,
+  marginTop: 8,
+  borderWidth: '1pt',
+  borderColor: 'grey',
+  padding: 16
+})

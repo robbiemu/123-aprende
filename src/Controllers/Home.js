@@ -22,10 +22,6 @@ const GET_HOME_PAGE = gql`query page ($id: ID) {
 class Home extends React.Component<Props> {
   state = {
     graphcool_id: null,
-    appid: config.appId,
-    appidInput: '',
-    appName: config.appName,
-    appNameInput: '',
     uid: '',
     uidInput: '',
     metric: ''

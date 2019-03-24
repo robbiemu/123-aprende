@@ -69,7 +69,8 @@ export default {
       }
     },
     graphcool: {
-      user_id: 'user_id'
+      user_id: 'user_id',
+      progress: 'progress'
     }
   },
   routes: ['activity', 'page', 'home', 'override', 'splash' ]
