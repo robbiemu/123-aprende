@@ -55,6 +55,7 @@ export default class User {
       $bundleIdentifier: String
       $devicesIds: [ID!]
       $tokensIds: [ID!]
+      $progress: Json
     ) {
       updateUser(
         id: $id
@@ -62,6 +63,23 @@ export default class User {
         bundleIdentifier: $bundleIdentifier
         devicesIds: $devicesIds
         tokensIds: $tokensIds
+        progress: $progress
+      ) {
+        id
+      }
+    }
+  `
+
+  static saveProgress = gql`
+    mutation(
+      $id: ID!
+      $userIdentifier: String
+      $progress: Json
+    ) {
+      updateUser(
+        id: $id
+        userIdentifier: $userIdentifier
+        progress: $progress
       ) {
         id
       }
@@ -83,6 +101,7 @@ export default class User {
         auth0UserId
         userIdentifier
         bundleIdentifier
+        progress
         devices {
           id
         }
@@ -102,6 +121,7 @@ export default class User {
           auth0UserId
           bundleIdentifier
           userIdentifier
+          progress
         }
       }
     }

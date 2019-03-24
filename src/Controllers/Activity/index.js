@@ -7,6 +7,8 @@ import gql from 'graphql-tag'
 
 import config from '@src/config/app'
 import history from '@src/lib/history'
+import User from '@src/Models/User'
+import { getRawClient } from "@src/lib/Graphcool"
 
 import Review from './Review'
 
@@ -22,16 +24,29 @@ const GET_ACTIVITY = gql`query activity ($id: ID) {
 class Activity extends React.Component {
   state = {
     graphcool_id: null,
-    appid: config.appId,
-    appidInput: '',
-    appName: config.appName,
-    appNameInput: '',
     uid: '',
-    uidInput: '',
-    metric: ''
+    apolloClient: null
   }
 
   async componentDidMount () {
+    let apolloClient = await getRawClient()
+
+    // load user progress at start of activity
+    await apolloClient
+        .query({ query: User.self, forceFetch: true })
+        .then(async ({data}) => {
+          if (!data.user) { // we didn't sign in?
+            console.error('error using connected data')
+          } else {
+            console.log('user data', data.user)
+
+            await AsyncStorage.setItem(
+                config.constants.graphcool.progress,
+                JSON.stringify(data.user.progress)
+            )
+          }
+        })
+
     const uid = await AsyncStorage.getItem(
         config.constants.bbn.connectionDetails.uid
     )
@@ -44,7 +59,8 @@ class Activity extends React.Component {
 
     this.setState({
       uid,
-      graphcool_id
+      graphcool_id,
+      apolloClient
     })
   }
 
@@ -101,7 +117,7 @@ class Activity extends React.Component {
   renderVocabularyPairs (data) {
     switch (this.props.match.params.presentation) {
       case config.constants.activities.VocabularyPairs.review:
-        return <Review vocabulary={data.Activity.json} completedActivity={this.onCompletedActivity} />
+        return <Review vocabulary={data.Activity.json} completedActivity={this.onCompletedActivity.bind(this)} />
       case config.constants.activities.VocabularyPairs.quiz:
       case config.constants.activities.VocabularyPairs.test:
       case config.constants.activities.VocabularyPairs.memoryGame:
@@ -112,6 +128,18 @@ class Activity extends React.Component {
   }
 
   onCompletedActivity() {
+    const self = this
+    AsyncStorage.getItem(config.constants.graphcool.progress).then(progress => {
+      self.state.apolloClient.mutate({
+        mutation: User.saveProgress,
+        variables: {
+          id: this.state.graphcool_id,
+          userIdentifier: this.state.uid,
+          progress
+        }
+      })
+    })
+
     history.goBack()
   }
 }
