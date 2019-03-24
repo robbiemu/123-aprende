@@ -93,8 +93,16 @@ async function _setStorageItems (user) {
     )
   }
 
+  console.log('setting graphcool storage items')
   if (user.id) {
     await AsyncStorage.setItem(appConfig.constants.graphcool.user_id, user.id)
+  }
+  if(user.progress) {
+    console.log(`user progress: writing string of >>${JSON.stringify(user.progress)}<< original's type: '${typeof user.progress}'`)
+    await AsyncStorage.setItem(
+        appConfig.constants.graphcool.progress,
+        user.progress
+    )
   }
 }
 

@@ -23,7 +23,7 @@ import DeviceTokenPair from '@src/Models/DeviceTokenPair'
  * going simultaneously
  */
 export const relayBBNToGraphcool = async () => {
-  history.replace('/home')
+  history.replace(appConfig.appHome)
 
   const apolloClient = await getRawClient()
 

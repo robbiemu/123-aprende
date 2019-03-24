@@ -10,7 +10,7 @@ import Auth from '@src/lib/Auth'
 import { getApolloClient } from '@src/lib/Graphcool'
 import { Router, Switch, Route } from '@src/routing'
 
-import Home from '@src/Controllers/Home'
+import Page from '@src/Controllers/Page'
 import Splash from '@src/Controllers/Splash'
 import Activity from '@src/Controllers/Activity'
 import Override from '@src/Controllers/Override'
@@ -84,36 +84,19 @@ export default class App extends React.Component<*, State> {
             <Router history={history}>
               <Switch>
                 <Route path='/callback' render={() => <Splash message={this.state.splashMessage} spinner={true} />} />
-                <Route exact path='/override' render={props => <Home
-                    appAuthenticated={this.isAuthenticated.bind(this)}
-                    appLogout={this.logout.bind(this)}
+                <Route exact path='/override' render={props => <Page id={config.constants.graphcool.HOME_PAGE_ID}
                     {...props}
                 />} />
                 <Route
                   exact
                   path='/'
-                  render={props =>
-                    this.state.isLoaded ? (
-                      <Home
-                        appAuthenticated={this.isAuthenticated.bind(this)}
-                        appLogout={this.logout.bind(this)}
-                        {...props}
-                      />
-                    ) : (
-                      <Splash message={this.state.splashMessage} />
-                    )
+                  render={props => this.state.isLoaded
+                      ? <Page id={config.constants.graphcool.HOME_PAGE_ID} {...props} />
+                      : <Splash message={this.state.splashMessage} />
                   }
                 />
-                <Route
-                  path='/home'
-                  render={props => (
-                    <Home
-                      appAuthenticated={this.isAuthenticated.bind(this)}
-                      appLogout={this.logout.bind(this)}
-                      {...props}
-                    />
-                  )}
-                />
+                <Route path={config.appHome} render={props => <Page id={config.constants.graphcool.HOME_PAGE_ID} {...props}/>}/>
+                <Route path='/page/:id' render={props => <Page {...props}/>}/>
                 <Route
                     path='/override'
                     render={props => (

@@ -9,19 +9,21 @@ import {
   Colors
 } from 'react-native-paper'
 
-import { APP_NAME } from '@src/lib/constants'
+import config from '@src/config/app'
 
 type Props = {
-    theme: Theme,
+  theme: Theme,
+  message: String,
+  spinner: boolean
 }
 
 class Splash extends React.Component<Props> {
   render() {
     return (<View style={styles.container}>
-          <Headline style={styles.header}>{ APP_NAME }</Headline>
+          <Headline style={styles.header}>{ config.states.app.appName }</Headline>
           {this.props.spinner?
               (<View style={styles.body}>
-                  <View style={styles.spinner}>
+                  <View style={styles.spinner} elevation={2}>
                       <ActivityIndicator animating={true} color={Colors.grey400} />
                   </View>
                   <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>

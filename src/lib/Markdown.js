@@ -8,7 +8,7 @@ export let rules = {
   link: (node, children, parent, styles) => {
     let destination = (node && node.attributes) ? node.attributes.href: undefined
     if(destination) {
-      destination = destination.replace(/^local:\/\//, '/')
+      destination = destination.replace(/^(local|vocabulary):\/\//, '/')
 
       return <Text key={ getUniqueID() } mode="text" onPress={() => history.push(destination)}>
         [{ children }]

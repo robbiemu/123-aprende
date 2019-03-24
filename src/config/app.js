@@ -4,12 +4,14 @@ export default {
   appName: 'uno-dos-tres-aprende',
   appScheme: 'uno-dos-tres', // 'expo'
   appId: secret.appId, // uuid app fingerprint
+  appHome: '/home',
+  appRoot: '/',
   logLevel: 'trace',
   states: {
     app: {
       uid: '',
       appid: '',
-      appName: '1,2,3 Aprende',
+      appName: 'Uno, Dos, Tres, Aprende',
       deviceToken: '',
       bundleid: secret.bundleId // your app's bundleId
     },
@@ -45,12 +47,31 @@ export default {
         token: 'deviceToken'
       },
     },
+    graphcool: {
+      user_id: 'user_id',
+      progress: 'progress',
+      HOME_PAGE_ID: 'cjtj9dw7t8rcj0136xycoxoon'
+    },
+    drawer: {
+      index: {
+        logout: 'logout'
+      },
+      items: [
+        { id: 'logout', label: 'logout' }
+      ]
+    },
     cards: {
       forward: 'forward',
       backward: 'backward',
       faces: {
         false: 'es',
         true: 'en'
+      }
+    },
+    pages: {
+      types: {
+        Page: 'Page',
+        Lesson: 'Lesson'
       }
     },
     activities: {
@@ -67,10 +88,6 @@ export default {
         memoryGame: 'memoryGame',
         list: 'list',
       }
-    },
-    graphcool: {
-      user_id: 'user_id',
-      progress: 'progress'
     }
   },
   routes: ['activity', 'page', 'home', 'override', 'splash' ]

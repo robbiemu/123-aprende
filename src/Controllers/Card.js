@@ -101,7 +101,7 @@ export default class Card extends React.Component {
   }
 
   /** evaluate user input against the expected values */
-  evaluate () {
+  async evaluate () {
     console.log('evaluating')
     const guess = this.state.text.toLowerCase().trim()
     const evaluations = (this.props.data[config.constants.cards.faces[this.props.face]].evaluateAs||[])
@@ -114,7 +114,7 @@ export default class Card extends React.Component {
     })
 
     if (matches) {
-      this.accept()
+      await this.accept()
     } else {
       const fs = FuzzySet(evaluations, false)
       const matches = fs.get(guess)
@@ -122,14 +122,14 @@ export default class Card extends React.Component {
       console.log('first failed, matches now:', matches)
       if(matches) {
         // accept as typo
-        this.accept(false)
+        await this.accept(false)
       } else {
         this.decline()
       }
     }
   }
 
-  accept (isAcceptedAsTypo) {
+  async accept (isAcceptedAsTypo) {
     const alpha = this.state.progress[config.constants.activities.types.VocabularyPairs][this.props.data.id]
     const progress = this.state.progress
     progress[config.constants.activities.types.VocabularyPairs][this.props.data.id] = alpha === undefined
@@ -138,7 +138,7 @@ export default class Card extends React.Component {
 
     this.setState({progress})
 
-    this.complete()
+    await this.complete()
   }
 
   decline () {
@@ -164,7 +164,7 @@ export default class Card extends React.Component {
     })
   }
 
-  onPress () {
+  async onPress () {
     switch (this.props.type) {
       case config.constants.activities.VocabularyPairs.review:
         if (!this.state.shown) {
@@ -174,19 +174,17 @@ export default class Card extends React.Component {
           this.setState({progress})
         }
 
-        this.complete()
+        await this.complete()
         break
       default:
         console.warn(`unimplemented VocabularyPairs type ${this.props.type}`)
     }
   }
 
-  complete() {
+  async complete() {
     this.setState({shown: false, currentFace: false, text: ''})
 
-    AsyncStorage.setItem(config.constants.graphcool.progress, JSON.stringify(this.state.progress))
-
-    console.log(this.state.progress)
+    await AsyncStorage.setItem(config.constants.graphcool.progress, JSON.stringify(this.state.progress))
 
     typeof this.props.progress === 'function'
         ? this.props.progress()

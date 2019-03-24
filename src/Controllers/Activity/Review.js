@@ -11,24 +11,18 @@ import Card from '@src/Controllers/Card'
 export default class Review extends React.Component {
   state = {
     graphcool_id: null,
-    uid: '',
     face: [],
     current: 0
   }
 
   async componentDidMount () {
-    const uid = await AsyncStorage.getItem(
-        config.constants.bbn.connectionDetails.uid
-    )
-
     const graphcool_id = await AsyncStorage.getItem(
         config.constants.graphcool.user_id
     )
 
-    if (!uid || !graphcool_id) return
+    if (!graphcool_id) return
 
     this.setState({
-      uid,
       graphcool_id
     })
   }

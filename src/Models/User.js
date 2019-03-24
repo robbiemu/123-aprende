@@ -73,12 +73,10 @@ export default class User {
   static saveProgress = gql`
     mutation(
       $id: ID!
-      $userIdentifier: String
       $progress: Json
     ) {
       updateUser(
         id: $id
-        userIdentifier: $userIdentifier
         progress: $progress
       ) {
         id
