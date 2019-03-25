@@ -6,6 +6,7 @@ import deepmerge from 'deepmerge'
 import FuzzySet from 'fuzzyset.js'
 
 import config from '@src/config/app'
+import { getProgress } from '@src/Controllers/Activity/Activity'
 import { cardStyle, cardContentStyle, cardTextInputStyle, cardNativeTextInputStyle } from '@src/styles/components/card'
 import { spinner } from '@src/styles'
 
@@ -18,22 +19,8 @@ export default class Card extends React.Component {
   }
 
   async componentWillMount () {
-    let inProgress
-    try {
-      inProgress = await AsyncStorage.getItem(config.constants.graphcool.progress)
-      inProgress = JSON.parse(inProgress)
-    } catch (e) {
-      console.warn('error', e)
-      inProgress = {[config.constants.activities.types.VocabularyPairs]: {}}
-    } finally {
-      if(inProgress === null || typeof inProgress !== 'object')
-        inProgress = {}
-      if(!inProgress.hasOwnProperty(config.constants.activities.types.VocabularyPairs))
-        inProgress[config.constants.activities.types.VocabularyPairs] = {}
-    }
-
-    const progress = deepmerge(this.state.progress||{}, inProgress)
-    console.log('progress', progress, inProgress)
+    const progress = deepmerge(this.state.progress||{}, await getProgress())
+    console.log('progress', progress)
     this.setState({progress})
   }
 

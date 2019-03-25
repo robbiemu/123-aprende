@@ -87,7 +87,8 @@ export default {
         test: 'test',
         memoryGame: 'memoryGame',
         list: 'list',
-      }
+      },
+      LIST: '...at a glance'
     }
   },
   routes: ['activity', 'page', 'home', 'override', 'splash' ]

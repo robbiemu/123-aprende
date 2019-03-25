@@ -1,6 +1,5 @@
 import React from "react";
 import { View } from 'react-native'
-import AsyncStorage from '@callstack/async-storage'
 
 import config from '@src/config/app'
 import { reviewStyle } from '@src/styles/components/review'
@@ -10,21 +9,8 @@ import Card from '@src/Controllers/Card'
 
 export default class Review extends React.Component {
   state = {
-    graphcool_id: null,
     face: [],
     current: 0
-  }
-
-  async componentDidMount () {
-    const graphcool_id = await AsyncStorage.getItem(
-        config.constants.graphcool.user_id
-    )
-
-    if (!graphcool_id) return
-
-    this.setState({
-      graphcool_id
-    })
   }
 
   render () {

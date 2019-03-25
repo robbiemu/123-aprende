@@ -11,6 +11,7 @@ import User from '@src/Models/User'
 import { getRawClient } from "@src/lib/Graphcool"
 
 import Review from './Review'
+import List from './List'
 
 const GET_ACTIVITY = gql`query activity ($id: ID) {
   Activity (id: $id) {
@@ -127,10 +128,11 @@ class Activity extends React.Component {
     switch (this.props.match.params.presentation) {
       case config.constants.activities.VocabularyPairs.review:
         return <Review vocabulary={data.Activity.json} completedActivity={this.onCompletedActivity.bind(this)} />
+      case config.constants.activities.VocabularyPairs.list:
+        return <List vocabulary={data.Activity.json} completedActivity={this.onCompletedActivity.bind(this)} />
       case config.constants.activities.VocabularyPairs.quiz:
       case config.constants.activities.VocabularyPairs.test:
       case config.constants.activities.VocabularyPairs.memoryGame:
-      case config.constants.activities.VocabularyPairs.list:
       default:
         return //<List vocabulary={data.Activity.json} completedActivity={onCompletedActivity} />
     }
