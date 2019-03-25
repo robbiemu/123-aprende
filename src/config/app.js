@@ -50,7 +50,8 @@ export default {
     graphcool: {
       user_id: 'user_id',
       progress: 'progress',
-      HOME_PAGE_ID: 'cjtj9dw7t8rcj0136xycoxoon'
+      HOME_PAGE_ID: 'cjtj9dw7t8rcj0136xycoxoon',
+      MASTER_LIST_ID: 'cjtnp665i8uls0136ncn02tdp'
     },
     drawer: {
       index: {

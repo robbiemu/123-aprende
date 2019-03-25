@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableWithoutFeedback } from 'react-native'
+import { View, TouchableWithoutFeedback, ScrollView } from 'react-native'
 import { ActivityIndicator, Colors, Headline, List as NativeList } from 'react-native-paper'
 
 import config from '@src/config/app'
@@ -31,14 +31,16 @@ export default class List extends React.Component {
             <View>
               <Headline>{ this.props.title || config.constants.activities.LIST }</Headline>
             </View>
-            { this.props.vocabulary.map((item, index) => {
-              const itemProgress = this.state.progress[config.constants.activities.types.VocabularyPairs][item.id]
-              return <NativeList.Item key={ index}
-                                      title={item.es.glyphs}
-                                      left={ () => <NativeList.Icon icon={itemProgress >= 0.95 ? 'check-box': 'check-box-outline-blank'} /> }
-              />
-            })
-            }
+            <ScrollView>
+              { this.props.vocabulary.map((item, index) => {
+                const itemProgress = this.state.progress[config.constants.activities.types.VocabularyPairs][item.id]
+                return <NativeList.Item key={ index}
+                                        title={item.es.glyphs}
+                                        left={ () => <NativeList.Icon icon={itemProgress >= 0.95 ? 'check-box': 'check-box-outline-blank'} /> }
+                />
+              })
+              }
+            </ScrollView>
           </NativeList.Section>
         </TouchableWithoutFeedback>
     )

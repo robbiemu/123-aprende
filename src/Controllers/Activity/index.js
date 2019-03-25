@@ -12,6 +12,7 @@ import { getRawClient } from "@src/lib/Graphcool"
 
 import Review from './Review'
 import List from './List'
+import Quiz from './Quiz'
 
 const GET_ACTIVITY = gql`query activity ($id: ID) {
   Activity (id: $id) {
@@ -75,10 +76,11 @@ class Activity extends React.Component {
       }} elevation={2}>
         <ActivityIndicator animating={true} color={Colors.grey400} />
       </View>
+
     return (<Query
             query={GET_ACTIVITY}
             fetchPolicy='network-only'
-            variables={{ id: this.props.match.params.activity_id }}>
+            variables={{ id: this.props.match.params.activity_id || config.constants.graphcool.MASTER_LIST_ID }}>
           {result => {
             let { data, error } = result
 
@@ -131,6 +133,7 @@ class Activity extends React.Component {
       case config.constants.activities.VocabularyPairs.list:
         return <List vocabulary={data.Activity.json} completedActivity={this.onCompletedActivity.bind(this)} />
       case config.constants.activities.VocabularyPairs.quiz:
+        return <Quiz vocabulary={data.Activity.json} completedActivity={this.onCompletedActivity.bind(this)} />
       case config.constants.activities.VocabularyPairs.test:
       case config.constants.activities.VocabularyPairs.memoryGame:
       default:
