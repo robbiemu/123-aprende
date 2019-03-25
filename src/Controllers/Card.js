@@ -41,6 +41,7 @@ export default class Card extends React.Component {
     const oppositeFace = config.constants.cards.faces[!(this.props.face || this.state.currentFace)]
 
     switch (this.props.type) {
+      case config.constants.activities.VocabularyPairs.test:
       case config.constants.activities.VocabularyPairs.quiz:
       case config.constants.activities.VocabularyPairs.review:
         if (recordForProgress === null || recordForProgress === undefined) { // first showing
@@ -154,6 +155,7 @@ export default class Card extends React.Component {
 
   async onPress () {
     switch (this.props.type) {
+      case config.constants.activities.VocabularyPairs.test:
       case config.constants.activities.VocabularyPairs.quiz:
       case config.constants.activities.VocabularyPairs.review:
         if (!this.state.shown) {
