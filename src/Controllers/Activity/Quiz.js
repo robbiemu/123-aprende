@@ -28,16 +28,18 @@ export default class Quiz extends React.Component {
         <ActivityIndicator animating={true} color={Colors.grey400} />
       </View>
 
-    let id = this.props.vocabulary[this.state.current].id
-    let recordForProgress = this.state.progress[config.constants.activities.types.VocabularyPairs][id]
+    const limit = 20 < this.props.vocabulary.length? 20: this.props.vocabulary.length
+
     let current = this.state.current
-    while((recordForProgress === undefined || recordForProgress === null) && current < this.props.vocabulary.length) {
+    let id = this.props.vocabulary[current].id
+    let recordForProgress = this.state.progress[config.constants.activities.types.VocabularyPairs][id]
+    while((recordForProgress === undefined || recordForProgress === null) && current < limit) {
       console.log('skipping card', recordForProgress, current, this.props.vocabulary.length)
       current++
       id = this.props.vocabulary[this.state.current].id
       recordForProgress = this.state.progress[config.constants.activities.types.VocabularyPairs][id]
     }
-    if(current >= this.props.vocabulary.length) {
+    if(current >= limit) {
       this.props.completedActivity()
 
       return <View style={spinner}>
