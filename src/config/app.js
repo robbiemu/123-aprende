@@ -89,7 +89,9 @@ export default {
         memoryGame: 'memoryGame',
         list: 'list',
       },
-      LIST: '...at a glance'
+      LIST: '...at a glance',
+      VIDEOSUBMISSION: 'Video Submission',
+      AUDIOSUBMISSION: 'Audio Submission'
     }
   },
   routes: ['activity', 'page', 'home', 'override', 'splash' ]

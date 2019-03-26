@@ -24,6 +24,7 @@
     "apollo-link-logger": "^1.2.3",
     "apollo-link-retry": "^2.2.8",
     "auth0-js": "^9.9.1",
+    "axios": "^0.18.0",
     "config": "^3.0.1",
     "deepmerge": "^3.2.0",
     "expo": "^32.0.0",
@@ -45,8 +46,10 @@
     "react-native-paper": "^2.6.1",
     "react-native-vector-icons": "^6.2.0",
     "react-native-web": "^0.10.0-alpha.3",
+    "react-native-youtube": "^1.1.0",
     "react-router-dom": "^4.3.1",
     "react-router-native": "^4.3.0",
+    "react-youtube": "^7.9.0",
     "url": "^0.11.0",
     "uuid": "^3.3.2"
   },

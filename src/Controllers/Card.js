@@ -6,7 +6,7 @@ import deepmerge from 'deepmerge'
 import FuzzySet from 'fuzzyset.js'
 
 import config from '@src/config/app'
-import { getProgress } from '@src/Controllers/Activity/Activity'
+import { getProgress } from '@src/Controllers/Activity/extensionActivity'
 import { cardStyle, cardContentStyle, cardTextInputStyle, cardNativeTextInputStyle } from '@src/styles/components/card'
 import { spinner } from '@src/styles'
 

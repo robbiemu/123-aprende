@@ -3,26 +3,18 @@ import { View } from 'react-native'
 import { ActivityIndicator, Colors, Paragraph } from 'react-native-paper'
 import AsyncStorage from '@callstack/async-storage'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
 
 import config from '@src/config/app'
 import history from '@src/lib/history'
 import User from '@src/Models/User'
-import { getRawClient } from "@src/lib/Graphcool"
+import ActivityModel from '@src/Models/Activity'
+import { getRawClient } from '@src/lib/Graphcool'
 
-import Review from './Review'
-import List from './List'
-import Quiz from './Quiz'
-import Test from './Test'
-
-const GET_ACTIVITY = gql`query activity ($id: ID) {
-  Activity (id: $id) {
-    id,
-    json,
-    title,
-    type
-  }
-}`
+import Review from './VocabularyPairs/Review'
+import List from './VocabularyPairs/List'
+import Quiz from './VocabularyPairs/Quiz'
+import Test from './VocabularyPairs/Test'
+import Submission from '@src/Controllers/Activity/Submission'
 
 class Activity extends React.Component {
   state = {
@@ -79,7 +71,7 @@ class Activity extends React.Component {
       </View>
 
     return (<Query
-            query={GET_ACTIVITY}
+            query={ActivityModel.getActivity}
             fetchPolicy='network-only'
             variables={{ id: this.props.match.params.activity_id || config.constants.graphcool.MASTER_LIST_ID }}>
           {result => {
@@ -105,6 +97,7 @@ class Activity extends React.Component {
                   return this.renderVocabularyPairs(data)
                 case config.constants.activities.types.VideoSubmission:
                 case config.constants.activities.types.AudioSubmission:
+                  return this.renderSubmission(data)
                 case config.constants.activities.types.Activity:
                 default:
                   console.warn(`activity type '${data.Activity.type}' not implemented`)
@@ -141,6 +134,10 @@ class Activity extends React.Component {
       default:
         return //<List vocabulary={data.Activity.json} completedActivity={onCompletedActivity} />
     }
+  }
+
+  renderSubmission (data) {
+    return <Submission data={data.Activity} />
   }
 
   onCompletedActivity() {

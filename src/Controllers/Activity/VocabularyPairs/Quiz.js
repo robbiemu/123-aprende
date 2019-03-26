@@ -5,12 +5,12 @@ import deepmerge from 'deepmerge'
 
 import config from '@src/config/app'
 import { reviewStyle } from '@src/styles/components/review'
-import { getProgress } from '@src/Controllers/Activity/Activity'
+import { getProgress } from '@src/Controllers/Activity/extensionActivity'
 import { spinner } from '@src/styles'
 
 import Card from '@src/Controllers/Card'
 
-export default class Test extends React.Component {
+export default class Quiz extends React.Component {
   state = {
     face: [],
     current: 0,
@@ -30,7 +30,16 @@ export default class Test extends React.Component {
 
     const limit = 20 < this.props.vocabulary.length? 20: this.props.vocabulary.length
 
-    if(this.state.current >= limit) {
+    let current = this.state.current
+    let id = this.props.vocabulary[current].id
+    let recordForProgress = this.state.progress[config.constants.activities.types.VocabularyPairs][id]
+    while((recordForProgress === undefined || recordForProgress === null) && current < limit) {
+      console.log('skipping card', recordForProgress, current, this.props.vocabulary.length)
+      current++
+      id = this.props.vocabulary[this.state.current].id
+      recordForProgress = this.state.progress[config.constants.activities.types.VocabularyPairs][id]
+    }
+    if(current >= limit) {
       this.props.completedActivity()
 
       return <View style={spinner}>
@@ -44,7 +53,7 @@ export default class Test extends React.Component {
     }
 
     return <View style={reviewStyle}>
-      <Headline style={{top: 48, position: 'fixed', color: 'white', fontSize: 32}}>Test</Headline>
+      <Headline style={{top: 48, position: 'fixed', color: 'white', fontSize: 32}}>Quiz</Headline>
       <Card
           data={this.props.vocabulary[this.state.current]}
           face={!!face[this.state.current]}

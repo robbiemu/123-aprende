@@ -5,22 +5,19 @@ import AsyncStorage from '@callstack/async-storage'
 import { Query } from 'react-apollo'
 
 import config from '@src/config/app'
-import history from '@src/lib/history'
 import PageModel from '@src/Models/Page'
 import { pageContainerStyle } from '@src/styles/components/page'
 
-import Appbar from '@src/Controllers/Appbar'
-import Drawer from '@src/Controllers/Drawer'
+import FramedView from '@src/Controllers/FramedView'
 import DefaultPage from './Page'
 import Home from './Home'
 import Lesson from './Lesson'
 
-class Page extends React.Component<Props> {
+class Page extends React.Component {
   state = {
     graphcool_id: null,
     uid: '',
     uidInput: '',
-    isShowingDrawer: false
   }
 
   async componentDidMount () {
@@ -82,20 +79,11 @@ class Page extends React.Component<Props> {
               }
 
               return (
-                  <View>
-                    { this.state.isShowingDrawer && <Drawer
-                        isShowingDrawer={this.state.isShowingDrawer}
-                        toggleDrawer={this.toggleDrawer.bind(this)}
-                        data={{ from: Page, context: data.Page }}
-                    /> }
-                    <View>
-                      <Appbar data={data.Page}
-                              goBack={this.goBack.bind(this)}
-                              toggleDrawer={this.toggleDrawer.bind(this)}
-                      />
-                      <View style={pageContainerStyle}>{page}</View>
-                    </View>
-                  </View>
+                  <FramedView containerStyle={pageContainerStyle} 
+                              id={data.Page.id} 
+                              title={data.Page.title}>
+                      {page}
+                  </FramedView>
               )
             }
 
@@ -107,14 +95,6 @@ class Page extends React.Component<Props> {
           }}
         </Query>
     )
-  }
-
-  goBack () {
-    history.goBack()
-  }
-
-  toggleDrawer () {
-    this.setState({ isShowingDrawer: !this.state.isShowingDrawer })
   }
 }
 
