@@ -10,34 +10,54 @@ import {
 } from 'react-native-paper'
 
 import config from '@src/config/app'
+import cssConfig from '@src/config/css'
 
 type Props = {
   theme: Theme,
   message: String,
-  spinner: boolean
+  spinner: boolean,
 }
 
 class Splash extends React.Component<Props> {
-  render() {
-    return (<View style={styles.container}>
-          <Headline style={styles.header}>{ config.states.app.appName }</Headline>
-          {this.props.spinner?
-              (<View style={styles.body}>
-                  <View style={styles.spinner} elevation={2}>
-                      <ActivityIndicator animating={true} color={Colors.grey400} />
-                  </View>
-                  <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Image style={{width: 512, height: 512}} source={require('@src/media/123go-big.png')}/>
-                  </View>
-              </View>):
-              (<View style={styles.body}>
-                <Paragraph>{ this.props.message || '' }</Paragraph>
-                <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Image style={{width: 256, height: 256}} source={require('@src/media/123go-big.png')}/>
-                </View>
-              </View>)
-          }
-      </View>)
+  render () {
+    return (
+      <View style={styles.container}>
+        <Headline style={styles.header}>{config.states.app.appName}</Headline>
+        {this.props.spinner ? (
+          <View style={styles.body}>
+            <View style={styles.spinner} elevation={2}>
+              <ActivityIndicator animating color={Colors.grey400} />
+            </View>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Image
+                style={{ width: 512, height: 512 }}
+                source={require('@src/media/123go-big.png')}
+              />
+            </View>
+          </View>
+        ) : (
+          <View style={styles.body}>
+            <Paragraph>{this.props.message || ''}</Paragraph>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Image
+                style={{ width: 256, height: 256 }}
+                source={require('@src/media/123go-big.png')}
+              />
+            </View>
+          </View>
+        )}
+      </View>
+    )
   }
 }
 
@@ -56,7 +76,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   body: {
-    position: 'fixed',
+    position: cssConfig.FIXED,
     top: 0,
     bottom: 0,
     left: 0,
@@ -68,7 +88,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3
   },
   spinner: {
-    position: 'fixed',
+    position: cssConfig.FIXED,
     top: 0,
     bottom: 0,
     left: 0,
@@ -76,10 +96,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
     justifyContent: 'center',
     alignItems: 'center',
-    opacity:0.5,
-    zIndex:2
+    opacity: 0.5,
+    zIndex: 2
   }
 })
 
 export default withTheme(Splash)
-  

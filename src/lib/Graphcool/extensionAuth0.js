@@ -26,6 +26,7 @@ export async function relayAuthToGraphcool ({ auth0 } = {}) {
   await apolloClient
     .query({ query: User.self, forceFetch: true })
     .then(async initial => {
+      console.log('resolved apollo response')
       if (!initial.data.user) {
         // we didn't sign in?
         console.trace('must sign in to graphcool', initial.data)
@@ -97,11 +98,15 @@ async function _setStorageItems (user) {
   if (user.id) {
     await AsyncStorage.setItem(appConfig.constants.graphcool.user_id, user.id)
   }
-  if(user.progress) {
-    console.log(`user progress: writing string of >>${JSON.stringify(user.progress)}<< original's type: '${typeof user.progress}'`)
+  if (user.progress) {
+    console.log(
+      `user progress: writing string of >>${JSON.stringify(
+        user.progress
+      )}<< original's type: '${typeof user.progress}'`
+    )
     await AsyncStorage.setItem(
-        appConfig.constants.graphcool.progress,
-        Platform.OS === 'ios' ? JSON.stringify(user.progress): user.progress
+      appConfig.constants.graphcool.progress,
+      Platform.OS === 'ios' ? JSON.stringify(user.progress) : user.progress
     )
   }
 }

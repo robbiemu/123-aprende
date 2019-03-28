@@ -2,30 +2,39 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withSoundCloudAudio } from 'react-soundplayer/addons'
+import { PlayButton, Progress } from 'react-soundplayer/components'
+import VolumeControl from './VolumeControl'
 import {
-  PlayButton,
-  Progress,
-  VolumeControl
-} from 'react-soundplayer/components'
+  playButtonStyle,
+  volumeButtonStyle,
+  artistTitleStyle,
+  playerStyle,
+  bodyContainerStyle,
+  rangeStyle
+} from '@src/styles/components/audio'
 
 class ProgressSoundPlayer extends Component {
   render () {
     const { track, currentTime, duration } = this.props
 
     return (
-      <div className='p2 border navy mt1 mb3 flex flex-center rounded'>
-        <PlayButton
-          className='flex-none h4 mr2 button white btn-big button-outline button-grow bg-orange circle'
-          {...this.props}
-        />
-        <div className='flex-auto'>
-          <h2 className='h4 nowrap m0'>{track ? track.user.username : ''}</h2>
-          <h2 className='h4 nowrap caps m0'>{track ? track.title : ''}</h2>
+      <div style={playerStyle}>
+        <PlayButton style={playButtonStyle} {...this.props} />
+        <div style={bodyContainerStyle}>
+          <h2 style={artistTitleStyle}>{track ? track.user.username : ''}</h2>
+          <h2
+            style={Object.assign(
+              { textTransform: 'uppercase' },
+              artistTitleStyle
+            )}>
+            {track ? track.title : ''}
+          </h2>
           <div className='flex flex-center'>
             <VolumeControl
-              className='mr2 flex flex-center'
-              buttonClassName='flex-none h6 button white btn-small button-outline button-grow bg-orange circle btn-square'
-              {...this.props}
+              {...Object.assign(
+                { buttonStyle: volumeButtonStyle, rangeStyle },
+                this.props
+              )}
             />
             <Progress
               className='mt1 mb1 rounded'

@@ -1,5 +1,6 @@
+import config from '@src/config/css'
 export const reviewStyle = {
-  position: 'fixed',
+  position: config.FIXED,
   top: 0,
   bottom: 0,
   left: 0,
