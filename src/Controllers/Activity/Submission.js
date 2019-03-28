@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { ActivityIndicator, Colors } from 'react-native-paper'
+import { ActivityIndicator, Colors, Headline } from 'react-native-paper'
 import deepmerge from 'deepmerge'
 import Markdown from 'react-native-markdown-renderer'
 
@@ -20,7 +20,6 @@ export default class Submission extends React.Component {
 
   async componentWillMount () {
     const progress = deepmerge(this.state.progress||{}, await getProgress())
-    console.log('progress', progress)
     this.setState({progress})
   }
 
@@ -35,10 +34,14 @@ export default class Submission extends React.Component {
     return (
       <FramedView containerStyle={pageContainerStyle} 
                   id={this.props.data.id} 
-                  title={this.props.data.title}>
+                  title={title}>
         <Markdown rules={rules}>
           {this.props.data.json.markdown.replace(/\\n/g, '\n')}
         </Markdown>
+        <View>
+          <Headline>Submit your media!</Headline>
+          {this.props.children}
+        </View>
         <Feed type={this.props.data.type} data={this.props.data.json.feed} />
       </FramedView>
     )

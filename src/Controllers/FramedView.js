@@ -5,6 +5,7 @@ import history from '@src/lib/history'
 
 import Appbar from '@src/Controllers/Appbar'
 import Drawer from '@src/Controllers/Drawer'
+import { appbarPadding } from '../styles/components/appbar';
 
 type Props = {
   id: string,
@@ -32,7 +33,7 @@ export default class FramedView extends React.Component<Props> {
                   goBack={this.goBack.bind(this)}
                   toggleDrawer={this.toggleDrawer.bind(this)}
           />
-          <ScrollView>
+          <ScrollView style={appbarPadding}>
             <View style={this.props.containerStyle}>{this.props.children}</View>
           </ScrollView>
         </View>

@@ -1,6 +1,7 @@
 import React from 'react'
-import { Platform } from 'react-native'
 import YouTube from 'react-youtube'
+
+import { videoStyle } from '@src/styles/components/video'
 
 class Video extends React.Component {
   render () {
@@ -8,7 +9,7 @@ class Video extends React.Component {
       videoId={this.props.data.id} 
       opts={{playerVars: {hl:'es', cc_load_policy: 1, cc_lang_pref: 'es'}}}
 
-      style={{ alignSelf: 'stretch', height: 300 }}
+      style={videoStyle}
     />
   }
 }

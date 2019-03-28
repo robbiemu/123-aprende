@@ -1,6 +1,7 @@
 import React from 'react'
 import YouTube from 'react-native-youtube'
 
+import { videoStyle } from '@src/styles/components/video'
 class Video extends React.Component {
   render () {
     return <YouTube
@@ -8,7 +9,7 @@ class Video extends React.Component {
       fullscreen={true}
       loop={false}
 
-      style={{ alignSelf: 'stretch', height: 300 }}
+      style={video}
     />
   }
 }

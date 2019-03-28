@@ -2,6 +2,7 @@ import secret from './private'
 
 export default {
   appName: 'uno-dos-tres-aprende',
+  appTags: ['123Aprende', 'spring2019'],
   appScheme: 'uno-dos-tres', // 'expo'
   appId: secret.appId, // uuid app fingerprint
   appHome: '/home',
@@ -45,7 +46,7 @@ export default {
         app: 'appId',
         uid: 'uid',
         token: 'deviceToken'
-      },
+      }
     },
     graphcool: {
       user_id: 'user_id',
@@ -57,9 +58,7 @@ export default {
       index: {
         logout: 'logout'
       },
-      items: [
-        { id: 'logout', label: 'logout' }
-      ]
+      items: [{ id: 'logout', label: 'logout' }]
     },
     cards: {
       forward: 'forward',
@@ -82,17 +81,21 @@ export default {
         VideoSubmission: 'VideoSubmission',
         AudioSubmission: 'AudioSubmission'
       },
-      VocabularyPairs:  {
+      VocabularyPairs: {
         review: 'review',
         quiz: 'quiz',
         test: 'test',
         memoryGame: 'memoryGame',
-        list: 'list',
+        list: 'list'
+      },
+      AudioSubmission: {
+        soundcloud_base_uri: 'https://soundcloud.com/'
       },
       LIST: '...at a glance',
+      OPEN_ON_SOUNDCLOUD: 'open on SoundCloud',
       VIDEOSUBMISSION: 'Video Submission',
       AUDIOSUBMISSION: 'Audio Submission'
     }
   },
-  routes: ['activity', 'page', 'home', 'override', 'splash' ]
+  routes: ['activity', 'page', 'home', 'override', 'splash']
 }
