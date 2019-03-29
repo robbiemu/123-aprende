@@ -69,12 +69,7 @@ function renderYoutube (destination, children) {
 
 function renderSoundcloud (destination, children) {
   destination = destination.replace(/^(soundcloud):\/\//, '')
-  console.log(
-    'children',
-    children[0].props.children,
-    'destination',
-    destination
-  )
+
   return (
     <View key={getUniqueID()}>
       <Audio

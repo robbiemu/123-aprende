@@ -66,7 +66,7 @@ export default class App extends React.Component<*, State> {
       await this.setupApollo()
 
       // don't forget to "t o d o - please remove" the following line i you uncomment it!
-      console.warn('logging out to allow full run')
+      // console.warn('logging out to allow full run')
       // this.state.auth0.logout()
     }
 

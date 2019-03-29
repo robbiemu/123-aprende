@@ -1,6 +1,7 @@
 import React from 'react'
 import { ScrollView, Modal, TouchableOpacity } from 'react-native'
 import { Drawer as NativeDrawer } from 'react-native-paper'
+import uuid from 'uuid/v4'
 
 import history from '@src/lib/history'
 import { drawerStyle, drawerItemStyle } from '@src/styles/components/drawer'
@@ -10,7 +11,7 @@ import { drawerItems, generateItemWithContext } from './extensionDrawerItems'
 
 type Props = {
   data: object,
-  toggleDrawer: Function
+  toggleDrawer: Function,
 }
 
 class Drawer extends React.Component<Props> {
@@ -18,42 +19,43 @@ class Drawer extends React.Component<Props> {
     console.log('rendering drawer with', this.props.data)
 
     return (
-        <Modal
-            style={modalParentStyle}
-            transparent
-            visible={this.props.isShowingDrawer}
-            animationType="slide"
-            onRequestClose={() => {}} >
-          <TouchableOpacity
-              activeOpacity={1}
-              onPress={this.props.toggleDrawer}
-              style={modalTransparentStyle}>
-            <TouchableOpacity activeOpacity={1} style={drawerStyle} elevation={8}>
-              <ScrollView>
-                {
-                  drawerItems.map(data => {
-                    data = generateItemWithContext(data, this.props.data.context)
+      <Modal
+        style={modalParentStyle}
+        transparent
+        visible={this.props.isShowingDrawer}
+        animationType='slide'
+        onRequestClose={() => {}}>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={this.props.toggleDrawer}
+          style={modalTransparentStyle}>
+          <TouchableOpacity activeOpacity={1} style={drawerStyle} elevation={8}>
+            <ScrollView>
+              {drawerItems.map(data => {
+                data = generateItemWithContext(data, this.props.data.context)
 
-                    return <NativeDrawer.Item
-                        style={ drawerItemStyle }
-                        icon={ data.icon }
-                        label={ data.label }
-                        active={ data.active }
-                        onPress={() => this.navigate(data)}
-                    />
-                  })
-                }
-              </ScrollView>
-            </TouchableOpacity>
+                return (
+                  <NativeDrawer.Item
+                    key={uuid()}
+                    style={drawerItemStyle}
+                    icon={data.icon}
+                    label={data.label}
+                    active={data.active}
+                    onPress={() => this.navigate(data)}
+                  />
+                )
+              })}
+            </ScrollView>
           </TouchableOpacity>
-        </Modal>
+        </TouchableOpacity>
+      </Modal>
     )
   }
 
   navigate (data) {
-    if(typeof data.navigate === 'function') {
+    if (typeof data.navigate === 'function') {
       data.navigate() && this.props.toggleDrawer()
-    } else if(data.to) {
+    } else if (data.to) {
       this.props.toggleDrawer()
 
       history.push(data.to)
