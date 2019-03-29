@@ -52,11 +52,11 @@ class Override extends React.Component<Props> {
 
   async componentDidMount () {
     const uid = await AsyncStorage.getItem(
-        config.constants.bbn.connectionDetails.uid
+      config.constants.bbn.connectionDetails.uid
     )
 
     const graphcool_id = await AsyncStorage.getItem(
-        config.constants.graphcool.user_id
+      config.constants.graphcool.user_id
     )
 
     if (!uid || !graphcool_id) return
@@ -77,149 +77,149 @@ class Override extends React.Component<Props> {
     } = this.props
 
     const uid = this.state.uid ? (
-        <Chip icon='account-circle' onClose={e => this.setState({ uid: '' })}>
-          {this.state.uid}
-        </Chip>
+      <Chip icon='account-circle' onClose={e => this.setState({ uid: '' })}>
+        {this.state.uid}
+      </Chip>
     ) : (
-        this.factoryInput(
-            'uid',
-            'UID',
-            <Button
-                mode='contained'
-                dark
-                compact
-                onPress={e => this.setState({ uid: uuid() })}>
-              generate
-            </Button>
-        )
+      this.factoryInput(
+        'uid',
+        'UID',
+        <Button
+          mode='contained'
+          dark
+          compact
+          onPress={e => this.setState({ uid: uuid() })}>
+          generate
+        </Button>
+      )
     )
 
     const appid = this.state.appid ? (
-        <Chip icon='apps' onClose={e => this.setState({ appid: '' })}>
-          {this.state.appid}
-        </Chip>
+      <Chip icon='apps' onClose={e => this.setState({ appid: '' })}>
+        {this.state.appid}
+      </Chip>
     ) : (
-        this.factoryInput('appid', 'app ID')
+      this.factoryInput('appid', 'app ID')
     )
 
     const appname = this.state.appName ? (
-        <Chip icon='apps' onClose={e => this.setState({ appName: '' })}>
-          {this.state.appName}
-        </Chip>
+      <Chip icon='apps' onClose={e => this.setState({ appName: '' })}>
+        {this.state.appName}
+      </Chip>
     ) : (
-        this.factoryInput('appName', 'app name')
+      this.factoryInput('appName', 'app name')
     )
 
     return (
-        <View style={[styles.container, { backgroundColor: background }]}>
-          <Headline style={styles.text}>Third Party Demo</Headline>
+      <View style={[styles.container, { backgroundColor: background }]}>
+        <Headline style={styles.text}>Third Party Demo</Headline>
 
-          <Caption style={styles.text}>description</Caption>
-          <Paragraph style={styles.text}>
-            Give yourself a metric. Optionally, also provide a uid to do it with.
-            It should show up in the firestore.
-          </Paragraph>
+        <Caption style={styles.text}>description</Caption>
+        <Paragraph style={styles.text}>
+          Give yourself a metric. Optionally, also provide a uid to do it with.
+          It should show up in the firestore.
+        </Paragraph>
 
-          <Caption style={styles.text}>uid</Caption>
-          {uid}
+        <Caption style={styles.text}>uid</Caption>
+        {uid}
 
-          <Caption style={styles.text}>app id</Caption>
-          {appid}
+        <Caption style={styles.text}>app id</Caption>
+        {appid}
 
-          <Caption style={styles.text}>app name</Caption>
-          {appname}
+        <Caption style={styles.text}>app name</Caption>
+        {appname}
 
-          <Caption style={styles.text}>metric</Caption>
-          <TextInput
-              label='number'
-              value={this.state.metric}
-              onChangeText={this.onChangeMetric}
-          />
+        <Caption style={styles.text}>metric</Caption>
+        <TextInput
+          label='number'
+          value={this.state.metric}
+          onChangeText={this.onChangeMetric}
+        />
 
-          <Button
-              icon='gavel'
-              mode='contained'
-              dark
-              compact
-              disabled={
-                !(
-                    this.state.uid &&
-                    this.state.appid &&
-                    this.state.appName &&
-                    this.isValidMetric()
-                )
-              }
-              onPress={this.onCommitMetric}>
-            send metric
-          </Button>
+        <Button
+          icon='gavel'
+          mode='contained'
+          dark
+          compact
+          disabled={
+            !(
+              this.state.uid &&
+              this.state.appid &&
+              this.state.appName &&
+              this.isValidMetric()
+            )
+          }
+          onPress={this.onCommitMetric}>
+          send metric
+        </Button>
 
-          <Caption style={styles.text}>etc</Caption>
+        <Caption style={styles.text}>etc</Caption>
 
-          <Button
-              mode='contained'
-              dark
-              compact
-              disabled={!this.props.appAuthenticated()}
-              onPress={this.logout.bind(this)}>
-            logout
-          </Button>
+        <Button
+          mode='contained'
+          dark
+          compact
+          disabled={!this.props.appAuthenticated()}
+          onPress={this.logout.bind(this)}>
+          logout
+        </Button>
 
-          <Query
-              query={GET_USERS}
-              fetchPolicy='cache-and-network'
-              variables={{ id: this.props.graphcool_id }}>
-            {result => {
-              // console.trace('result!', result) // beware, in ios this is the ENTIRE APOLLO CLIENT
-              let { data, loading, error, refetch, networkStatus } = result
+        <Query
+          query={GET_USERS}
+          fetchPolicy='cache-and-network'
+          variables={{ id: this.props.graphcool_id }}>
+          {result => {
+            // console.log('result!', result) // beware, in ios this is the ENTIRE APOLLO CLIENT
+            let { data, loading, error, refetch, networkStatus } = result
 
-              console.log(
-                  'results from token query in Home',
-                  Object.assign({}, data)
-              )
+            console.log(
+              'results from token query in Home',
+              Object.assign({}, data)
+            )
 
-              if (error) {
-                console.error('error', error)
-                return (
-                    <View>
-                      <Paragraph>{error.message}</Paragraph>
-                    </View>
-                )
-              }
-
-              if (!data && loading) {
-                return (
-                    <View>
-                      <Paragraph>Loading...</Paragraph>
-                    </View>
-                )
-              }
-
-              if (data && data.user && data.user.tokens) {
-                return (
-                    <FlatList
-                        data={data.user.tokens}
-                        keyExtractor={item => String(item.deviceToken)}
-                        renderItem={({ item }) => (
-                            <Paragraph>{item.deviceToken}</Paragraph>
-                        )}
-                        refreshControl={
-                          <RefreshControl
-                              refreshing={loading && networkStatus !== POLL_STATUS}
-                              onRefresh={refetch}
-                          />
-                        }
-                    />
-                )
-              }
-
+            if (error) {
+              console.error('error', error)
               return (
-                  <View>
-                    <Paragraph>Failing silently?</Paragraph>
-                  </View>
+                <View>
+                  <Paragraph>{error.message}</Paragraph>
+                </View>
               )
-            }}
-          </Query>
-        </View>
+            }
+
+            if (!data && loading) {
+              return (
+                <View>
+                  <Paragraph>Loading...</Paragraph>
+                </View>
+              )
+            }
+
+            if (data && data.user && data.user.tokens) {
+              return (
+                <FlatList
+                  data={data.user.tokens}
+                  keyExtractor={item => String(item.deviceToken)}
+                  renderItem={({ item }) => (
+                    <Paragraph>{item.deviceToken}</Paragraph>
+                  )}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={loading && networkStatus !== POLL_STATUS}
+                      onRefresh={refetch}
+                    />
+                  }
+                />
+              )
+            }
+
+            return (
+              <View>
+                <Paragraph>Failing silently?</Paragraph>
+              </View>
+            )
+          }}
+        </Query>
+      </View>
     )
   }
 
@@ -271,10 +271,10 @@ class Override extends React.Component<Props> {
    * TODO - refactor. This is a store executable
    */
   getFirebaseDate = (date = new Date()) =>
-      date
-          .toISOString()
-          .slice(0, 19)
-          .replace('T', ' ')
+    date
+      .toISOString()
+      .slice(0, 19)
+      .replace('T', ' ')
 
   /** helper method that validates state.metric
    * TODO - refactor. This is arguably a store executable
@@ -299,24 +299,24 @@ class Override extends React.Component<Props> {
     const input = field + 'Input'
 
     return (
-        <View>
-          <TextInput
-              label={label}
-              value={this.state[input]}
-              onChangeText={item => this.setState({ [input]: item })}
-          />
+      <View>
+        <TextInput
+          label={label}
+          value={this.state[input]}
+          onChangeText={item => this.setState({ [input]: item })}
+        />
 
-          <Button
-              icon='account-box'
-              mode='contained'
-              dark
-              compact
-              disabled={!this.isFieldValid(field)}
-              onPress={e => this.onCommitField(field, e)}>
-            use {label}
-          </Button>
-          {appending}
-        </View>
+        <Button
+          icon='account-box'
+          mode='contained'
+          dark
+          compact
+          disabled={!this.isFieldValid(field)}
+          onPress={e => this.onCommitField(field, e)}>
+          use {label}
+        </Button>
+        {appending}
+      </View>
     )
   }
 }

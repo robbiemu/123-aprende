@@ -10,12 +10,12 @@ import { getFirebaseToken } from './extensionFirebase'
 
 /** after auth0 authentication, we need to user our credentials to sign in/create an account */
 export async function relayAuthToGraphcool ({ auth0 } = {}) {
-  console.trace('relayAuthToGraphcool')
+  console.log('relayAuthToGraphcool')
   let apolloClient = await getRawClient()
 
   const idToken = await AsyncStorage.getItem('id_token') // auth0's identity token
 
-  console.trace(
+  console.log(
     'ensuring graphcool authentication. hasToken?: ',
     typeof idToken === 'string'
   )
@@ -29,7 +29,7 @@ export async function relayAuthToGraphcool ({ auth0 } = {}) {
       console.log('resolved apollo response')
       if (!initial.data.user) {
         // we didn't sign in?
-        console.trace('must sign in to graphcool', initial.data)
+        console.log('must sign in to graphcool', initial.data)
 
         await apolloClient
           .mutate({
@@ -37,7 +37,7 @@ export async function relayAuthToGraphcool ({ auth0 } = {}) {
             variables: { accessToken: idToken }
           })
           .then(async results => {
-            console.trace('signin successful', results)
+            console.log('signin successful', results)
 
             await AsyncStorage.setItem(
               'graphcool_token',
@@ -46,7 +46,7 @@ export async function relayAuthToGraphcool ({ auth0 } = {}) {
             // not sure why this is necessary -- I had defined this as const at first but found that the token was not being updated. when I console.log the token from the same source, it shows: reinitializing seems to solve -- may be an optimiation issue
             apolloClient = await getRawClient()
 
-            console.trace('verifying signin success')
+            console.log('verifying signin success')
             await apolloClient
               .query({ query: User.self, forceFetch: true })
               .then(async ({ data }) => {
@@ -60,7 +60,7 @@ export async function relayAuthToGraphcool ({ auth0 } = {}) {
           })
           .catch(err => console.error('error', err))
       } else {
-        console.trace('data', initial.data)
+        console.log('data', initial.data)
 
         await _setStorageItems(initial.data.user)
 
@@ -80,7 +80,7 @@ export async function relayAuthToGraphcool ({ auth0 } = {}) {
  * requirements in graphcool
  **/
 async function _setStorageItems (user) {
-  console.trace('setting BBN storage items from graphcool user data')
+  console.log('setting BBN storage items from graphcool user data')
   if (user.bundleIdentifier) {
     await AsyncStorage.setItem(
       appConfig.constants.bbn.connectionDetails.bundle,

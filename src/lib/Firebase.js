@@ -42,7 +42,7 @@ export default {
       }
     }
 
-    console.trace('signing into firebase with token', token)
+    console.log('signing into firebase with token', token)
 
     await firebase
       .auth()

@@ -20,16 +20,16 @@ export async function conditionallyAuthenticate () {
   if (!authenticated) {
     this.setState({ isLoaded: false })
 
-    console.trace('not authenticated')
+    console.log('not authenticated')
 
     await AsyncStorage.clear()
 
     if (!/access_token|id_token|error/.test(history.location.hash)) {
-      console.trace('authentication pending')
+      console.log('authentication pending')
 
       await this.state.auth0.login()
     } else {
-      console.trace(
+      console.log(
         `handling auth0 callback for location hash ${history.location.hash}`
       )
 
@@ -41,7 +41,7 @@ export async function conditionallyAuthenticate () {
       await this.state.auth0.handleAuthentication()
     }
   } else {
-    console.trace('authenticated', authenticated)
+    console.log('authenticated', authenticated)
 
     this.setState({ isLoaded: true })
   }
@@ -57,13 +57,16 @@ export async function relayAuthToGraphcool () {
   })
 
   if (this.state.isLoaded) {
-    if(config.routes.every(route => {
-      return !new RegExp(route).test(location.pathname)
-    })) {
+    if (
+      Platform.OS === 'ios' ||
+      config.routes.every(route => {
+        return !new RegExp(route).test(location.pathname)
+      })
+    ) {
       console.log('progressing home', location.pathname)
       history.replace(config.appHome)
     } else {
-      console.log('no need to progress home', location.pathname)
+      console.log('no need to progress home.', location.pathname)
     }
   } else {
     console.log(
@@ -92,7 +95,7 @@ export async function logout () {
 
   // await AsyncStorage.clear()
 
-  // console.trace('remaining async storage keys')
+  // console.log('remaining async storage keys')
   // AsyncStorage.getAllKeys()
   //     .then(keys => AsyncStorage.multiGet(keys)
   //         .then(result => result.map(req => req).forEach(console.log))

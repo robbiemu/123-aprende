@@ -1,4 +1,10 @@
 import React from 'react'
+// import { View } from 'react-native'
+// export default class App extends React.Component {
+//   render () {
+//     return <View />
+//   }
+// }
 import { StyleSheet, View, Platform, Linking } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import { ApolloProvider } from 'react-apollo'
@@ -40,11 +46,12 @@ export default class App extends React.Component<*, State> {
       splashMessage: config.constants.messages.LOADING
     }
 
-    if(Platform.OS === 'ios')
+    if (Platform.OS === 'ios') {
       Linking.addListener('url', e => {
         console.log('listening on url')
         AppLinking.onOpen(e.url)
       })
+    }
 
     this.conditionallyAuthenticate = conditionallyAuthenticate.bind(this)
     this.relayAuthToGraphcool = relayAuthToGraphcool.bind(this)
@@ -59,7 +66,7 @@ export default class App extends React.Component<*, State> {
       await this.setupApollo()
 
       // don't forget to "t o d o - please remove" the following line i you uncomment it!
-       console.warn('logging out to allow full run')
+      console.warn('logging out to allow full run')
       // this.state.auth0.logout()
     }
 
@@ -83,33 +90,59 @@ export default class App extends React.Component<*, State> {
           <View style={styles.app}>
             <Router history={history}>
               <Switch>
-                <Route path='/callback' render={() => <Splash message={this.state.splashMessage} spinner={true} />} />
-                <Route exact path='/override' render={props => <Page id={config.constants.graphcool.HOME_PAGE_ID}
-                    {...props}
-                />} />
+                <Route
+                  path='/callback'
+                  render={() => (
+                    <Splash message={this.state.splashMessage} spinner />
+                  )}
+                />
+                <Route
+                  exact
+                  path='/override'
+                  render={props => (
+                    <Page
+                      id={config.constants.graphcool.HOME_PAGE_ID}
+                      {...props}
+                    />
+                  )}
+                />
                 <Route
                   exact
                   path='/'
-                  render={props => this.state.isLoaded
-                      ? <Page id={config.constants.graphcool.HOME_PAGE_ID} {...props} />
-                      : <Splash message={this.state.splashMessage} />
+                  render={props =>
+                    this.state.isLoaded ? (
+                      <Page
+                        id={config.constants.graphcool.HOME_PAGE_ID}
+                        {...props}
+                      />
+                    ) : (
+                      <Splash message={this.state.splashMessage} />
+                    )
                   }
                 />
-                <Route path={config.appHome} render={props => <Page id={config.constants.graphcool.HOME_PAGE_ID} {...props}/>}/>
-                <Route path='/page/:id' render={props => <Page {...props}/>}/>
                 <Route
-                    path='/override'
-                    render={props => (
-                        <Override
-                            appAuthenticated={this.isAuthenticated.bind(this)}
-                            appLogout={this.logout.bind(this)}
-                            {...props}
-                        />
-                    )}
+                  path={config.appHome}
+                  render={props => (
+                    <Page
+                      id={config.constants.graphcool.HOME_PAGE_ID}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route path='/page/:id' render={props => <Page {...props} />} />
+                <Route
+                  path='/override'
+                  render={props => (
+                    <Override
+                      appAuthenticated={this.isAuthenticated.bind(this)}
+                      appLogout={this.logout.bind(this)}
+                      {...props}
+                    />
+                  )}
                 />
                 <Route
-                    path='/activity/:activity_id/:presentation?'
-                    render={props => (<Activity {...props}/> )}
+                  path='/activity/:activity_id/:presentation?'
+                  render={props => <Activity {...props} />}
                 />
               </Switch>
             </Router>

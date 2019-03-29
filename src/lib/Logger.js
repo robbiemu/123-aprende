@@ -36,9 +36,7 @@ export default class Logger {
     let messages = [...arguments]
     messages[0] = this.format(Logger.levels.TRACE, messages[0])
 
-    Platform.OS === 'ios'
-      ? console.log(...messages)
-      : console.trace(...messages)
+    Platform.OS === 'ios' ? console.log(...messages) : console.log(...messages)
   }
 
   info () {

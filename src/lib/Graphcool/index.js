@@ -62,7 +62,7 @@ export const getRawClient = async ({ savingCache = false } = {}) => {
       await AsyncStorage.getItem(/* 'access_token' */ 'graphcool_token')
     const token = await getToken()
 
-    // console.trace(' --- token for connection to graphcool is currently', token, req.operationName)
+    // console.log(' --- token for connection to graphcool is currently', token, req.operationName)
 
     // return the headers to the context so httpLink can read them
     return token
@@ -84,7 +84,7 @@ export const getRawClient = async ({ savingCache = false } = {}) => {
     httpLink
   ])
 
-  const cache = new InMemoryCache()
+  const cache = new InMemoryCache().restore(_cache || {})
   if (savingCache) {
     _cache = cache
   }
