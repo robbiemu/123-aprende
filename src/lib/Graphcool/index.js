@@ -84,7 +84,7 @@ export const getRawClient = async ({ savingCache = false } = {}) => {
     httpLink
   ])
 
-  const cache = new InMemoryCache().restore(_cache || {})
+  const cache = new InMemoryCache()
   if (savingCache) {
     _cache = cache
   }
