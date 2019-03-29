@@ -10,7 +10,7 @@ try {
 } catch (e) {
   // no error
 }
-debugger
+
 if (__DEV__) {
   KeepAwake.activate()
 }
