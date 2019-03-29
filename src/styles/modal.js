@@ -2,11 +2,7 @@ import config from '@src/config/css'
 
 export const modalBaseStyle = {
   background: 'transparent',
-  position: config.FIXED,
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0
+  flex: 1
 }
 
 export const modalParentStyle = Object.assign({}, modalBaseStyle, {
