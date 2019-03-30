@@ -1,4 +1,4 @@
-import config from '@src/config/css'
+// import config from '@src/config/css'
 
 export const modalBaseStyle = {
   background: 'transparent',

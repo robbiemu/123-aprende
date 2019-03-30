@@ -128,10 +128,10 @@ class VolumeControl extends Component {
           onClick={this.handleMute.bind(this)}>
           {isMuted ? <VolumeIconMuteSVG /> : <VolumeIconLoudSVG />}
         </button>
-        {true && (
+        {isRangeShowing && (
           <div
             style={{
-              minWidth: '33vw',
+              minWidth: 330,
               display: 'flex',
               flex: 1,
               alignItems: 'center',

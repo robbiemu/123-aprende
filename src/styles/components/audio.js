@@ -15,7 +15,8 @@ export const playerStyle = {
 }
 
 export const bodyContainerStyle = {
-  lineHeight: 0
+  lineHeight: 0,
+  minWidth: 350
 }
 
 export const playButtonStyle = {

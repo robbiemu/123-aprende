@@ -1,7 +1,7 @@
 import React from 'react'
 
 import config from '@src/config/soundcloud'
-import ProgressSoundPlayer from './web/ProgressSoundPlayer'
+import ProgressSoundPlayer from './native/ProgressSoundPlayer'
 
 class Audio extends React.Component {
   render () {

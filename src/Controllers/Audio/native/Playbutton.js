@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-native-paper'
 import PropTypes from 'prop-types'
 import ClassNames from 'classnames'
-import SoundCloudAudio from 'soundcloud-audio'
+import SoundCloudAudio from './soundcloud-audio'
 import { PauseIconSVG, PlayIconSVG } from './icons'
 
 class PlayButton extends Component {

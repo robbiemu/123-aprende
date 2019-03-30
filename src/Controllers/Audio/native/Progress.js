@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import PropTypes from 'prop-types'
-import SoundCloudAudio from 'soundcloud-audio'
+import SoundCloudAudio from './soundcloud-audio'
 import ClassNames from 'classnames'
 
 class Progress extends Component {

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 import { Text, Subheading } from 'react-native-paper'
 import {
@@ -85,8 +85,7 @@ function renderSoundcloud (destination, children) {
   destination = destination.replace(/^(soundcloud):\/\//, '')
 
   return (
-    <Text />
-    /*    <Fragment key={getUniqueID()}>
+    <View key={getUniqueID()}>
       <Audio
         data={{
           url:
@@ -99,6 +98,6 @@ function renderSoundcloud (destination, children) {
         onPress={() => openUrl(children[0].props.children)}>
         {config.constants.activities.OPEN_ON_SOUNDCLOUD}
       </Text>
-    </Fragment> */
+    </View>
   )
 }

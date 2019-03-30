@@ -2,9 +2,9 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Button } from 'react-native-paper'
-import { Slider } from 'react-native-slider'
+import Slider from 'react-native-slider'
 import PropTypes from 'prop-types'
-import SoundCloudAudio from 'soundcloud-audio'
+import SoundCloudAudio from './soundcloud-audio'
 import ClassNames from 'classnames'
 import { VolumeIconLoudSVG, VolumeIconMuteSVG } from './icons'
 
@@ -33,7 +33,6 @@ class VolumeControl extends Component {
 
   handleMute (value) {
     const { onToggleMute, soundCloudAudio } = this.props
-
     if (soundCloudAudio && !isNaN(soundCloudAudio.audio.muted)) {
       soundCloudAudio.audio.muted = !soundCloudAudio.audio.muted
     }
