@@ -38,7 +38,7 @@ export default class Auth extends BaseAuth {
 
           if (result.type !== 'success') throw result
 
-          console.trace('login result', result)
+          console.log('login result', result)
 
           resolve(await self.handleParams(result.params))
         })
@@ -75,7 +75,7 @@ export default class Auth extends BaseAuth {
     let success = Platform.OS !== 'ios'
 
     if (!uid) {
-      console.trace('we don´t have data from BBN, so let´s try to get it')
+      console.log('we don´t have data from BBN, so let´s try to get it')
 
       AppLinking.register()
     } else {
@@ -97,14 +97,14 @@ export default class Auth extends BaseAuth {
           })
 
         if (!userHasDevice) {
-          console.trace(
+          console.log(
             'we have a uid, but this device isn´t in associated with this user yet'
           )
 
           AppLinking.register()
         }
       } else {
-        console.trace(
+        console.log(
           'no need to register app/device pair, already satisfied w/ uid: ',
           uid
         )

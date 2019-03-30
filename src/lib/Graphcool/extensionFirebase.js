@@ -4,7 +4,7 @@ import { default as appConfig } from '@src/config/app'
 import User from '@src/Models/User'
 
 export const getFirebaseToken = async () => {
-  console.trace('getFirebaseToken')
+  console.log('getFirebaseToken')
 
   const userIdentifier = await AsyncStorage.getItem(
     appConfig.constants.bbn.connectionDetails.uid
@@ -24,14 +24,14 @@ export const getFirebaseToken = async () => {
         // we didn't sign in?
         console.error('error using connected data')
       } else {
-        console.trace('attempting to getFirebaseToken with uid', userIdentifier)
+        console.log('attempting to getFirebaseToken with uid', userIdentifier)
         await apolloClient
           .query({
             query: User.getFirebaseToken,
             variables: { userIdentifier }
           })
           .then(async response => {
-            console.trace('received firebase token response', response)
+            console.log('received firebase token response', response)
 
             await AsyncStorage.setItem(
               'firebase_token',

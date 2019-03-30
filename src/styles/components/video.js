@@ -1,0 +1,1 @@
+export const videoStyle = { alignSelf: 'stretch', height: 300 }

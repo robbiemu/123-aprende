@@ -1,13 +1,11 @@
+// import config from '@src/config/css'
+
 export const modalBaseStyle = {
   background: 'transparent',
-  position: 'fixed',
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
+  flex: 1
 }
 
-export const modalParentStyle = Object.assign({}, modalBaseStyle,{
+export const modalParentStyle = Object.assign({}, modalBaseStyle, {
   zIndex: 1000
 })
 

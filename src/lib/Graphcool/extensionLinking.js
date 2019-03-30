@@ -40,7 +40,7 @@ export const relayBBNToGraphcool = async () => {
 
   const deviceIdentifier = Device.currentIdentifier()
 
-  console.trace(
+  console.log(
     'saving to graphcool the BBN data',
     /* , await AsyncStorage.getItem('graphcool_token'), bundleIdentifier, userIdentifier, */ deviceToken,
     deviceIdentifier
@@ -53,7 +53,7 @@ export const relayBBNToGraphcool = async () => {
 
       if (user === null) throw new Error('no user')
 
-      console.trace('1 creating Token for user', `deviceToken: ${deviceToken}`)
+      console.log('1 creating Token for user', `deviceToken: ${deviceToken}`)
 
       apolloClient
         .mutate({
@@ -66,7 +66,7 @@ export const relayBBNToGraphcool = async () => {
         .then(tokenPayload => {
           const token = tokenPayload.data.createToken
 
-          console.trace(
+          console.log(
             '2 creating Device for user',
             `deviceIdentifier: ${deviceIdentifier}, tokenId: ${token.id}`
           )
@@ -82,7 +82,7 @@ export const relayBBNToGraphcool = async () => {
             .then(devicePayload => {
               const device = devicePayload.data.createDevice
 
-              console.trace(
+              console.log(
                 '3 updating user',
                 `bundleIdentifier: ${bundleIdentifier}, userIdentifier: ${userIdentifier}`
               )
@@ -106,7 +106,7 @@ export const relayBBNToGraphcool = async () => {
                 }
               })
 
-              console.trace('4 updating Token/Device pair')
+              console.log('4 updating Token/Device pair')
 
               apolloClient
                 .mutate({

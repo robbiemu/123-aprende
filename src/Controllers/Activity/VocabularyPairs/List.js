@@ -3,7 +3,7 @@ import { View, TouchableWithoutFeedback, ScrollView } from 'react-native'
 import { ActivityIndicator, Colors, Headline, List as NativeList } from 'react-native-paper'
 
 import config from '@src/config/app'
-import { getProgress } from '@src/Controllers/Activity/Activity'
+import { getProgress } from '@src/Controllers/Activity/extensionActivity'
 import deepmerge from 'deepmerge'
 import { spinner } from '@src/styles'
 import { listStyle, listTouchableStyle } from '@src/styles/components/list'

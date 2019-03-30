@@ -5,13 +5,12 @@ import Url from 'url'
 import { relayBBNToGraphcool } from '@src/lib/Graphcool'
 import config from '@src/config/app'
 
-
 export default {
   /** on iOS, request contection details by url */
   async register () {
     const appid = config.appId
 
-    console.trace('registering app id as', appid)
+    console.log('registering app id as', appid)
 
     const urlize = uri =>
       `bbn://register?appname=third-party-demo&callback=${uri}?action=${
