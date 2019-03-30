@@ -1,15 +1,24 @@
+import { BackHandler, Platform } from 'react-native'
 import AsyncStorage from '@callstack/async-storage'
 
 import config from '@src/config/app'
 
 export const drawerItems = config.constants.drawer.items
 
-export function generateItemWithContext(data, context) {
+export function generateItemWithContext (data, context) {
   switch (data.id) {
     case config.constants.drawer.index.logout:
       data.navigate = () => {
-        AsyncStorage.clear()
-        // TODO - reroute to login again in boh windows and ios .   windows is easy - window.reload()
+        try {
+          AsyncStorage.clear()
+        } catch (e) {}
+        // TODO - reroute to login again in boh windows and ios .   windows is easy - window.location.reload()
+
+        if (Platform.OS === 'ios') {
+          BackHandler.exitApp()
+        } else {
+          window.location.reload()
+        }
       }
       break
     default:
