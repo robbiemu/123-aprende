@@ -15,26 +15,32 @@ import Feed from '@src/Controllers/Feed'
 
 export default class Submission extends React.Component {
   state = {
-    progress: null, // progress for submissions is 0/1, and is not part of the series used to calculate class completion. Their prupose is to allow feedback and demonstration of work.
+    progress: null // progress for submissions is 0/1, and is not part of the series used to calculate class completion. Their prupose is to allow feedback and demonstration of work.
   }
 
   async componentWillMount () {
-    const progress = deepmerge(this.state.progress||{}, await getProgress())
-    this.setState({progress})
+    const progress = deepmerge(this.state.progress || {}, await getProgress())
+    this.setState({ progress })
   }
 
   render () {
-    if(this.state.progress === null)
-      return <View style={spinner}>
-        <ActivityIndicator animating={true} color={Colors.grey400} />
-      </View>
+    if (this.state.progress === null) {
+      return (
+        <View style={spinner}>
+          <ActivityIndicator animating color={Colors.grey400} />
+        </View>
+      )
+    }
 
-    const title = this.props.data.title || config.constants.activities[this.props.data.type.toUpperCase()]
+    const title =
+      this.props.data.title ||
+      config.constants.activities[this.props.data.type.toUpperCase()]
 
     return (
-      <FramedView containerStyle={pageContainerStyle} 
-                  id={this.props.data.id} 
-                  title={title}>
+      <FramedView
+        containerStyle={pageContainerStyle}
+        id={this.props.data.id}
+        title={title}>
         <Markdown rules={rules}>
           {this.props.data.json.markdown.replace(/\\n/g, '\n')}
         </Markdown>
@@ -42,7 +48,20 @@ export default class Submission extends React.Component {
           <Headline>Submit your media!</Headline>
           {this.props.children}
         </View>
-        <Feed type={this.props.data.type} data={this.props.data.json.feed} />
+        {this.props.data.json.feed && (
+          <Feed
+            search='video'
+            type={this.props.data.type}
+            data={this.props.data.json.feed}
+          />
+        )}
+        {this.props.data.json.twitter && (
+          <Feed
+            search='twitter'
+            type={this.props.data.type}
+            data={this.props.data.json.twitter}
+          />
+        )}
       </FramedView>
     )
   }

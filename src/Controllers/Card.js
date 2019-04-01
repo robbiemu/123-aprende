@@ -1,13 +1,26 @@
 import React from 'react'
 import { TextInput as NativeTextInput, Platform, View } from 'react-native'
-import { Card as PaperCard, TextInput, Title, Paragraph, Headline, ActivityIndicator, Colors } from 'react-native-paper'
+import {
+  Card as PaperCard,
+  TextInput,
+  Title,
+  Paragraph,
+  Headline,
+  ActivityIndicator,
+  Colors
+} from 'react-native-paper'
 import AsyncStorage from '@callstack/async-storage'
 import deepmerge from 'deepmerge'
 import FuzzySet from 'fuzzyset.js'
 
 import config from '@src/config/app'
 import { getProgress } from '@src/Controllers/Activity/extensionActivity'
-import { cardStyle, cardContentStyle, cardTextInputStyle, cardNativeTextInputStyle } from '@src/styles/components/card'
+import {
+  cardStyle,
+  cardContentStyle,
+  cardTextInputStyle,
+  cardNativeTextInputStyle
+} from '@src/styles/components/card'
 import { spinner } from '@src/styles'
 
 export default class Card extends React.Component {
@@ -19,73 +32,123 @@ export default class Card extends React.Component {
   }
 
   async componentWillMount () {
-    const progress = deepmerge(this.state.progress||{}, await getProgress())
+    const progress = deepmerge(this.state.progress || {}, await getProgress())
     console.log('progress', progress)
-    this.setState({progress})
+    this.setState({ progress })
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     // this.state.progress.vocabularyPairs[this.props.data] = progress.vocabularyPairs[this.props.data] ?
   }
 
-  render() {
-    if(this.state.progress === null)
-      return <View style={spinner}>
-        <ActivityIndicator animating={true} color={Colors.grey400} />
-      </View>
+  render () {
+    if (this.state.progress === null) {
+      return (
+        <View style={spinner}>
+          <ActivityIndicator animating color={Colors.grey400} />
+        </View>
+      )
+    }
 
-    const recordForProgress = this.state.progress[config.constants.activities.types.VocabularyPairs][this.props.data.id]
+    const recordForProgress = this.state.progress[
+      config.constants.activities.types.VocabularyPairs
+    ][this.props.data.id]
 
     const cardFace = this.props.data
-    const face = config.constants.cards.faces[this.props.face || this.state.currentFace]
-    const oppositeFace = config.constants.cards.faces[!(this.props.face || this.state.currentFace)]
+    const face =
+      config.constants.cards.faces[this.props.face || this.state.currentFace]
+    const oppositeFace =
+      config.constants.cards.faces[!(this.props.face || this.state.currentFace)]
 
     switch (this.props.type) {
       case config.constants.activities.VocabularyPairs.test:
       case config.constants.activities.VocabularyPairs.quiz:
       case config.constants.activities.VocabularyPairs.review:
-        if (recordForProgress === null || recordForProgress === undefined) { // first showing
-          return <PaperCard style={cardStyle} elevation={8} accessible={true} onPress={this.onPress.bind(this)}>
-            <PaperCard.Content style={cardContentStyle}>
-              <Title style={{fontSize: "48pt", padding: 8}}>{cardFace[face].number}</Title>
-              <Headline style={{ textAlign: 'center'}}>{cardFace[face].glyphs}</Headline>
-              <Paragraph style={{ textAlign: 'center'}}>{cardFace[oppositeFace].glyphs}</Paragraph>
-            </PaperCard.Content>
-          </PaperCard>
+        if (recordForProgress === null || recordForProgress === undefined) {
+          // first showing
+          return (
+            <PaperCard
+              style={cardStyle}
+              elevation={8}
+              accessible
+              onPress={this.onPress.bind(this)}>
+              <PaperCard.Content style={cardContentStyle}>
+                <Title style={{ fontSize: '48pt', padding: 8 }}>
+                  {cardFace[face].number}
+                </Title>
+                <Headline style={{ textAlign: 'center' }}>
+                  {cardFace[face].glyphs}
+                </Headline>
+                <Paragraph style={{ textAlign: 'center' }}>
+                  {cardFace[oppositeFace].glyphs}
+                </Paragraph>
+              </PaperCard.Content>
+            </PaperCard>
+          )
         }
         /* not the first time a card is shown */
-        return !this.state.shown
-            /** before they guess */
-            ? <PaperCard style={cardStyle} elevation={8} accessible={true}>
-                <PaperCard.Content style={cardContentStyle}>
-                  <Title style={{fontSize: "48pt", padding: 8}}>{cardFace[face].number}</Title>
-                  <Headline style={{ textAlign: 'center'}}>{cardFace[face].glyphs}</Headline>
-                  {Platform.OS === 'ios'
-                      ? <TextInput mode={'outlined'}
-                                   label={config.constants.cards.faces[!this.props.face]}
-                                   style={cardTextInputStyle}
-                                   value={this.state.text}
-                                   onChangeText={text => this.setState({ text })}
-                                   onEndEditing={this.evaluate.bind(this)} />
-                      : <NativeTextInput mode={'outlined'}
-                                         placeholder={config.constants.cards.faces[!this.props.face]}
-                                         style={cardNativeTextInputStyle}
-                                         value={this.state.text}
-                                         onChangeText={text => this.setState({ text })}
-                                         onBlur={this.evaluate.bind(this)} />
-                  }
-                </PaperCard.Content>
-              </PaperCard>
-            /** after they guess */
-            : <PaperCard style={cardStyle} elevation={8} accessible={true} onPress={this.onPress.bind(this)}>
-                <PaperCard.Content style={cardContentStyle}>
-                  <Title style={{fontSize: "48pt", padding: 8}}>{cardFace[face].number}</Title>
-                  <Paragraph style={{ textAlign: 'center'}}>{cardFace[face].glyphs}</Paragraph>
-                  <Headline style={{ textAlign: 'center', fontWeight: 'bold', color: 'orange'}}>{cardFace[oppositeFace].glyphs}</Headline>
-                </PaperCard.Content>
-              </PaperCard>
+        return !this.state.shown ? (
+          /** before they guess */
+          <PaperCard style={cardStyle} elevation={8} accessible>
+            <PaperCard.Content style={cardContentStyle}>
+              <Title style={{ fontSize: '48pt', padding: 8 }}>
+                {cardFace[face].number}
+              </Title>
+              <Headline style={{ textAlign: 'center' }}>
+                {cardFace[face].glyphs}
+              </Headline>
+              {Platform.OS === 'ios' ? (
+                <TextInput
+                  mode={'outlined'}
+                  label={config.constants.cards.faces[!this.props.face]}
+                  style={cardTextInputStyle}
+                  value={this.state.text}
+                  onChangeText={text => this.setState({ text })}
+                  onEndEditing={this.evaluate.bind(this)}
+                />
+              ) : (
+                <NativeTextInput
+                  mode={'outlined'}
+                  placeholder={config.constants.cards.faces[!this.props.face]}
+                  style={cardNativeTextInputStyle}
+                  value={this.state.text}
+                  onChangeText={text => this.setState({ text })}
+                  onBlur={this.evaluate.bind(this)}
+                />
+              )}
+            </PaperCard.Content>
+          </PaperCard>
+        ) : (
+          /** after they guess */
+          <PaperCard
+            style={cardStyle}
+            elevation={8}
+            accessible
+            onPress={this.onPress.bind(this)}>
+            <PaperCard.Content style={cardContentStyle}>
+              <Title style={{ fontSize: '48pt', padding: 8 }}>
+                {cardFace[face].number}
+              </Title>
+              <Paragraph style={{ textAlign: 'center' }}>
+                {cardFace[face].glyphs}
+              </Paragraph>
+              <Headline
+                style={{
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  color: 'orange'
+                }}>
+                {cardFace[oppositeFace].glyphs}
+              </Headline>
+            </PaperCard.Content>
+          </PaperCard>
+        )
       default:
-        return <h1>{this.props.data[config.constants.cards.faces[this.props.face]]}</h1>
+        return (
+          <h1>
+            {this.props.data[config.constants.cards.faces[this.props.face]]}
+          </h1>
+        )
     }
   }
 
@@ -93,9 +156,13 @@ export default class Card extends React.Component {
   async evaluate () {
     console.log('evaluating')
     const guess = this.state.text.toLowerCase().trim()
-    const evaluations = (this.props.data[config.constants.cards.faces[this.props.face]].evaluateAs||[])
-        .map(word => word.toLowerCase().trim())
-    evaluations.push(this.props.data[config.constants.cards.faces[!this.props.face]].glyphs)
+    const evaluations = (
+      this.props.data[config.constants.cards.faces[this.props.face]]
+        .evaluateAs || []
+    ).map(word => word.toLowerCase().trim())
+    evaluations.push(
+      this.props.data[config.constants.cards.faces[!this.props.face]].glyphs
+    )
 
     const matches = evaluations.some(representation => {
       const word = representation
@@ -109,7 +176,7 @@ export default class Card extends React.Component {
       const matches = fs.get(guess)
 
       console.log('first failed, matches now:', matches)
-      if(matches) {
+      if (matches) {
         // accept as typo
         await this.accept(false)
       } else {
@@ -119,38 +186,62 @@ export default class Card extends React.Component {
   }
 
   async accept (isAcceptedAsTypo) {
-    const alpha = this.state.progress[config.constants.activities.types.VocabularyPairs][this.props.data.id]
-    const progress = this.state.progress
-    progress[config.constants.activities.types.VocabularyPairs][this.props.data.id] = alpha === undefined
-      ? 0
-      : (1 - alpha)/2 + alpha
+    const alpha = this.state.progress[
+      config.constants.activities.types.VocabularyPairs
+    ][this.props.data.id]
+    const numerator = (1 - alpha) * this.getModifier()
 
-    this.setState({progress})
+    const progress = this.state.progress
+    progress[config.constants.activities.types.VocabularyPairs][
+      this.props.data.id
+    ] = alpha === undefined ? 0 : numerator / 2 + alpha
+
+    this.setState({ progress })
 
     await this.complete()
   }
 
   decline () {
-    const alpha = this.state.progress[config.constants.activities.types.VocabularyPairs][this.props.data.id]
+    const alpha = this.state.progress[
+      config.constants.activities.types.VocabularyPairs
+    ][this.props.data.id]
     const progress = this.state.progress
-    if(alpha === 0 || alpha === undefined || alpha === null) {
-      progress[config.constants.activities.types.VocabularyPairs][this.props.data.id] = 0
+    if (alpha === 0 || alpha === undefined || alpha === null) {
+      progress[config.constants.activities.types.VocabularyPairs][
+        this.props.data.id
+      ] = 0
     } else {
-      progress[config.constants.activities.types.VocabularyPairs][this.props.data.id] =
-          (alpha === 0? 0: (1 - alpha)/8 + alpha - (1 - alpha)/2)
+      progress[config.constants.activities.types.VocabularyPairs][
+        this.props.data.id
+      ] = alpha === 0 ? 0 : (1 - alpha) / 8 + alpha - (1 - alpha) / 2
     }
 
-    this.setState({progress})
+    this.setState({ progress })
 
     this.flip()
   }
 
   flip () {
     this.setState({
-          currentFace: !this.state.currentFace,
-          shown: true,
-          progress: this.state.progress
+      currentFace: !this.state.currentFace,
+      shown: true,
+      progress: this.state.progress
     })
+  }
+
+  /* allow tests to help more advanced students "skip ahead"  */
+  getModifier () {
+    switch (this.props.type) {
+      case config.constants.activities.VocabularyPairs.test:
+        return 2
+      case config.constants.activities.VocabularyPairs.quiz:
+      case config.constants.activities.VocabularyPairs.review:
+        return 1
+        break
+      default:
+        console.warn(`unimplemented VocabularyPairs type ${this.props.type}`)
+        return 0
+    }
   }
 
   async onPress () {
@@ -160,9 +251,11 @@ export default class Card extends React.Component {
       case config.constants.activities.VocabularyPairs.review:
         if (!this.state.shown) {
           const progress = this.state.progress
-          progress[config.constants.activities.types.VocabularyPairs][this.props.data.id] = 0
+          progress[config.constants.activities.types.VocabularyPairs][
+            this.props.data.id
+          ] = 0
 
-          this.setState({progress})
+          this.setState({ progress })
         }
 
         await this.complete()
@@ -172,13 +265,16 @@ export default class Card extends React.Component {
     }
   }
 
-  async complete() {
-    this.setState({shown: false, currentFace: false, text: ''})
+  async complete () {
+    this.setState({ shown: false, currentFace: false, text: '' })
 
-    await AsyncStorage.setItem(config.constants.graphcool.progress, JSON.stringify(this.state.progress))
+    await AsyncStorage.setItem(
+      config.constants.graphcool.progress,
+      JSON.stringify(this.state.progress)
+    )
 
     typeof this.props.progress === 'function'
-        ? this.props.progress()
-        : console.warn('no progress function set!')
+      ? this.props.progress()
+      : console.warn('no progress function set!')
   }
 }

@@ -13,6 +13,7 @@ import config from '@src/config/app'
 import history from '@src/lib/history'
 import { default as AppLinking } from '@src/lib/Linking'
 import Auth from '@src/lib/Auth'
+import twitter from '@src/lib/twitter'
 import { getApolloClient } from '@src/lib/Graphcool'
 import { Router, Switch, Route } from '@src/routing'
 
@@ -29,6 +30,7 @@ import {
 } from './extensionAuthentication'
 
 type State = {
+  twitter: any,
   auth0: any, // we must authenticate with auth0 ...
   apolloClient: any, // and pass that authentication to graphcool to login
   isLoaded: boolean,
@@ -40,6 +42,7 @@ export default class App extends React.Component<*, State> {
     super()
 
     this.state = {
+      twitter,
       auth0: new Auth(),
       apolloClient: null,
       isLoaded: false,
