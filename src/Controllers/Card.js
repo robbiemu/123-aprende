@@ -237,7 +237,6 @@ export default class Card extends React.Component {
       case config.constants.activities.VocabularyPairs.quiz:
       case config.constants.activities.VocabularyPairs.review:
         return 1
-        break
       default:
         console.warn(`unimplemented VocabularyPairs type ${this.props.type}`)
         return 0
