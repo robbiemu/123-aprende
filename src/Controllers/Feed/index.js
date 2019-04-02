@@ -1,9 +1,11 @@
+/* eslint no-lone-blocks: "error" */
+/* eslint-env es6 */
 import React from 'react'
 import { View } from 'react-native'
 import uuid from 'uuid/v4'
 
 import config from '@src/config/app'
-import { getTwitterFeed } from './extensionTwitter'
+import { getTwitterFeed } from './extensionTwitter.native'
 import { getVideoFeed } from './extensionVideo'
 import { getAudioFeed } from './extensionAudio'
 import { default as Video } from '@src/Controllers/Video'
