@@ -18,6 +18,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import Firebase from '@src/lib/Firebase'
+import { getAppTx } from '@src/lib/Firebase/mixinAppTx'
 import config from '@src/config/app'
 import { config as firebaseConfig } from '@src/config/firebase'
 
@@ -244,7 +245,7 @@ class Override extends React.Component<Props> {
 
   onCommitMetric = async () => {
     let path = firebaseConfig.appData.path
-    let payload = this.getAppTx({
+    let payload = getAppTx({
       uid: this.state.uid,
       app_id: this.state.appid,
       app_name: this.state.appName,
@@ -257,24 +258,6 @@ class Override extends React.Component<Props> {
 
     db.collection(path + this.state.uid).add(payload)
   }
-
-  /** helper method - generate a valid firebase payload for app metric data
-   * TODO - refactor. This is a store executable
-   */
-  getAppTx = object => {
-    object.date = this.getFirebaseDate()
-    return object
-  }
-
-  /** helper method - generate a valid Date for firebse database
-   * from src https://stackoverflow.com/questions/8362952/output-javascript-date-in-yyyy-mm-dd-hhmsec-format#answer-54187918
-   * TODO - refactor. This is a store executable
-   */
-  getFirebaseDate = (date = new Date()) =>
-    date
-      .toISOString()
-      .slice(0, 19)
-      .replace('T', ' ')
 
   /** helper method that validates state.metric
    * TODO - refactor. This is arguably a store executable

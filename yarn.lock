@@ -12359,6 +12359,13 @@ react-native-safe-area-view@^0.12.0:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
+react-native-safe-area-view@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.13.1.tgz#834bbb6d22f76a7ff07de56725ee5667ba1386b0"
+  integrity sha512-d/pu2866jApSwLtK/xWAvMXZkNTIQcFrjjbcTATBrmIfFNnu8TNFUcMRFpfJ+eOn5nmx7uGmDvs9B53Ft7JGpQ==
+  dependencies:
+    hoist-non-react-statics "^2.3.1"
+
 react-native-safe-module@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-module/-/react-native-safe-module-1.2.0.tgz#a23824ca24edc2901913694a76646475113d570d"
@@ -12370,6 +12377,14 @@ react-native-screens@1.0.0-alpha.22:
   version "1.0.0-alpha.22"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
+
+react-native-simple-twitter@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-simple-twitter/-/react-native-simple-twitter-2.3.0.tgz#4f2fcd051cea8d445388827022fd43ef85dd7973"
+  integrity sha512-6I2JIgklb5WoaKv38oSGCls6NR1RdOIqL8zPBe37zkrh1qGlqD/yAbLOi37IZRJGKP6vQkUzz1f6GnKfMk8A7g==
+  dependencies:
+    crypto-js "^3.1.9-1"
+    react-native-safe-area-view "^0.13.1"
 
 react-native-slider@^0.11.0:
   version "0.11.0"

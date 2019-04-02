@@ -5,6 +5,7 @@ import { videoStyle } from '@src/styles/components/video'
 
 class Video extends React.Component {
   render () {
+    console.log('rendering video with data', this.props)
     const uri = `https://www.youtube.com/embed/${
       this.props.data.id
     }?rel=0&autoplay=${

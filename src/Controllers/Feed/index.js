@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import uuid from 'uuid/v4'
 
 import config from '@src/config/app'
+import { getTwitterFeed } from './extensionTwitter'
 import { getVideoFeed } from './extensionVideo'
 import { getAudioFeed } from './extensionAudio'
 import { default as Video } from '@src/Controllers/Video'
@@ -18,8 +19,22 @@ class Feed extends React.Component {
     switch (this.props.type) {
       case config.constants.activities.types.VideoSubmission:
         {
-          const results = await getVideoFeed(this.props.data)
-          feed = results.map(video => <Video key={uuid()} data={video} />)
+          switch (this.props.search) {
+            case 'video':
+              const results = await getVideoFeed(this.props.data)
+              feed = results.map(video => <Video key={uuid()} data={video} />)
+              break
+            case 'twitter':
+              const twitter = await getTwitterFeed(this.props.data)
+              feed = twitter.video.map(video => (
+                <Video key={uuid()} data={video} />
+              )) /* -- someday: .concat(twitter.tweets.map(status => {
+                <Tweet id= />
+              })) */
+              break
+            default:
+              console.warn('unknown video submission search', this.props.search)
+          }
         }
         break
       case config.constants.activities.types.AudioSubmission:
