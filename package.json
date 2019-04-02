@@ -35,6 +35,7 @@
     "install": "^0.12.2",
     "jwt-decode": "^2.2.0",
     "linkify-it": "^2.1.0",
+    "lodash.debounce": "^4.0.8",
     "markdown-it": "^8.4.2",
     "npm": "^6.9.0",
     "prop-types": "^15.0.0",

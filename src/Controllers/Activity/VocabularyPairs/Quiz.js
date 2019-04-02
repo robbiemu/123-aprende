@@ -6,7 +6,7 @@ import deepmerge from 'deepmerge'
 import config from '@src/config/app'
 import cssConfig from '@src/config/css'
 import { reviewStyle } from '@src/styles/components/review'
-import { getProgress } from '@src/Controllers/Activity/extensionActivity'
+import { getProgress } from '@src/Controllers/Activity/mixinProgress'
 import { spinner } from '@src/styles'
 
 import Card from '@src/Controllers/Card'

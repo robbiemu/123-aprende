@@ -3,9 +3,13 @@ import { View } from 'react-native'
 import { ActivityIndicator, Colors, Paragraph } from 'react-native-paper'
 import AsyncStorage from '@callstack/async-storage'
 import { Query } from 'react-apollo'
+import debounce from 'lodash.debounce'
 
 import config from '@src/config/app'
 import cssConfig from '@src/config/css'
+import { config as firebaseConfig } from '@src/config/firebase'
+import Firebase from '@src/lib/Firebase'
+import { getAppTx } from '@src/lib/Firebase/mixinAppTx'
 import history from '@src/lib/history'
 import User from '@src/Models/User'
 import ActivityModel from '@src/Models/Activity'
@@ -20,7 +24,9 @@ import Submission from '@src/Controllers/Activity/Submission'
 class Activity extends React.Component {
   state = {
     graphcool_id: null,
-    apolloClient: null
+    apolloClient: null,
+    uid: '',
+    metric_coefficient: NaN
   }
 
   async componentDidMount () {
@@ -47,12 +53,27 @@ class Activity extends React.Component {
       config.constants.graphcool.user_id
     )
 
-    if (!graphcool_id) return
+    const uid = await AsyncStorage.getItem(
+      config.constants.bbn.connectionDetails.uid
+    )
 
-    this.setState({
-      graphcool_id,
-      apolloClient
-    })
+    const state = {}
+    await apolloClient
+      .query({
+        query: ActivityModel.getActivity,
+        variables: {
+          id: config.constants.graphcool.MASTER_LIST_ID
+        }
+      })
+      .then(response => {
+        state.metric_coefficient = response.data.Activity.json.length
+      })
+
+    if (graphcool_id) state.graphcool_id = graphcool_id
+    if (apolloClient) state.apolloClient = apolloClient
+    if (uid) state.uid = uid
+
+    if (Object.keys(state)) this.setState(state)
   }
 
   render () {
@@ -166,7 +187,7 @@ class Activity extends React.Component {
         )
       case config.constants.activities.VocabularyPairs.memoryGame:
       default:
-         // <List vocabulary={data.Activity.json} completedActivity={onCompletedActivity} />
+      // <List vocabulary={data.Activity.json} completedActivity={onCompletedActivity} />
     }
   }
 
@@ -188,9 +209,52 @@ class Activity extends React.Component {
         mutation: User.saveProgress,
         variables
       })
+
+      if (this.state.uid) {
+        const observation = JSON.parse(progress)
+        const metric = this.computeMetric(observation)
+
+        this.commitMetric(metric)
+      }
     })
 
     history.goBack()
+  }
+
+  computeMetric (progress) {
+    const p = progress[config.constants.activities.types.VocabularyPairs]
+    const progress_coefficient = Object.values(p).reduce((p, c) => {
+      return p + c
+    }, 0)
+
+    return progress_coefficient / this.state.metric_coefficient
+  }
+
+  commitMetric = debounce(this._commitMetric, 200)
+
+  async _commitMetric (metric) {
+    let path = firebaseConfig.appData.path
+    let payload = getAppTx({
+      uid: this.state.uid,
+      app_id: config.appId,
+      app_name: config.appName,
+      metric
+    })
+
+    console.log(
+      '------adding to path: payload to uid',
+      path + this.state.uid,
+      payload,
+      this.state.uid
+    )
+
+    const db = await Firebase.getDb()
+
+    try {
+      db.collection(path + this.state.uid).add(payload)
+    } catch (e) {
+      console.warn(e)
+    }
   }
 }
 

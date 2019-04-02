@@ -6,7 +6,7 @@ import Markdown from 'react-native-markdown-renderer'
 
 import { rules } from '@src/lib/Markdown'
 import config from '@src/config/app'
-import { getProgress } from '@src/Controllers/Activity/extensionActivity'
+import { getProgress } from '@src/Controllers/Activity/mixinProgress'
 import { spinner } from '@src/styles'
 import { pageContainerStyle } from '@src/styles/components/page'
 

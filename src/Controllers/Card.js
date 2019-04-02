@@ -14,7 +14,7 @@ import deepmerge from 'deepmerge'
 import FuzzySet from 'fuzzyset.js'
 
 import config from '@src/config/app'
-import { getProgress } from '@src/Controllers/Activity/extensionActivity'
+import { getProgress } from '@src/Controllers/Activity/mixinProgress'
 import {
   cardStyle,
   cardContentStyle,
