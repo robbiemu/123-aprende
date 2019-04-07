@@ -195,6 +195,17 @@ export default class Card extends React.Component {
     progress[config.constants.activities.types.VocabularyPairs][
       this.props.data.id
     ] = alpha === undefined ? 0 : numerator / 2 + alpha
+    if (
+      progress[config.constants.activities.types.VocabularyPairs][
+        this.props.data.id
+      ] > 1
+    )
+    // should be impossible, but floats, you know
+    {
+      progress[config.constants.activities.types.VocabularyPairs][
+        this.props.data.id
+      ] = 1
+    }
 
     this.setState({ progress })
 
@@ -215,6 +226,17 @@ export default class Card extends React.Component {
         this.props.data.id
       ] = alpha === 0 ? 0 : (1 - alpha) / 8 + alpha - (1 - alpha) / 2
     }
+    if (
+      progress[config.constants.activities.types.VocabularyPairs][
+        this.props.data.id
+      ] < 0
+    )
+    // should be impossible, but floats, you know
+    {
+      progress[config.constants.activities.types.VocabularyPairs][
+        this.props.data.id
+      ] = 0
+    }
 
     this.setState({ progress })
 
@@ -233,7 +255,7 @@ export default class Card extends React.Component {
   getModifier () {
     switch (this.props.type) {
       case config.constants.activities.VocabularyPairs.test:
-        return 2
+        return 1.9
       case config.constants.activities.VocabularyPairs.quiz:
       case config.constants.activities.VocabularyPairs.review:
         return 1

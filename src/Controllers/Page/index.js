@@ -6,7 +6,10 @@ import { Query } from 'react-apollo'
 
 import config from '@src/config/app'
 import PageModel from '@src/Models/Page'
-import { pageContainerStyle } from '@src/styles/components/page'
+import {
+  pageContainerStyle,
+  lessonContainerStyle
+} from '@src/styles/components/page'
 
 import FramedView from '@src/Controllers/FramedView'
 import DefaultPage from './Page'
@@ -62,10 +65,14 @@ class Page extends React.Component {
           }
 
           if (data && data.Page && data.Page.markdown && data.Page.type) {
+            let containerStyle = pageContainerStyle
+
             let page
             switch (data.Page.type) {
               case config.constants.pages.types.Lesson:
                 page = <Lesson data={data.Page} />
+
+                containerStyle = lessonContainerStyle
                 break
               case config.constants.pages.types.Page:
                 if (data.Page.id === config.constants.graphcool.HOME_PAGE_ID) {
@@ -81,7 +88,7 @@ class Page extends React.Component {
 
             return (
               <FramedView
-                containerStyle={pageContainerStyle}
+                containerStyle={containerStyle}
                 id={data.Page.id}
                 title={data.Page.title}>
                 {page}

@@ -1,4 +1,4 @@
-import { vw, vh } from 'react-native-expo-viewport-units'
+import { vw } from 'react-native-expo-viewport-units'
 
 const paddedWidth = vw(100) - 32
 const pixelRatio = 100 / vw(100)

@@ -5,6 +5,7 @@ import {
   openUrl /* , renderRules */
 } from 'react-native-markdown-renderer'
 
+import config from '@src/config/app'
 import history from '@src/lib/history'
 
 function renderLocal (destination, children) {
@@ -20,12 +21,29 @@ function renderLocal (destination, children) {
   )
 }
 
+function renderTweetLink (destination, children) {
+  const tags = destination.replace(/^(tweet):\/\//, '')
+
+  const tweet =
+    'https://twitter.com/intent/tweet?hastags=' +
+    [tags, ...config.appTags].join(',')
+
+  return (
+    <Text key={getUniqueID()} mode='text' onPress={() => openUrl(tweet)}>
+      [{children}]
+    </Text>
+  )
+}
+
 export const rules = {
   link: (node, children, parent, styles) => {
     let destination = node && node.attributes ? node.attributes.href : undefined
     if (destination) {
       if (/^(?:local|vocabulary):\/\//.test(destination)) {
         return renderLocal(destination, children)
+      }
+      if (/^(?:tweet):\/\//.test(destination)) {
+        return renderTweetLink(destination, children)
       }
 
       // this is the original link renderer for markdown: https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/renderRules.js
