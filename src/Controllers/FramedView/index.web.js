@@ -15,6 +15,12 @@ type Props = {
   dataType: object,
 }
 
+const scrollviewStyle = {
+  ...appbarPadding,
+  overflowY: 'scroll',
+  height: 'calc(100vh - 56px)'
+}
+
 export default class FramedView extends React.Component<Props> {
   state = {
     isShowingDrawer: false
@@ -36,7 +42,7 @@ export default class FramedView extends React.Component<Props> {
             goBack={this.goBack.bind(this)}
             toggleDrawer={this.toggleDrawer.bind(this)}
           />
-          <ScrollView style={appbarPadding}>
+          <ScrollView style={scrollviewStyle}>
             <View style={this.props.containerStyle}>{this.props.children}</View>
           </ScrollView>
         </View>

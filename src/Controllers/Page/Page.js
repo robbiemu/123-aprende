@@ -5,7 +5,11 @@ import { rules } from '@src/lib/Markdown'
 
 class Page extends React.Component<Props> {
   render () {
-    return <Markdown rules={rules}>{this.props.data.markdown.replace(/\\n/g, '\n')}</Markdown>
+    return (
+      <Markdown rules={rules}>
+        {this.props.data.markdown.replace(/\\n/g, '\n')}
+      </Markdown>
+    )
   }
 }
 
