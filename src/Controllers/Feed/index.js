@@ -21,6 +21,7 @@ class Feed extends React.Component {
 
   async componentDidMount () {
     let feed = null
+
     switch (this.props.type) {
       case config.constants.activities.types.VideoSubmission:
         switch (this.props.search) {
@@ -59,6 +60,27 @@ class Feed extends React.Component {
       case config.constants.activities.types.AudioSubmission:
         const results = await getAudioFeed(this.props.data)
         feed = results.map(audio => <Audio key={uuid()} data={audio} />)
+
+        const twitter = await getTwitterFeed(this.props.data)
+        feed = feed.concat(
+          twitter.video.map(video => <Video key={uuid()} data={video} />)
+        )
+        if (Platform.OS === 'ios') {
+        } else {
+          const hashtags = config.appTags
+            .map(tag => '#' + tag)
+            .concat(this.props.data)
+            .map(tag => encodeURIComponent(tag))
+
+          const tweet = 'https://twitter.com/search?src=typd&q=' + hashtags
+
+          feed.push(
+            <Text key={uuid()} mode='text' onPress={() => openUrl(tweet)}>
+              [{this.props.data.join(' ')}]
+            </Text>
+          )
+        }
+
         break
       default:
         console.warn('no such submission type ', this.props.type)
