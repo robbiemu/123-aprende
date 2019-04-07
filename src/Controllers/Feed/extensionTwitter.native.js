@@ -50,6 +50,15 @@ export async function getTwitterFeed (feed) {
           })
           .flat(2)
 
+        twitter.audio = response.statuses
+          .map(tweet => {
+            if (!tweet.entities || !tweet.entities.urls) return []
+            return tweet.entities.urls
+              .filter(url => isSoundcloudAudio(url.expanded_url))
+              .map(url => ({ id: getAudioKey(url.expanded_url) }))
+          })
+          .flat(2)
+
         twitter.tweets = response.statuses.filter(tweet => {
           if (!tweet.entities || !tweet.entities.urls) return true
           return tweet.entities.urls.every(
@@ -74,17 +83,35 @@ export async function getTwitterFeed (feed) {
   return results
 }
 
-const regexen = [
-  /^(?:https?\:)?(?:\/\/)?youtu.be\/(\S+)/,
-  /^(?:https?\:)?(?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/
-]
+const regexen = {
+  youtube: [
+    /^(?:https?\:)?(?:\/\/)?youtu.be\/(\S+)/,
+    /^(?:https?\:)?(?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/
+  ],
+  soundcloud: [
+    /^(?:https?\:)?(?:\/\/)?(?:www\.)?youtube\.com\/([^/]+\/[^/&?]+)/
+  ]
+}
 
 function isYoutubeVideo (url) {
-  return regexen.some(regex => regex.test(url))
+  return regexen.youtube.some(regex => regex.test(url))
+}
+
+function isSoundcloudAudio (url) {
+  return regexen.soundcloud.some(regex => regex.test(url))
 }
 
 function getVideoKey (url) {
   // MDN's description of 'match' doesn't describe the JS interpreter in ios, so we can't just do string.match(r)
+  return regexen
+    .map(regex => {
+      const res = regex.exec(url)
+      return res ? res[0] : null
+    })
+    .filter(exists)
+}
+
+function getAudioKey (url) {
   return regexen
     .map(regex => {
       const res = regex.exec(url)

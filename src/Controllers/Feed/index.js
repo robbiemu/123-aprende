@@ -1,7 +1,10 @@
 /* eslint no-lone-blocks: "error" */
 /* eslint-env es6 */
 import React from 'react'
-import { View } from 'react-native'
+import { Platform, View } from 'react-native'
+import { Text } from 'react-native-paper'
+import { openUrl } from 'react-native-markdown-renderer'
+
 import uuid from 'uuid/v4'
 
 import config from '@src/config/app'
@@ -29,7 +32,23 @@ class Feed extends React.Component {
             const twitter = await getTwitterFeed(this.props.data)
             feed = twitter.video.map(video => (
               <Video key={uuid()} data={video} />
-            )) /* -- someday: .concat(twitter.tweets.map(status => {
+            ))
+            if (Platform.OS === 'ios') {
+            } else {
+              const hashtags = config.appTags
+                .map(tag => '#' + tag)
+                .concat(this.props.data)
+                .map(tag => encodeURIComponent(tag))
+
+              const tweet = 'https://twitter.com/search?src=typd&q=' + hashtags
+
+              feed.push(
+                <Text key={uuid()} mode='text' onPress={() => openUrl(tweet)}>
+                  [{this.props.data.join(' ')}]
+                </Text>
+              )
+            }
+            /* -- someday: .concat(twitter.tweets.map(status => {
                 <Tweet id= />
               })) */
             break

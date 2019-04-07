@@ -8,7 +8,7 @@ import { rules } from '@src/lib/Markdown'
 import config from '@src/config/app'
 import { getProgress } from '@src/Controllers/Activity/mixinProgress'
 import { spinner } from '@src/styles'
-import { pageContainerStyle } from '@src/styles/components/page'
+import { pageContainerStyle, lessonStyle } from '@src/styles/components/page'
 
 import FramedView from '@src/Controllers/FramedView'
 import Feed from '@src/Controllers/Feed'
@@ -41,27 +41,29 @@ export default class Submission extends React.Component {
         containerStyle={pageContainerStyle}
         id={this.props.data.id}
         title={title}>
-        <Markdown rules={rules}>
-          {this.props.data.json.markdown.replace(/\\n/g, '\n')}
-        </Markdown>
-        <View>
-          <Headline>Submit your media!</Headline>
-          {this.props.children}
+        <View style={lessonStyle}>
+          <Markdown rules={rules}>
+            {this.props.data.json.markdown.replace(/\\n/g, '\n')}
+          </Markdown>
+          <View>
+            <Headline>Submit your media!</Headline>
+            {this.props.children}
+          </View>
+          {this.props.data.json.feed && (
+            <Feed
+              search='video'
+              type={this.props.data.type}
+              data={this.props.data.json.feed}
+            />
+          )}
+          {this.props.data.json.twitter && (
+            <Feed
+              search='twitter'
+              type={this.props.data.type}
+              data={this.props.data.json.twitter}
+            />
+          )}
         </View>
-        {this.props.data.json.feed && (
-          <Feed
-            search='video'
-            type={this.props.data.type}
-            data={this.props.data.json.feed}
-          />
-        )}
-        {this.props.data.json.twitter && (
-          <Feed
-            search='twitter'
-            type={this.props.data.type}
-            data={this.props.data.json.twitter}
-          />
-        )}
       </FramedView>
     )
   }

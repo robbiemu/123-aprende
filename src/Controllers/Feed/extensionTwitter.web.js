@@ -1,3 +1,3 @@
 export async function getTwitterFeed (feed) {
-  return []
+  return { video: [], audio: [], tweets: [] }
 }
