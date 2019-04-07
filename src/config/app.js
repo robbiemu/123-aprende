@@ -52,6 +52,8 @@ export default {
       user_id: 'user_id',
       progress: 'progress',
       HOME_PAGE_ID: 'cjtj9dw7t8rcj0136xycoxoon',
+      RESOURCES_PAGE_ID: 'cju7a82ry9h2a0136lqq4yjgn',
+      REQUIREMENTS_PAGE_ID: 'cju79kmlq9h210136evnynihm',
       MASTER_LIST_ID: 'cjtnp665i8uls0136ncn02tdp'
     },
     drawer: {

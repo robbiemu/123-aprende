@@ -1,11 +1,12 @@
 import React from 'react'
 import { View } from 'react-native'
-import { ActivityIndicator, Colors, Headline } from 'react-native-paper'
+import { ActivityIndicator, Colors, Headline, Text } from 'react-native-paper'
 import deepmerge from 'deepmerge'
 import Markdown from 'react-native-markdown-renderer'
 
-import { rules } from '@src/lib/Markdown'
 import config from '@src/config/app'
+import history from '@src/lib/history'
+import { rules } from '@src/lib/Markdown'
 import { getProgress } from '@src/Controllers/Activity/mixinProgress'
 import { spinner } from '@src/styles'
 import { pageContainerStyle, lessonStyle } from '@src/styles/components/page'
@@ -36,6 +37,10 @@ export default class Submission extends React.Component {
       this.props.data.title ||
       config.constants.activities[this.props.data.type.toUpperCase()]
 
+    const requirements =
+      '/page/' + config.constants.graphcool.REQUIREMENTS_PAGE_ID
+    const resources = '/page/' + config.constants.graphcool.RESOURCES_PAGE_ID
+
     return (
       <FramedView
         containerStyle={pageContainerStyle}
@@ -45,6 +50,18 @@ export default class Submission extends React.Component {
           <Markdown rules={rules}>
             {this.props.data.json.markdown.replace(/\\n/g, '\n')}
           </Markdown>
+          <Text>
+            see <Text onPress={() => history.push(resources)}>[resources]</Text>{' '}
+            for instructions on how to submit a recording.
+          </Text>
+          <Text>
+            see{' '}
+            <Text onPress={() => history.push(requirements)}>
+              [requirements]
+            </Text>{' '}
+            for details about what accounts you need in order to participate
+            with us in social media.
+          </Text>
           <View>
             <Headline>Submit your media!</Headline>
             {this.props.children}
