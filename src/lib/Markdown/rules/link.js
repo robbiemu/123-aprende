@@ -25,7 +25,7 @@ function renderTweetLink (destination, children) {
   const tags = destination.replace(/^(tweet):\/\//, '')
 
   const tweet =
-    'https://twitter.com/intent/tweet?hastags=' +
+    'https://twitter.com/intent/tweet?hashtags=' +
     [tags, ...config.appTags].join(',')
 
   return (
