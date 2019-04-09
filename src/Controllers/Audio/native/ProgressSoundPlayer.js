@@ -8,20 +8,35 @@ import PropTypes from 'prop-types'
 import VolumeControl from './VolumeControl'
 import PlayButton from './Playbutton'
 import Progress from './Progress'
+import {
+  playButtonStyle,
+  volumeButtonStyle,
+  artistTitleStyle,
+  playerStyle,
+  bodyContainerStyle,
+  rangeStyle
+} from '@src/styles/components/audio'
 
 class ProgressSoundPlayer extends Component {
   render () {
     const { track, currentTime, duration } = this.props
 
     return (
-      <View>
-        <PlayButton {...this.props} />
-        <View>
-          <Headline>{track ? track.user.username : ''}</Headline>
-          <Headline>{track ? track.title : ''}</Headline>
+      <View style={playerStyle}>
+        <PlayButton style={playButtonStyle} {...this.props} />
+        <View style={bodyContainerStyle}>
+          <Headline style={artistTitleStyle}>
+            {track ? track.user.username : ''}
+          </Headline>
+          <Headline style={{ textTransform: 'uppercase', ...artistTitleStyle }}>
+            {track ? track.title : ''}
+          </Headline>
           <View>
             <VolumeControl
-              buttonClassName='flex-none h6 button white btn-small button-outline button-grow bg-orange circle btn-square'
+              {...Object.assign(
+                { buttonStyle: volumeButtonStyle, rangeStyle },
+                this.props
+              )}
               {...this.props}
             />
             <Progress

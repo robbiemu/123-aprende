@@ -1,8 +1,7 @@
 // modified from npm soundcloud-audio for react'native
 import React from 'react'
-import { Text } from 'react-native'
 import { Audio } from 'expo'
-import uuid from 'uuid/v4'
+import parse from 'url-parse'
 
 const SOUNDCLOUD_API_URL = 'https://api.soundcloud.com'
 
@@ -10,17 +9,9 @@ let styles = {
   link: {}
 }
 
-let anchor
-let keys = 'protocol hostname host pathname port search hash href'.split(' ')
+let keys = 'protocol hostname host pathname port query hash href'.split(' ')
 function _parseURL (url) {
-  if (!anchor) {
-    anchor = (
-      <Text key={uuid()} style={styles.link} onPress={() => openUrl(url || '')}>
-        {url}
-      </Text>
-    )
-  }
-
+  let anchor = parse(url)
   let result = {}
 
   for (var i = 0, len = keys.length; i < len; i++) {
@@ -34,14 +25,14 @@ function _parseURL (url) {
 function _appendQueryParam (url, param, value) {
   var U = _parseURL(url)
   var regex = /\?(?:.*)$/
-  var chr = regex.test(U.search) ? '&' : '?'
+  var chr = regex.test(U.query) ? '&' : '?'
   var result =
     U.protocol +
     '//' +
     U.host +
     U.port +
     U.pathname +
-    U.search +
+    U.query +
     chr +
     param +
     '=' +
@@ -108,11 +99,23 @@ export default class SoundCloudAudio {
   }
 
   on (e, fn) {
-    this._events[e] = fn
+    this._events[e] = this._events[e] ? this._events[e].concat([fn]) : [fn]
   }
 
   off (e, fn) {
-    this._events[e] = null
+    if (!this._events[e]) return (this._events[e] = [])
+
+    this._events[e] = this._events[e].filter(callback => callback !== fn)
+  }
+
+  triggerOn (event) {
+    this._events[event].forEach(async eventBinding => {
+      try {
+        await eventBinding()
+      } catch (e) {
+        console.warn(e)
+      }
+    })
   }
 
   preload (streamUrl, preloadType) {
@@ -134,7 +137,7 @@ export default class SoundCloudAudio {
     this.currentUri = uri
   }
 
-  async play (options) {
+  _getPlayableSource (options) {
     options = options || {}
     var src
 
@@ -172,51 +175,34 @@ export default class SoundCloudAudio {
       src = _appendQueryParam(src, 'client_id', this._clientId)
     }
 
-    if (src !== this.currentUri) {
-      try {
-        await this.audio.loadAsync(src).then((...args) =>
-          this._events['loadedmetadata'].forEach(eventBinding => {
-            try {
-              eventBinding(args)
-            } catch (e) {
-              console.warn(e)
-            }
-          })
-        )
-      } catch (e) {
-        return
-      }
-    }
-
-    this.currentUri = src
-
-    return this.audio
-      .playAsync()
-      .then(() => (this.playing = src))
-      .then((...args) =>
-        this._events['playing'].forEach(eventBinding => {
-          try {
-            eventBinding(args)
-          } catch (e) {
-            console.warn(e)
-          }
-        })
-      )
+    return src
   }
 
-  pause () {
-    return this.audio
-      .pauseAsync()
-      .then(() => (this.playing = false))
-      .then((...args) =>
-        this._events['pause'].forEach(eventBinding => {
-          try {
-            eventBinding(args)
-          } catch (e) {
-            console.warn(e)
-          }
-        })
-      )
+  async play (options) {
+    const src = this._getPlayableSource(options)
+
+    if (src !== this.currentUri) {
+      try {
+        await this.audio.unloadAsync()
+        await this.audio.loadAsync({ uri: src }, {}, false)
+        await this.triggerOn('loadedmetadata')
+        this.audio.playAsync()
+        await this.triggerOn('playing')
+        this.currentUri = src
+      } catch (e) {
+        console.warn(e)
+      }
+    } else {
+      this.audio.playAsync()
+      await this.triggerOn('playing')
+    }
+  }
+
+  async pause () {
+    await this.audio.pauseAsync()
+    this.playing = false
+
+    await this.triggerOn('pause')
   }
 
   unbindAll () {
@@ -228,19 +214,11 @@ export default class SoundCloudAudio {
     }
   }
 
-  stop () {
-    this.audio
-      .stopAsync()
-      .then(() => (this.playing = false))
-      .then((...args) =>
-        this._events['ended'].forEach(eventBinding => {
-          try {
-            eventBinding(args)
-          } catch (e) {
-            console.warn(e)
-          }
-        })
-      )
+  async stop () {
+    await this.audio.stopAsync()
+    this.playing = false
+
+    await this.triggerOn('ended')
   }
 
   next (options) {
@@ -270,7 +248,7 @@ export default class SoundCloudAudio {
     }
   }
 
-  seek (e) {
+  async seek (e) {
     if (!(this.audio.canPlay || this.audio.canPrepare || this.audio.canStop)) {
       return false
     }
@@ -279,27 +257,14 @@ export default class SoundCloudAudio {
       e.offsetX / e.target.offsetWidth ||
       (e.layerX - e.target.offsetLeft) / e.target.offsetWidth
 
-    this._events['seeking'].forEach(eventBinding => {
-      try {
-        eventBinding(args)
-      } catch (e) {
-        console.warn(e)
-      }
-    })
+    await this.triggerOn('seeking')
 
     this.audio
       .setPositionAsync(percent * (this.audio.duration || 0))
-      .then((...args) =>
-        ['seeked', 'timeupdate'].forEach(event =>
-          this._events[event].forEach(eventBinding => {
-            try {
-              eventBinding(args)
-            } catch (e) {
-              console.warn(e)
-            }
-          })
-        )
-      )
+      .then((...args) => {
+        this.triggerOn('seeked')
+        this.triggerOn('timeupdate')
+      })
   }
 
   cleanData () {

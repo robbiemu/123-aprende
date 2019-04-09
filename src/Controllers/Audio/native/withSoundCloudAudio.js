@@ -107,10 +107,10 @@ export default function withSoundCloudAudio (WrappedComponent) {
 
       this.setState({ playing: true })
 
-      stopAllOther(soundCloudAudio.playing)
+      stopAllOther(soundCloudAudio._track.id)
       addToPlayedStore(soundCloudAudio)
 
-      onStartTrack && onStartTrack(soundCloudAudio, soundCloudAudio.playing)
+      onStartTrack && onStartTrack(soundCloudAudio, soundCloudAudio._track.id)
     }
 
     onAudioPaused () {

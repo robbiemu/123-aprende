@@ -27,8 +27,8 @@ export const VolumeIconLoudSVG = props => (
   <Svg
     x={0}
     y={0}
-    width={75}
-    height={75}
+    width={24}
+    height={24}
     fill='currentColor'
     stroke='currentColor'
     {...props}>

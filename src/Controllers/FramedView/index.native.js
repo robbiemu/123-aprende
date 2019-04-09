@@ -7,7 +7,6 @@ import Appbar from '@src/Controllers/Appbar'
 import Drawer from '@src/Controllers/Drawer'
 import { appbarPadding } from '@src/styles/components/appbar'
 import { DefaultTheme } from 'react-native-paper'
-import console = require('console');
 
 type Props = {
   id: string,

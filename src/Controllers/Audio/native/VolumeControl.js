@@ -1,12 +1,10 @@
 // modified for use with react-native from: https://github.com/kosmetism/react-soundplayer/blob/master/src/components/VolumeControl.js
 import React, { Component } from 'react'
 import { View } from 'react-native'
-import { Button } from 'react-native-paper'
 import Slider from 'react-native-slider'
 import PropTypes from 'prop-types'
 import SoundCloudAudio from './soundcloud-audio'
 import ClassNames from 'classnames'
-import { VolumeIconLoudSVG, VolumeIconMuteSVG } from './icons'
 
 class VolumeControl extends Component {
   handleVolumeChange (value) {
@@ -19,36 +17,34 @@ class VolumeControl extends Component {
     const xPos = value / 100
     const mute = xPos <= 0 && !isMuted
 
-    if (soundCloudAudio && !isNaN(soundCloudAudio.audio.volume)) {
-      soundCloudAudio.audio.volume = xPos
-      soundCloudAudio.audio.muted = mute
-    }
+    soundCloudAudio.audio.getStatusAsync().then(status => {
+      soundCloudAudio.audio.setVolumeAsync(xPos).then(() => {
+        onVolumeChange &&
+          onVolumeChange.call(this, xPos, { target: { value: xPos } })
 
-    if (mute !== isMuted) {
-      onToggleMute && onToggleMute.call(this, mute, { target: { value } })
-    }
+        if (status.isMuted !== mute) {
+          soundCloudAudio.audio.setStatusAsync({ isMuted: mute })
+        }
 
-    onVolumeChange && onVolumeChange.call(this, xPos, { target: { value } })
+        if (mute !== isMuted) {
+          onToggleMute && onToggleMute.call(this, mute, { target: { value } })
+        }
+      })
+    })
   }
 
   handleMute (value) {
     const { onToggleMute, soundCloudAudio } = this.props
-    if (soundCloudAudio && !isNaN(soundCloudAudio.audio.muted)) {
-      soundCloudAudio.audio.muted = !soundCloudAudio.audio.muted
-    }
+    soundCloudAudio.getStatusAsync().then(status => {
+      soundCloudAudio.audio.setStatusAsync({ isMuted: !status.isMuted })
 
-    onToggleMute &&
-      onToggleMute.call(this, !this.props.isMuted, { target: { value } })
+      onToggleMute &&
+        onToggleMute.call(this, !this.props.isMuted, { target: { value } })
+    })
   }
 
   render () {
-    const {
-      className,
-      buttonClassName,
-      rangeClassName,
-      volume,
-      isMuted
-    } = this.props
+    const { className, rangeStyle, volume, isMuted } = this.props
 
     let value = volume * 100 || 0
 
@@ -61,32 +57,17 @@ class VolumeControl extends Component {
     }
 
     const classNames = ClassNames('sb-soundplayer-volume', className)
-    const buttonClassNames = ClassNames(
-      'sb-soundplayer-btn sb-soundplayer-volume-btn',
-      buttonClassName
-    )
-    const rangeClassNames = ClassNames(
-      'sb-soundplayer-volume-range',
-      rangeClassName
-    )
 
     return (
       <View className={classNames}>
-        <Button
-          className={buttonClassNames}
-          onClick={this.handleMute.bind(this)}>
-          {isMuted ? <VolumeIconMuteSVG /> : <VolumeIconLoudSVG />}
-        </Button>
-        <View>
-          <Slider
-            className={rangeClassNames}
-            minimumValue={0}
-            maximumValue={100}
-            step={1}
-            value={value}
-            onValueChange={this.handleVolumeChange.bind(this)}
-          />
-        </View>
+        <Slider
+          style={rangeStyle}
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          value={value}
+          onValueChange={this.handleVolumeChange.bind(this)}
+        />
       </View>
     )
   }

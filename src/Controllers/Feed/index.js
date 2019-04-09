@@ -63,7 +63,7 @@ class Feed extends React.Component {
 
         const twitter = await getTwitterFeed(this.props.data)
         feed = feed.concat(
-          twitter.video.map(video => <Video key={uuid()} data={video} />)
+          twitter.audio.map(audio => <Audio key={uuid()} data={audio} />)
         )
         if (Platform.OS === 'ios') {
         } else {
