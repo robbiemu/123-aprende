@@ -4,6 +4,7 @@ import Url from 'url'
 
 import { relayBBNToGraphcool } from '@src/lib/Graphcool'
 import config from '@src/config/app'
+import history from '@src/lib/history'
 
 export default {
   /** on iOS, request contection details by url */
@@ -24,6 +25,7 @@ export default {
           console.warn('error', error)
 
           Alert.alert('Notice', 'Behavior-based-notifications is not installed')
+          history.replace(config.appHome)
         })
       })
       .catch(err => {
