@@ -56,6 +56,13 @@ class Activity extends React.Component {
     const uid = await AsyncStorage.getItem(
       config.constants.bbn.connectionDetails.uid
     )
+    AsyncStorage.getAllKeys().then(keys => {
+      keys.forEach(key => {
+        AsyncStorage.getItem(key).then(value => {
+          console.log('got item', { [key]: value })
+        })
+      })
+    })
 
     const state = {}
     await apolloClient

@@ -60,6 +60,8 @@ export default class Card extends React.Component {
     const oppositeFace =
       config.constants.cards.faces[!(this.props.face || this.state.currentFace)]
 
+    const titleSize = Platform.OS === 'ios' ? 48 : '48pt'
+
     switch (this.props.type) {
       case config.constants.activities.VocabularyPairs.test:
       case config.constants.activities.VocabularyPairs.quiz:
@@ -73,7 +75,7 @@ export default class Card extends React.Component {
               accessible
               onPress={this.onPress.bind(this)}>
               <PaperCard.Content style={cardContentStyle}>
-                <Title style={{ fontSize: '48pt', padding: 8 }}>
+                <Title style={{ fontSize: titleSize, padding: 8 }}>
                   {cardFace[face].number}
                 </Title>
                 <Headline style={{ textAlign: 'center' }}>
@@ -91,7 +93,7 @@ export default class Card extends React.Component {
           /** before they guess */
           <PaperCard style={cardStyle} elevation={8} accessible>
             <PaperCard.Content style={cardContentStyle}>
-              <Title style={{ fontSize: '48pt', padding: 8 }}>
+              <Title style={{ fontSize: titleSize, padding: 8 }}>
                 {cardFace[face].number}
               </Title>
               <Headline style={{ textAlign: 'center' }}>
@@ -126,7 +128,11 @@ export default class Card extends React.Component {
             accessible
             onPress={this.onPress.bind(this)}>
             <PaperCard.Content style={cardContentStyle}>
-              <Title style={{ fontSize: '48pt', padding: 8 }}>
+              <Title
+                style={{
+                  fontSize: titleSize,
+                  padding: 8
+                }}>
                 {cardFace[face].number}
               </Title>
               <Paragraph style={{ textAlign: 'center' }}>
@@ -199,9 +205,8 @@ export default class Card extends React.Component {
       progress[config.constants.activities.types.VocabularyPairs][
         this.props.data.id
       ] > 1
-    )
-    // should be impossible, but floats, you know
-    {
+    ) {
+      // should be impossible, but floats, you know
       progress[config.constants.activities.types.VocabularyPairs][
         this.props.data.id
       ] = 1
@@ -230,9 +235,8 @@ export default class Card extends React.Component {
       progress[config.constants.activities.types.VocabularyPairs][
         this.props.data.id
       ] < 0
-    )
-    // should be impossible, but floats, you know
-    {
+    ) {
+      // should be impossible, but floats, you know
       progress[config.constants.activities.types.VocabularyPairs][
         this.props.data.id
       ] = 0

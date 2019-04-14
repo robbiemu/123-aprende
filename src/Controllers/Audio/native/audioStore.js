@@ -35,8 +35,6 @@ export function addToPlayedStore (soundCloudAudio) {
 }
 
 export function resetPlayedStore () {
-  debugger
-
   each(_playedAudios, soundCloudAudio => {
     soundCloudAudio.stop()
   })
