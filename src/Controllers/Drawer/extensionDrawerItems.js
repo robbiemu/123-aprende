@@ -9,6 +9,7 @@ export function generateItemWithContext (data, context) {
   switch (data.id) {
     case config.constants.drawer.index.logout:
       data.navigate = () => {
+        console.log('on naviage to logout, clearing async storage')
         try {
           AsyncStorage.clear()
         } catch (e) {}

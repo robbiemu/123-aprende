@@ -16,6 +16,7 @@ import Auth from '@src/lib/Auth'
 import twitter from '@src/lib/twitter'
 import { getApolloClient } from '@src/lib/Graphcool'
 import { Router, Switch, Route } from '@src/routing'
+import { registerForPushNotifications } from '@src/lib/APNs'
 
 import Page from '@src/Controllers/Page'
 import Splash from '@src/Controllers/Splash'
@@ -35,6 +36,7 @@ type State = {
   apolloClient: any, // and pass that authentication to graphcool to login
   isLoaded: boolean,
   splashMessage: string,
+  APNtoken: any,
 }
 
 export default class App extends React.Component<*, State> {
@@ -46,14 +48,26 @@ export default class App extends React.Component<*, State> {
       auth0: new Auth(),
       apolloClient: null,
       isLoaded: false,
-      splashMessage: config.constants.messages.LOADING
+      splashMessage: config.constants.messages.LOADING,
+      APNtoken: null
     }
 
+    console.log('in app constructor', Platform.OS)
     if (Platform.OS === 'ios') {
+      // setup linking
       Linking.addListener('url', e => {
         console.log('listening on url')
         AppLinking.onOpen(e.url)
       })
+
+      // setup APNs
+      console.log('setting up APN', this.state.APNtoken)
+      if (!this.state.APNtoken) {
+        const register = registerForPushNotifications.bind(this)
+
+        const isInContructor = true
+        register(isInContructor)
+      }
     }
 
     this.conditionallyAuthenticate = conditionallyAuthenticate.bind(this)
