@@ -8,7 +8,7 @@
     "platforms": [
       "ios"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/123go.png",
     "splash": {
@@ -24,7 +24,7 @@
     ],
     "ios": {
       "bundleIdentifier": "edu.harvard.thesis.behavior-based-notifications.third-party-demo",
-      "buildNumber": "0.2.0",
+      "buildNumber": "0.3.0",
       "supportsTablet": false
     },
     "description": "activities! and, added Youtube and SoundCloud inserts. With a tagging system, we can tie them all together so people can see each others posts easily!",
