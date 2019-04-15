@@ -16,13 +16,13 @@ import Auth from '@src/lib/Auth'
 import twitter from '@src/lib/twitter'
 import { getApolloClient } from '@src/lib/Graphcool'
 import { Router, Switch, Route } from '@src/routing'
-import { registerForPushNotifications } from '@src/lib/APNs'
 
 import Page from '@src/Controllers/Page'
 import Splash from '@src/Controllers/Splash'
 import Activity from '@src/Controllers/Activity'
 import Override from '@src/Controllers/Override'
 
+import { registerForPushNotifications } from './extensionAPNs'
 import {
   conditionallyAuthenticate,
   relayAuthToGraphcool,
@@ -36,7 +36,7 @@ type State = {
   apolloClient: any, // and pass that authentication to graphcool to login
   isLoaded: boolean,
   splashMessage: string,
-  APNtoken: any,
+  expoToken: any,
 }
 
 export default class App extends React.Component<*, State> {
@@ -49,27 +49,18 @@ export default class App extends React.Component<*, State> {
       apolloClient: null,
       isLoaded: false,
       splashMessage: config.constants.messages.LOADING,
-      APNtoken: null
+      expoToken: null
     }
 
-    console.log('in app constructor', Platform.OS)
     if (Platform.OS === 'ios') {
       // setup linking
       Linking.addListener('url', e => {
         console.log('listening on url')
         AppLinking.onOpen(e.url)
       })
-
-      // setup APNs
-      console.log('setting up APN', this.state.APNtoken)
-      if (!this.state.APNtoken) {
-        const register = registerForPushNotifications.bind(this)
-
-        const isInContructor = true
-        register(isInContructor)
-      }
     }
 
+    this.registerForPushNotifications = registerForPushNotifications.bind(this)
     this.conditionallyAuthenticate = conditionallyAuthenticate.bind(this)
     this.relayAuthToGraphcool = relayAuthToGraphcool.bind(this)
     this.isAuthenticated = isAuthenticated.bind(this)
@@ -77,6 +68,11 @@ export default class App extends React.Component<*, State> {
   }
 
   async componentDidMount () {
+    if (Platform.OS === 'ios' && !this.state.expoToken) {
+      console.log('setting up APN', this.state.expoToken)
+      await this.registerForPushNotifications()
+    }
+
     await this.conditionallyAuthenticate()
 
     if (this.state && !this.state.apolloClient) {

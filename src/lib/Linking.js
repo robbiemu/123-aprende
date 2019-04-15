@@ -13,20 +13,18 @@ export default {
 
     console.log('registering app id as', appid)
 
+    const notify = await getExpoNotification()
+
     const urlize = uri =>
-      `bbn://register?appname=${config.appName}&callback=${uri}?action=${
+      `bbn://register?appname=${
+        config.appName
+      }&notify=${notify}&callback=${uri}?action=${
         config.constants.urls.connectionDetails
       }&appid=${appid}`
 
     console.info('opening', urlize(config.appScheme))
 
-    let lastOpen
-    try {
-      lastOpen = await AsyncStorage.getItem('linkingLastOpenBBN')
-    } catch (e) {
-      console.info(e)
-    }
-    const lastOpenDate = lastOpen ? new Date(lastOpen) : null
+    const lastOpenDate = await getLastOpenDate()
 
     const SIX_MONTHS = 60 * 60 * 24 * 1000 * (365 / 2)
     const sufficientlyLater = lastOpen
@@ -38,7 +36,7 @@ export default {
         Linking.openURL(urlize(uri)).catch(error => {
           console.warn('error', error)
 
-          if (!lastOpen || sufficientlyLater) {
+          if (!lastOpenDate || sufficientlyLater) {
             Alert.alert(
               'Notice',
               'Behavior-based-notifications is not installed'
@@ -53,22 +51,17 @@ export default {
       })
   },
 
-  /** TODO - revise this to APN */
   async requestConnectionDetails () {
+    const notify = await getExpoNotification()
+
     let urlize = (uri, auth) =>
-      `bbn://connectionDetails?appname=third-party-demo&callback=${uri}?action=${
+      `bbn://connectionDetails?appname=third-party-demo&notify=${notify}&callback=${uri}?action=${
         config.constants.urls.connectionDetails
       }`
 
     console.info('opening', urlize('expo'))
 
-    let lastOpen
-    try {
-      lastOpen = await AsyncStorage.getItem('linkingLastOpenBBN')
-    } catch (e) {
-      console.info(e)
-    }
-    const lastOpenDate = lastOpen ? new Date(lastOpen) : null
+    const lastOpenDate = await getLastOpenDate()
 
     const SIX_MONTHS = 60 * 60 * 24 * 1000 * (365 / 2)
     const sufficientlyLater = lastOpen
@@ -80,7 +73,7 @@ export default {
         Linking.openURL(urlize(uri)).catch(error => {
           console.warn('error', error)
 
-          if (!lastOpen || sufficientlyLater) {
+          if (!lastOpenDate || sufficientlyLater) {
             Alert.alert(
               'Notice',
               'Behavior-based-notifications is not installed'
@@ -139,4 +132,31 @@ export default {
 
     relayBBNToGraphcool()
   }
+}
+
+async function getExpoNotification () {
+  let expoToken
+  try {
+    expoToken = await AsyncStorage.getItem('expoToken')
+  } catch (e) {
+    console.info(e)
+  }
+
+  return JSON.stringify({
+    token: expoToken,
+    body: {
+      to: expoToken,
+      _category: '@user/experienceId:notification'
+    }
+  })
+}
+
+async function getLastOpenDate () {
+  let lastOpen
+  try {
+    lastOpen = await AsyncStorage.getItem('linkingLastOpenBBN')
+  } catch (e) {
+    console.info(e)
+  }
+  return lastOpen ? new Date(lastOpen) : null
 }
