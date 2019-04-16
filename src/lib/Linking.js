@@ -27,7 +27,7 @@ export default {
     const lastOpenDate = await getLastOpenDate()
 
     const SIX_MONTHS = 60 * 60 * 24 * 1000 * (365 / 2)
-    const sufficientlyLater = lastOpen
+    const sufficientlyLater = lastOpenDate
       ? new Date() - lastOpenDate > SIX_MONTHS
       : false
 
@@ -64,7 +64,7 @@ export default {
     const lastOpenDate = await getLastOpenDate()
 
     const SIX_MONTHS = 60 * 60 * 24 * 1000 * (365 / 2)
-    const sufficientlyLater = lastOpen
+    const sufficientlyLater = lastOpenDate
       ? new Date() - lastOpenDate > SIX_MONTHS
       : false
 
