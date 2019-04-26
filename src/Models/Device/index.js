@@ -16,7 +16,7 @@ export default class Device extends DeviceTokenPair {
 
   static userHasDevice = gql`
     query($deviceIdentifier: String!) {
-      device(deviceIdentifier: $deviceIdentifier) {
+      Device(deviceIdentifier: $deviceIdentifier) {
         id
       }
     }

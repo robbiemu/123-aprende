@@ -58,7 +58,8 @@ export default {
     },
     drawer: {
       index: {
-        logout: 'logout'
+        logout: 'logout',
+        bbn: 'bbn'
       },
       items: [{ id: 'logout', label: 'logout' }]
     },

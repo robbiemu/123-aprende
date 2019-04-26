@@ -222,6 +222,10 @@ class Activity extends React.Component {
         const metric = this.computeMetric(observation)
 
         this.commitMetric(metric)
+      } else {
+        console.log(
+          'no bbn.connectionDetails.uid for user, will not try to update bbn with results'
+        )
       }
     })
 
