@@ -135,17 +135,23 @@ export default {
 }
 
 async function getExpoNotification () {
+  console.log('getting expo token')
+  console.log('all keys', await AsyncStorage.getAllKeys())
+
   let expoToken
   try {
     expoToken = await AsyncStorage.getItem('expoToken')
+    console.log('rendering expo token', expoToken)
   } catch (e) {
     console.info(e)
   }
+  console.log('got', expoToken)
 
   return JSON.stringify({
     token: expoToken,
     body: {
       to: expoToken,
+      body: 'Don´t forget, learning Spanish requires practice',
       _category: '@user/experienceId:notification'
     }
   })

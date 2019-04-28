@@ -1,6 +1,6 @@
-import { Alert } from 'react-native'
+// import { Alert } from 'react-native'
 
 export async function handleNotification () {
-  Alert.alert(JSON.stringify(arguments))
   console.log('arguments', arguments)
+  //  Alert.alert(JSON.stringify(arguments))
 }

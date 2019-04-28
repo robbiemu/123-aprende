@@ -23,7 +23,8 @@ export async function conditionallyAuthenticate () {
 
     console.log('not authenticated')
 
-    await AsyncStorage.clear()
+    // debugging
+    // await AsyncStorage.clear()
 
     if (!/access_token|id_token|error/.test(history.location.hash)) {
       console.log('authentication pending')

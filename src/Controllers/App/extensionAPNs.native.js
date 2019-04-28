@@ -16,7 +16,7 @@ export async function registerForPushNotifications () {
   }
 
   const expoToken = await Notifications.getExpoPushTokenAsync()
-  Alert.alert('recieved permission to listen to APNs with token ' + expoToken)
+  //  Alert.alert('recieved permission to listen to APNs with token ' + expoToken)
 
   this.subscription = Notifications.addListener(handleNotification)
 
