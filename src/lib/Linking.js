@@ -151,7 +151,7 @@ async function getExpoNotification () {
     token: expoToken,
     body: {
       to: expoToken,
-      badge: 0,
+      body: 'Don´t forget, learning Spanish requires practice',
       _category: '@user/experienceId:notification'
     }
   })
