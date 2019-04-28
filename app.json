@@ -8,7 +8,7 @@
     "platforms": [
       "ios"
     ],
-    "version": "1.2.1",
+    "version": "1.2.2",
     "orientation": "portrait",
     "icon": "./assets/123go.png",
     "splash": {

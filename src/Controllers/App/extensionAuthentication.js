@@ -1,5 +1,4 @@
 import { Platform } from 'react-native'
-import AsyncStorage from '@callstack/async-storage'
 import { relayAuthToGraphcool as authToGraphcool } from '@src/lib/Graphcool'
 import Firebase from '@src/lib/Firebase'
 import { default as history, location } from '@src/lib/history'
