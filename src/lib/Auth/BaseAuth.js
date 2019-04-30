@@ -1,5 +1,5 @@
 // highly modified from official Auth0 documentation example: https://auth0.com/docs/quickstart/spa/react?framed=1&sq=1#configure-auth0
-
+import axios from 'axios'
 import AsyncStorage from '@callstack/async-storage'
 
 export default class BaseAuth {
@@ -23,6 +23,8 @@ export default class BaseAuth {
     await AsyncStorage.removeItem('access_token')
     await AsyncStorage.removeItem('id_token')
     await AsyncStorage.removeItem('expires_at')
+
+    axios.get('https://third-party-demo.auth0.com/v2/logout').catch(console.log)
   }
 
   /* Check whether the current time is past the access token's expiry time */

@@ -7,7 +7,7 @@ import React from 'react'
 //   }
 // }
 
-import { View, Image, StyleSheet } from 'react-native'
+import { TouchableOpacity, View, Image, StyleSheet } from 'react-native'
 import {
   Headline,
   withTheme,
@@ -27,31 +27,30 @@ type Props = {
 }
 
 class Splash extends React.Component<Props> {
+  constructor () {
+    super()
+
+    this.state = {
+      canSpin: true
+    }
+
+    const self = this
+    setTimeout(function () {
+      self.setState({ canSpin: false })
+    }, 10 * 1000)
+  }
+
   render () {
     return (
       <View style={styles.container}>
         <Headline style={styles.header}>{config.states.app.appName}</Headline>
-        {this.props.spinner ? (
+        {this.props.spinner && this.state.canSpin ? (
           <View style={styles.body}>
             <View style={styles.spinner} elevation={2}>
               <ActivityIndicator animating color={Colors.grey400} />
             </View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <Image
-                style={{ width: 512, height: 512 }}
-                source={require('@src/media/123go-big.png')}
-              />
-            </View>
-          </View>
-        ) : (
-          <View style={styles.body}>
-            <Paragraph>{this.props.message || ''}</Paragraph>
-            <View
+            <TouchableOpacity
+              onPress={this.signout.bind(this)}
               style={{
                 flex: 1,
                 justifyContent: 'center',
@@ -61,11 +60,32 @@ class Splash extends React.Component<Props> {
                 style={{ width: 256, height: 256 }}
                 source={require('@src/media/123go-big.png')}
               />
-            </View>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.body}>
+            <Paragraph>{this.props.message || ''}</Paragraph>
+            <TouchableOpacity
+              onPress={this.signout.bind(this)}
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Image
+                style={{ width: 256, height: 256 }}
+                source={require('@src/media/123go-big.png')}
+              />
+            </TouchableOpacity>
           </View>
         )}
       </View>
     )
+  }
+
+  signout () {
+    console.log('signing out')
+    this.props.signout()
   }
 }
 

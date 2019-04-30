@@ -18,18 +18,21 @@ import config from '@src/config/app'
 export async function conditionallyAuthenticate () {
   let authenticated = await this.state.auth0.isAuthenticated()
   if (!authenticated) {
-    this.setState({ isLoaded: false })
-
+    this.setState({ isLoaded: false, splashMessage: 'not authenticated' })
     console.log('not authenticated')
 
     // debugging
     // await AsyncStorage.clear()
 
     if (!/access_token|id_token|error/.test(history.location.hash)) {
+      this.setState({ splashMessage: 'authentication pending' })
       console.log('authentication pending')
 
       await this.state.auth0.login()
     } else {
+      this.setState({
+        splashMessage: `handling auth0 callback`
+      })
       console.log(
         `handling auth0 callback for location hash ${history.location.hash}`
       )
@@ -42,6 +45,7 @@ export async function conditionallyAuthenticate () {
       await this.state.auth0.handleAuthentication()
     }
   } else {
+    this.setState({ splashMessage: 'authenticated' })
     console.log('authenticated', authenticated)
 
     this.setState({ isLoaded: true })

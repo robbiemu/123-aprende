@@ -88,6 +88,7 @@ class Page extends React.Component {
 
             return (
               <FramedView
+                signout={this.props.signout}
                 containerStyle={containerStyle}
                 id={data.Page.id}
                 title={data.Page.title}>

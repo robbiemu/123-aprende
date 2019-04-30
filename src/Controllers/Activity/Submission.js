@@ -43,6 +43,7 @@ export default class Submission extends React.Component {
 
     return (
       <FramedView
+        signout={this.props.signout}
         containerStyle={pageContainerStyle}
         id={this.props.data.id}
         title={title}>

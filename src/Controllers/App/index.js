@@ -102,67 +102,106 @@ export default class App extends React.Component<*, State> {
         <PaperProvider>
           <View style={styles.app}>
             <Router history={history}>
-              <Switch>
-                <Route
-                  path='/callback'
-                  render={() => (
-                    <Splash message={this.state.splashMessage} spinner />
-                  )}
-                />
-                <Route
-                  exact
-                  path='/override'
-                  render={props => (
-                    <Page
-                      id={config.constants.graphcool.HOME_PAGE_ID}
-                      {...props}
-                    />
-                  )}
-                />
-                <Route
-                  exact
-                  path='/'
-                  render={props =>
-                    this.state.isLoaded ? (
+              {!this.state.isLoaded ? (
+                <Switch>
+                  <Route
+                    path='/'
+                    render={() => (
+                      <Splash
+                        message={this.state.splashMessage}
+                        spinner
+                        signout={this.signout.bind(this)}
+                      />
+                    )}
+                  />
+                </Switch>
+              ) : (
+                <Switch>
+                  <Route
+                    path='/callback'
+                    render={() => (
+                      <Splash
+                        message={this.state.splashMessage}
+                        spinner
+                        signout={this.signout.bind(this)}
+                      />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path='/override'
+                    render={props => (
                       <Page
                         id={config.constants.graphcool.HOME_PAGE_ID}
+                        signout={this.signout.bind(this)}
                         {...props}
                       />
-                    ) : (
-                      <Splash message={this.state.splashMessage} />
-                    )
-                  }
-                />
-                <Route
-                  path={config.appHome}
-                  render={props => (
-                    <Page
-                      id={config.constants.graphcool.HOME_PAGE_ID}
-                      {...props}
-                    />
-                  )}
-                />
-                <Route path='/page/:id' render={props => <Page {...props} />} />
-                <Route
-                  path='/override'
-                  render={props => (
-                    <Override
-                      appAuthenticated={this.isAuthenticated.bind(this)}
-                      appLogout={this.logout.bind(this)}
-                      {...props}
-                    />
-                  )}
-                />
-                <Route
-                  path='/activity/:activity_id/:presentation?'
-                  render={props => <Activity {...props} />}
-                />
-              </Switch>
+                    )}
+                  />
+                  <Route
+                    exact
+                    path='/'
+                    render={props => (
+                      <Page
+                        id={config.constants.graphcool.HOME_PAGE_ID}
+                        signout={this.signout.bind(this)}
+                        {...props}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={config.appHome}
+                    render={props => (
+                      <Page
+                        id={config.constants.graphcool.HOME_PAGE_ID}
+                        signout={this.signout.bind(this)}
+                        {...props}
+                      />
+                    )}
+                  />
+                  <Route
+                    path='/page/:id'
+                    render={props => (
+                      <Page {...props} signout={this.signout.bind(this)} />
+                    )}
+                  />
+                  <Route
+                    path='/override'
+                    render={props => (
+                      <Override
+                        appAuthenticated={this.isAuthenticated.bind(this)}
+                        appLogout={this.signout.bind(this)}
+                        {...props}
+                      />
+                    )}
+                  />
+                  <Route
+                    path='/activity/:activity_id/:presentation?'
+                    render={props => (
+                      <Activity {...props} signout={this.signout.bind(this)} />
+                    )}
+                  />
+                </Switch>
+              )}
             </Router>
           </View>
         </PaperProvider>
       </ApolloProvider>
     )
+  }
+
+  signout () {
+    this.state.auth0.logout()
+    this.setState({ isLoaded: false })
+
+    history.replace('/')
+
+    const self = this
+    setTimeout(function () {
+      self.setState({ isLoaded: false })
+      history.replace('/callback')
+      self.componentDidMount()
+    }, 1000)
   }
 }
 

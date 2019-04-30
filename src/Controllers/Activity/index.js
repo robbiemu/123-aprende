@@ -199,7 +199,7 @@ class Activity extends React.Component {
   }
 
   renderSubmission (data) {
-    return <Submission data={data.Activity} />
+    return <Submission data={data.Activity} signout={this.props.signout} />
   }
 
   onCompletedActivity () {

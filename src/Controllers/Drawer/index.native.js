@@ -31,7 +31,11 @@ class Drawer extends React.Component<Props> {
           <TouchableOpacity activeOpacity={1} style={drawerStyle} elevation={8}>
             <ScrollView>
               {drawerItems.map(data => {
-                data = generateItemWithContext(data, this.props.data.context)
+                data = generateItemWithContext(
+                  data,
+                  this.props.data.context,
+                  this.props.signout
+                )
 
                 return (
                   <NativeDrawer.Item

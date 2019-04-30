@@ -31,6 +31,7 @@ export default class FramedView extends React.Component<Props> {
       <View>
         {this.state.isShowingDrawer && (
           <Drawer
+            signout={this.props.signout}
             isShowingDrawer={this.state.isShowingDrawer}
             toggleDrawer={this.toggleDrawer.bind(this)}
             data={{ from: this.props.dataType, context: this.props.data }}

@@ -19,6 +19,7 @@ import { getApolloClient } from '@src/lib/Graphcool'
 
 export default class Auth extends BaseAuth {
   async login () {
+    AuthSession.dismiss()
     const redirectUrl = AuthSession.getRedirectUrl()
     console.info(`Redirect URL (add this to Auth0): ${redirectUrl}`)
 

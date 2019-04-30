@@ -5,7 +5,7 @@ import config from '@src/config/app'
 
 export const drawerItems = config.constants.drawer.items
 
-export function generateItemWithContext (data, context) {
+export function generateItemWithContext (data, context, signout) {
   switch (data.id) {
     case config.constants.drawer.index.logout:
       data.navigate = () => {
@@ -16,7 +16,8 @@ export function generateItemWithContext (data, context) {
         // TODO - reroute to login again in boh windows and ios .   windows is easy - window.location.reload()
 
         if (Platform.OS === 'ios') {
-          BackHandler.exitApp()
+          if (typeof signout === 'function') signout()
+          else BackHandler.exitApp()
         } else {
           window.location.reload()
         }
