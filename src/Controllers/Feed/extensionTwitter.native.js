@@ -15,7 +15,6 @@ export async function getTwitterFeed (feed) {
   console.log(query)
   const q = query
 
-  /*
   console.log('getting', TwitterService.endpoints.search_30day)
   const bearer_credentials =
     encodeURI(twitterConfig.consumer_key) +
@@ -71,7 +70,7 @@ export async function getTwitterFeed (feed) {
 
       return twitter
     })
-    */
+    /*
   console.log('getting', TwitterService.endpoints.standard_search)
   let results = await TwitterService.twitter
     .get(TwitterService.endpoints.standard_search, { q })
@@ -112,6 +111,7 @@ export async function getTwitterFeed (feed) {
 
       return twitter
     })
+  */
     .catch(e => {
       console.warn('error getting tweets', e)
       return { video: [], audio: [], tweets: [] }

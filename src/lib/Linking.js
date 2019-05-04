@@ -1,4 +1,5 @@
 import { Linking, Alert } from 'react-native'
+import { Notifications } from 'expo'
 import AsyncStorage from '@callstack/async-storage'
 import Url from 'url'
 
@@ -143,6 +144,8 @@ async function getExpoNotification () {
     expoToken = await AsyncStorage.getItem('expoToken')
     console.log('rendering expo token', expoToken)
   } catch (e) {
+    expoToken = await Notifications.getExpoPushTokenAsync()
+    AsyncStorage.setItem('expoToken', expoToken)
     console.info(e)
   }
   console.log('got', expoToken)
