@@ -5,7 +5,14 @@ import React from 'react'
 //     return <View />
 //   }
 // }
-import { StyleSheet, View, Platform, Linking } from 'react-native'
+import {
+  Alert,
+  StyleSheet,
+  View,
+  Platform,
+  Linking,
+  AsyncStorage
+} from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import { ApolloProvider } from 'react-apollo'
 
@@ -14,6 +21,7 @@ import history from '@src/lib/history'
 import { default as AppLinking } from '@src/lib/Linking'
 import Auth from '@src/lib/Auth'
 import twitter from '@src/lib/twitter'
+import { emitter } from '@src/lib/emitter'
 import { getApolloClient } from '@src/lib/Graphcool'
 import { Router, Switch, Route } from '@src/routing'
 
@@ -58,6 +66,15 @@ export default class App extends React.Component<*, State> {
         console.log('listening on url')
         AppLinking.onOpen(e.url)
       })
+
+      const handler = function (arg) {
+        if (arg.isLoaded) {
+          this.setState({ isLoaded: true })
+          history.replace(config.appHome)
+        }
+      }
+
+      emitter.addListener('didRelayBBNToGraphcool', handler.bind(this))
     }
 
     this.registerForPushNotifications = registerForPushNotifications.bind(this)
@@ -68,9 +85,16 @@ export default class App extends React.Component<*, State> {
   }
 
   async componentDidMount () {
-    if (Platform.OS === 'ios' && !this.state.expoToken) {
-      console.log('setting up APN', this.state.expoToken)
-      await this.registerForPushNotifications()
+    if (Platform.OS === 'ios') {
+      if (!this.state.expoToken) {
+        console.log('setting up APN', this.state.expoToken)
+        await this.registerForPushNotifications()
+      }
+
+      const isLoaded = await AsyncStorage.getItem('didRelayBBNToGraphcool')
+      if (isLoaded) {
+        this.setState({ isLoaded })
+      }
     }
 
     await this.conditionallyAuthenticate()

@@ -1,13 +1,15 @@
 // Here, we handle interaction of data between two datasources: graphcool and the BBN app for the user. We want to ensure that the BBN user specific information is in the graphcool store - particularly the uid, which we will use to qualify the reporting of our metric data.
-
+import { Alert } from 'react-native'
 import AsyncStorage from '@callstack/async-storage'
-import history from '@src/lib/history'
+
 import { default as appConfig } from '@src/config/app'
-import { getRawClient, getFirebaseToken } from './index'
+import history from '@src/lib/history'
+import { emitter } from '@src/lib/emitter'
 import User from '@src/Models/User'
 import Token from '@src/Models/Token'
 import Device from '@src/Models/Device'
 import DeviceTokenPair from '@src/Models/DeviceTokenPair'
+import { getRawClient, getFirebaseToken } from './index'
 
 /** relayBBNToGraphcool - (iOS only) after BBN connectionDetails have been set
  * in asyncStorage, we are ready to convey them to graphcool so we won't need
@@ -23,7 +25,7 @@ import DeviceTokenPair from '@src/Models/DeviceTokenPair'
  * going simultaneously
  */
 export const relayBBNToGraphcool = async () => {
-  history.replace(appConfig.appHome)
+  history.replace(appConfig.appRoot)
 
   const apolloClient = await getRawClient()
 
@@ -116,7 +118,9 @@ export const relayBBNToGraphcool = async () => {
                     deviceDeviceId: device.id
                   }
                 })
-                .then(() => {
+                .then(async () => {
+                  emitter.emit('didRelayBBNToGraphcool', { isLoaded: true })
+
                   getFirebaseToken()
                 })
             })
