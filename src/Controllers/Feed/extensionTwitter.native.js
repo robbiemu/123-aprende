@@ -36,8 +36,12 @@ export async function getTwitterFeed (feed) {
         twitter = {}
         twitter.video = response.results
           .map(tweet => {
-            if (!tweet.entities || !tweet.entities.urls) return []
-            return tweet.entities.urls
+            const urls = (tweet.entities ? tweet.entities.urls : []).concat(
+              tweet.extended_tweet && tweet.extended_tweet.entities
+                ? tweet.extended_tweet.entities.urls
+                : []
+            )
+            return urls
               .filter(url => isYoutubeVideo(url.expanded_url))
               .map(url => ({ id: getVideoKey(url.expanded_url) }))
           })
@@ -45,20 +49,31 @@ export async function getTwitterFeed (feed) {
 
         twitter.audio = response.results
           .map(tweet => {
-            if (!tweet.entities || !tweet.entities.urls) return []
-            return tweet.entities.urls
+            const urls = (tweet.entities ? tweet.entities.urls : []).concat(
+              tweet.extended_tweet && tweet.extended_tweet.entities
+                ? tweet.extended_tweet.entities.urls
+                : []
+            )
+            return urls
               .filter(url => isSoundcloudAudio(url.expanded_url))
               .map(url => ({ url: url.expanded_url }))
           })
           .flat(2)
 
         twitter.tweets = response.results.filter(tweet => {
-          if (!tweet.entities || !tweet.entities.urls) return true
-          return tweet.entities.urls.every(
-            url =>
-              !isYoutubeVideo(url.expanded_url) &&
-              !isSoundcloudAudio(url.expanded_url)
+          const urls = (tweet.entities ? tweet.entities.urls : []).concat(
+            tweet.extended_tweet && tweet.extended_tweet.entities
+              ? tweet.extended_tweet.entities.urls
+              : []
           )
+
+          return !urls.length
+            ? true
+            : urls.every(
+              url =>
+                !isYoutubeVideo(url.expanded_url) &&
+                  !isSoundcloudAudio(url.expanded_url)
+            )
         })
       } catch (e) {
         console.warn(e)

@@ -1,6 +1,7 @@
-import twitter from './react-native-simple-twitter'
+import { Base64 } from 'js-base64'
 
 import config from '@src/config/twitter'
+import twitter from './react-native-simple-twitter'
 
 twitter.setConsumerKey(config.consumer_key, config.consumer_key_secret)
 
@@ -9,7 +10,7 @@ export async function getBearerToken (bearer_credentials) {
     'attempting to authenticate app with credentials',
     bearer_credentials
   )
-  const base64_bc = btoa(bearer_credentials)
+  const base64_bc = Base64.encode(bearer_credentials)
   const headers = {
     Accept: 'application/json',
     Authorization: 'Basic ' + base64_bc,
