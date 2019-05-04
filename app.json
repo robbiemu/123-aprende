@@ -24,7 +24,7 @@
     ],
     "ios": {
       "bundleIdentifier": "edu.harvard.thesis.behavior-based-notifications.third-party-demo",
-      "buildNumber": "10",
+      "buildNumber": "11",
       "supportsTablet": false
     },
     "description": "1 full acctivity, and 1 signin process debugged successfully (I believe!)",

@@ -5,14 +5,7 @@ import React from 'react'
 //     return <View />
 //   }
 // }
-import {
-  Alert,
-  StyleSheet,
-  View,
-  Platform,
-  Linking,
-  AsyncStorage
-} from 'react-native'
+import { StyleSheet, View, Platform, Linking } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import { ApolloProvider } from 'react-apollo'
 
@@ -89,11 +82,6 @@ export default class App extends React.Component<*, State> {
       if (!this.state.expoToken) {
         console.log('setting up APN', this.state.expoToken)
         await this.registerForPushNotifications()
-      }
-
-      const isLoaded = await AsyncStorage.getItem('didRelayBBNToGraphcool')
-      if (isLoaded) {
-        this.setState({ isLoaded })
       }
     }
 

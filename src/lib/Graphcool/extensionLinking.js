@@ -1,5 +1,4 @@
 // Here, we handle interaction of data between two datasources: graphcool and the BBN app for the user. We want to ensure that the BBN user specific information is in the graphcool store - particularly the uid, which we will use to qualify the reporting of our metric data.
-import { Alert } from 'react-native'
 import AsyncStorage from '@callstack/async-storage'
 
 import { default as appConfig } from '@src/config/app'
