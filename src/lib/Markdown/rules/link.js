@@ -60,7 +60,7 @@ export const rules = {
       return (
         <Text
           key={getUniqueID()}
-          style={styles}
+          style={style}
           onPress={() => openUrl(node.attributes.href)}>
           {children}
         </Text>
