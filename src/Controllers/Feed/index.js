@@ -1,7 +1,7 @@
 /* eslint no-lone-blocks: "error" */
 /* eslint-env es6 */
 import React from 'react'
-import { Platform, View } from 'react-native'
+import { View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { openUrl } from 'react-native-markdown-renderer'
 
@@ -13,6 +13,7 @@ import { getVideoFeed } from './extensionVideo'
 import { getAudioFeed } from './extensionAudio'
 import { default as Video } from '@src/Controllers/Video'
 import { default as Audio } from '@src/Controllers/Audio'
+import { linkStyle } from '@src/styles/markdown/link'
 
 class Feed extends React.Component {
   state = {
@@ -34,21 +35,23 @@ class Feed extends React.Component {
             feed = twitter.video.map(video => (
               <Video key={uuid()} data={video} />
             ))
-            if (Platform.OS === 'ios') {
-            } else {
-              const hashtags = config.appTags
-                .map(tag => '#' + tag)
-                .concat(this.props.data)
-                .map(tag => encodeURIComponent(tag))
 
-              const tweet = 'https://twitter.com/search?src=typd&q=' + hashtags
+            const hashtags = config.appTags
+              .map(tag => '#' + tag)
+              .concat(this.props.data)
+              .map(tag => encodeURIComponent(tag))
 
-              feed.push(
-                <Text key={uuid()} mode='text' onPress={() => openUrl(tweet)}>
-                  [{this.props.data.join(' ')}]
-                </Text>
-              )
-            }
+            const tweet = 'https://twitter.com/search?src=typd&q=' + hashtags
+
+            feed.push(
+              <Text
+                key={uuid()}
+                mode='text'
+                style={linkStyle}
+                onPress={() => openUrl(tweet)}>
+                {this.props.data.join(' ')}
+              </Text>
+            )
             /* -- someday: .concat(twitter.tweets.map(status => {
                 <Tweet id= />
               })) */
@@ -65,21 +68,23 @@ class Feed extends React.Component {
         feed = feed.concat(
           twitter.audio.map(audio => <Audio key={uuid()} data={audio} />)
         )
-        if (Platform.OS === 'ios') {
-        } else {
-          const hashtags = config.appTags
-            .map(tag => '#' + tag)
-            .concat(this.props.data)
-            .map(tag => encodeURIComponent(tag))
 
-          const tweet = 'https://twitter.com/search?src=typd&q=' + hashtags
+        const hashtags = config.appTags
+          .map(tag => '#' + tag)
+          .concat(this.props.data)
+          .map(tag => encodeURIComponent(tag))
 
-          feed.push(
-            <Text key={uuid()} mode='text' onPress={() => openUrl(tweet)}>
-              [{this.props.data.join(' ')}]
-            </Text>
-          )
-        }
+        const tweet = 'https://twitter.com/search?src=typd&q=' + hashtags
+
+        feed.push(
+          <Text
+            key={uuid()}
+            mode='text'
+            style={linkStyle}
+            onPress={() => openUrl(tweet)}>
+            {this.props.data.join(' ')}
+          </Text>
+        )
 
         break
       default:
