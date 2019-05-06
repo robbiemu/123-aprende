@@ -8,7 +8,7 @@ export const playerStyle = {
   fontSize: 16,
   minHeight: 35,
   lineHeight: '24px',
-  marginBottom: 32,
+  marginBottom: 0,
   marginTop: 8,
   padding: 8,
   flex: 1

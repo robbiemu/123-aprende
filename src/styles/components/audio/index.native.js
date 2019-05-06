@@ -12,7 +12,7 @@ export const playerStyle = {
   minHeight: 35,
   maxHeight: 102,
   lineHeight: 24,
-  marginBottom: 32,
+  marginBottom: 0,
   marginTop: 8,
   padding: 8,
   flex: 1

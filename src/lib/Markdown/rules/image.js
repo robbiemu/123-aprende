@@ -26,6 +26,13 @@ function renderYoutube (destination, children) {
 function renderSoundcloud (destination, children) {
   destination = destination.replace(/^(soundcloud):\/\//, '')
 
+  const soundcloudUrl =
+    'https://soundcloud.com/' +
+    destination
+      .split('/')
+      .map(encodeURIComponent)
+      .join('/')
+
   return (
     <View key={getUniqueID()}>
       <Audio
@@ -35,9 +42,7 @@ function renderSoundcloud (destination, children) {
             destination
         }}
       />
-      <Text
-        style={styles.link}
-        onPress={() => openUrl(children[0].props.children)}>
+      <Text style={styles.link} onPress={() => openUrl(soundcloudUrl)}>
         {config.constants.activities.OPEN_ON_SOUNDCLOUD}
       </Text>
     </View>
