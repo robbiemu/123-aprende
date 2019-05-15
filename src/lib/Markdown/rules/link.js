@@ -29,7 +29,7 @@ function renderTweetLink (destination, children) {
   const tweet =
     'https://twitter.com/intent/tweet?hashtags=' +
     [tags, ...config.appTags]
-      .map(tag => (/^#/.test(tag) ? tag : '#' + tag))
+      //    .map(tag => (/^#/.test(tag) ? tag : '#' + tag))
       .join(',')
 
   return (

@@ -10,6 +10,7 @@ import { rules } from '@src/lib/Markdown'
 import { getProgress } from '@src/Controllers/Activity/mixinProgress'
 import { spinner } from '@src/styles'
 import { pageContainerStyle, lessonStyle } from '@src/styles/components/page'
+import { linkStyle } from '@src/styles/markdown/link'
 
 import FramedView from '@src/Controllers/FramedView'
 import Feed from '@src/Controllers/Feed'
@@ -52,12 +53,15 @@ export default class Submission extends React.Component {
             {this.props.data.json.markdown.replace(/\\n/g, '\n')}
           </Markdown>
           <Text>
-            see <Text onPress={() => history.push(resources)}>[resources]</Text>{' '}
+            see{' '}
+            <Text style={linkStyle} onPress={() => history.push(resources)}>
+              [resources]
+            </Text>{' '}
             for instructions on how to submit a recording.
           </Text>
           <Text>
             see{' '}
-            <Text onPress={() => history.push(requirements)}>
+            <Text style={linkStyle} onPress={() => history.push(requirements)}>
               [requirements]
             </Text>{' '}
             for details about what accounts you need in order to participate
